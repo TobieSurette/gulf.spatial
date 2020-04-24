@@ -1,6 +1,8 @@
-#' Coordinate Conversion Functions
+#' Loran Coordinate Conversion
 #'
-#' @description Convert Loran XY coordinate format to decimal latitude-longitude degree format.
+#' @aliases loran
+#'
+#' @description Function to convert Loran coordinates format to decimal latitude-longitude degree format.
 #'
 #' @param x Numeric vector of Loran X coordinates.
 #' @param y Numeric vector of Loran Y coordinates.
@@ -9,14 +11,21 @@
 #' dimensions as \code{x} and \code{y}.
 #'
 #' @examples
-#' # Convert a coordinate in kilometer format to decimal degree format:
+#' # Check whether character string is a candidate loran coordinate:
+#' is.loran(c("", "25.000", "0025500", "14456.123", "014512345", "14'456", "0000"))
+#'
+#' # Loran coordinate clean-up function:
+#' as.loran(c("", "25.000", "0025500", "14456.123", "014512345", "14'456", "0000"))
+#'
+#' # Convert a Loran XY coordinate to decimal degree format:
 #' loran2deg(14500, 29500)
 #'
-#' # Convert a vector of kilometer-format coordinates to decimal degree format:
+#' # Convert a vector of Loran XY coordinates to decimal degree format:
 #' loran2deg(seq(14000, 14500, len = 21), seq(29000, 29500, len = 21))
 #'
 #' @export loran2deg
 #' @export as.loran
+#' @export is.loran
 #'
 loran2deg <- function(x, y){
    x <- as.loran(x)
@@ -675,3 +684,5 @@ as.loran <- function(x){
    return(r)
 }
 
+#' @describeIn loran2deg Determine if character string is a Loran-type coordinate.
+is.loran <- function(x) return(!is.na(as.loran(x)))
