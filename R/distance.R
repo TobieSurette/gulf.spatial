@@ -14,6 +14,7 @@
 #' @export distance
 #' @exprot distance.default
 #' @seealso deg2km
+#'
 distance <- function(x, ...) UseMethod("distance")
 
 #' @describeIn distance Default distance method.

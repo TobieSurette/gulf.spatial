@@ -15,6 +15,8 @@
 #' @param label Logical value specifying whether to display label inside the grids when using \code{plot.grid}.
 #' @param col Background colour when plotting a grid using \code{plot.grid}.
 #' @param border Border line colour when plotting a grid using \code{plot.grid}.
+#' @param vertices Logical value specifiying whether to output the corner coordinates of
+#'                 each grid.
 #'
 #' @examples
 #' deg2grid(-64, 47) # Returns "HD37".
@@ -27,8 +29,8 @@
 #'
 #' @export deg2grid
 #' @export grid2deg
+#' @export plot.grid
 #'
-
 # Functions to return numeric index from letter index, and vice versa:
 abc2num <- function(x) return(26*(match(substr(toupper(x), 1, 1), LETTERS)-1) + match(substr(toupper(x), 2, 2), LETTERS)-1)
 num2abc <- function(x) return(paste0(LETTERS[floor(x / 26) + 1], LETTERS[x %% 26 + 1]))
@@ -55,7 +57,7 @@ deg2grid <- function(x, y,  quarter.grid = FALSE, xref = -66-1/3, yref = 45, dx 
 }
 
 #' @describeIn deg2grid Returns the corner coordinates of a grid.
-grid2deg <- function(x, xref = -66-1/3, yref = 45, dx = 1/6, dy = 1/6, reference = "HP23"){
+grid2deg <- function(x, xref = -66-1/3, yref = 45, dx = 1/6, dy = 1/6, reference = "HP23", vertices = FALSE){
    x <- toupper(x)
 
    # Calculate horizontal lower left coordinate:
@@ -65,7 +67,17 @@ grid2deg <- function(x, xref = -66-1/3, yref = 45, dx = 1/6, dy = 1/6, reference
    yr <- yref - dy * (abc2num(substr(x, 1, 2)) - abc2num(reference))
 
    # Add corner coordinates:
-   v <- data.frame(left = xr, bottom = yr, right = xr + dx, top = yr + dy)
+   if (!vertices){
+      v <- data.frame(left = xr, bottom = yr, right = xr + dx, top = yr + dy)
+   }else{
+      xx  <- cbind(xr, xr + dx, xr + dx, xr, NA)
+      yy  <- cbind(yr, yr, yr + dy, yr + dy, NA)
+      gg <- cbind(repvec(x, ncol = 4), "")
+      v <- data.frame(grid = as.vector(t(gg)),
+                      longitude = as.vector(t(xx)),
+                      latitude = as.vector(t(yy)),
+                      stringsAsFactors = FALSE)
+   }
 
    return(v)
 }
@@ -81,5 +93,4 @@ plot.grid <- function(x, label = FALSE, col = "white", border = "black", ...){
    # Print label:
    if (label) text((grid$left + grids$right) / 2, (grid$bottom + grids$top) / 2, x, ...)
 }
-
 
