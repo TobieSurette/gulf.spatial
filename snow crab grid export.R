@@ -5,7 +5,6 @@ xx <- seq(-66.5 + 1/12, -60 - 1/12, by  = 1/6)
 yy <- seq(45.5-1/12, 49 + 1/12, by  = 1/6)
 x <- expand.grid(xx, yy)
 x$grid <- deg2grid(x[,1], x[,2])
-
 x <- grid2deg(x$grid, vertices = TRUE)
 
 x$depth <- depth(x$longitude, x$latitude)

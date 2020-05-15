@@ -1,9 +1,45 @@
-#' Convert lat-lon coordinates from decimal degrees to kilometers.
-deg2km <- function(x, y, long.ref = NULL, lat.ref = NULL, method = "utm"){
+#' Degree and Kilometer Conversion
+#'
+#' @description Convert geographical coordinates to kilometers and vice versa.
+#'
+#' @param x,y A numeric vector of longitude and latitude coordinates. Coordinates are assumed
+#' to be in decimal degree format.
+#'
+#' @param long.ref,lat.ref Reference coordinate from which the coordinate
+#' distances will be calculated. Assumed to be in decimal degree format.
+#'
+#' @param method Character string specifying the method to be used for calculating the distances
+#'               between coordinate points. The options are \sQuote{utm} which first converts the
+#'               coordinates into UTM NAD83 coordinates, and \sQuote{ellipsoid} which models the
+#'               Earth as an ellipsoid with major and minor radii of 6378.16 and 6356.775 kilomters,
+#'               respectively. The default is \sQuote{utm}.
+#'
+#' @return A data frame containing the converted coordinates.
+#'
+#' @seealso loran2deg deg2dms deg2dmm deg2str
+#'
+#' @examples
+#' # Convert a decimal degree coordinate to kilometers format:
+#' deg2km(-63.123, 47.56)
+#'
+#' # Convert a vector of decimal degree coordinates to kilometer format:
+#' deg2km(seq(-65, -63, len = 21), seq(46, 48, len = 21))
+#'
+#' #Convert a coordinate in kilometer format to decimal degree format:
+#' km2deg(-227.3639, 111.1331)
+#'
+#' # Return the value of the reference coordinate:
+#' km2deg(0, 0)
+#'
+#' # Convert a vector of kilometer-format coordinates to decimal degree format:
+#' km2deg(seq(0, -200, len = 21), seq(0, 100, len = 21))
+#'
+#' @export deg2km
+#' @export km2deg
+#'
+deg2km <- function(x, y, long.ref, lat.ref, method = "utm"){
 
-   # Check 'method' argument:
-   method <- tolower(method)
-   if (!(method %in% c("utm", "ellipsoid"))) stop("Invalid 'method' argument.")
+   method <- match.arg(tolower(method), c("utm", "ellipsoid"))
 
    # Calculate coordinates using 'rgdal' package methods:
    if (method == "utm"){
@@ -32,19 +68,16 @@ deg2km <- function(x, y, long.ref = NULL, lat.ref = NULL, method = "utm"){
       v <- v / 1000
 
       # Adjust for reference coordinates:
-      if (!is.null(long.ref) & !is.null(lat.ref)){
+      if (!missing(long.ref) & !missing(lat.ref)){
          ref <- deg2km(long.ref, lat.ref)
          v$x <- v$x - ref$x
          v$y <- v$y - ref$y
       }
-
-      return(v)
    }
 
    # Calculate coordinates using 'ellipsoid' method:
    if (method == "ellipsoid"){
-      if (is.null(long.ref) | is.null(lat.ref))
-         stop("Reference coordinates 'long.ref' and 'lat.ref' must be specified.")
+      if (missing(long.ref) | missing(lat.ref)) stop("Reference coordinates 'long.ref' and 'lat.ref' must be specified.")
 
       const <- sqrt (6378.16 * 6356.775) / 57.29578
 
@@ -69,19 +102,16 @@ deg2km <- function(x, y, long.ref = NULL, lat.ref = NULL, method = "utm"){
       yy <- yy * sign(y-lat.ref)
 
       # Store result as a list:
-      result <- data.frame(x = -xx, y = yy)
-
-      return(result)
+      v <- data.frame(x = -xx, y = yy)
    }
 
-   stop("'deg2km' 'method' argument is invalid.")
+   return(v)
 }
 
-# KM2DEG - Convert coordinates from kilometers to decimal lat-lon.
-km2deg <- function(x, y, long.ref = NULL, lat.ref = NULL, method = "utm"){
-   # Check 'method' argument:
-   method <- tolower(method)
-   if (!(method %in% c("utm", "ellipsoid"))) stop("Invalid 'method' argument.")
+#' @describeIn deg2km Convert coordinates from kilometers to decimal lat-lon.
+km2deg <- function(x, y, long.ref, lat.ref, method = "utm"){
+
+   method <- match.arg(tolower(method), c("utm", "ellipsoid"))
 
    # Calculate coordinates using 'rgdal' package methods:
    if (method == "utm"){
@@ -89,7 +119,7 @@ km2deg <- function(x, y, long.ref = NULL, lat.ref = NULL, method = "utm"){
       require(rgdal)
 
       # Adjust for reference coordinates:
-      if (!is.null(long.ref) & !is.null(lat.ref)){
+      if (missing(long.ref) & missing(lat.ref)){
          ref <- deg2km(long.ref, lat.ref)
          x <- x + ref$x
          y <- y + ref$y
@@ -117,8 +147,7 @@ km2deg <- function(x, y, long.ref = NULL, lat.ref = NULL, method = "utm"){
 
    # Calculate coordinates using 'ellipsoid' method:
    if (method == "ellipsoid"){
-      if (is.null(long.ref) | is.null(lat.ref))
-         stop("Reference coordinates 'long.ref' and 'lat.ref' must be specified.")
+      if (missing(long.ref) | missing(lat.ref)) stop("'long.ref' and 'lat.ref' reference coordinates must be specified.")
 
       # Transform reference coordinates into radians:
       long.ref <- (long.ref / 180) * pi
@@ -138,10 +167,8 @@ km2deg <- function(x, y, long.ref = NULL, lat.ref = NULL, method = "utm"){
       lat <- (yp * 180) / pi
 
       # Store result as a list:
-      result <- list(longitude = long, latitude = lat)
-
-      return(result)
+      v <- list(longitude = long, latitude = lat)
    }
 
-   stop("'km2deg' 'method' argument is invalid.")
+   return(v)
 }

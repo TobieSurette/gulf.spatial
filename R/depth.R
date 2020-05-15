@@ -27,7 +27,7 @@
 #'
 depth <- function(x, ...) UseMethod("depth")
 
-#' @describeIn
+#' @describeIn depth Default \code{depth} function.
 depth.default <- function(longitude, latitude, units = "m"){
    units <- match.arg(tolower(units), c("meters", "ft", "feet", "fth", "fathoms"))
 

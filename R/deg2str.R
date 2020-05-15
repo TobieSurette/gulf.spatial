@@ -1,4 +1,43 @@
-#' @description Converts coordinates from decimal degrees to a character string.
+#' Coordinate Conversion Functions
+#'
+#' @description Convert a decimal-degree coordinate to a formatted character string suitable for printing.
+#'
+#' @param deg A numeric vector of coordinates in decimal degree format.
+#'
+#' @param longitude,latitude Numeric decimal degree coordinate value(s). If \code{northing = TRUE} or
+#'           \code{easting = TRUE} then the corresponding Northing (i.e. "N" or "S") or Easting character
+#'           (i.e. "E" or "W") is included in the output character string.
+#'
+#' @param clip A logical value. Whether to strip away coordinate seconds or
+#' minutes and seconds when they have zero values. The resulting output strings
+#' are of an abridged form. The default is \code{TRUE}.
+#'
+#' @param northing,easting Logical value specifying whether to include a Northing (i.e. "N" or "S")
+#'                         or Easting (i.e. "E" or "W") character in the output string when \code{longitude}
+#'                         or \code{latitude} are specified.
+#'
+#' @param as.list Logical value specifying whether to return the output as a list object. The default is \code{FALSE}.
+#'
+#' @return If a single argument is provided and as.list is FALSE, then the
+#' returned output is a character string vector. Otherwise, the output is
+#' returned as a list with fields \code{longitude} and \code{latitude}.
+#'
+#' @seealso loran2deg deg2grid deg2grid
+#'
+#' @examples
+#' # Convert generic coordinate:
+#' deg2str(c(45, 47.5))
+#' deg2str(c(45, 47.5), clip = FALSE)
+#'
+#' # Convert latitude coordinate, which adds the northing character to the output:
+#' deg2str(lat = c(45, 47.5))
+#' deg2str(long = c(-66, -66.5))
+#'
+#' # Convert vectors of lat-long coordinates, which are returned as a list:
+#' deg2str(latitude = 45:47, longitude = -64:-66, clip = FALSE)
+#'
+#' @export deg2str
+#'
 deg2str <- function(deg = NULL, latitude = NULL, longitude = NULL, clip = TRUE,
                     northing = TRUE, easting = TRUE, as.list = FALSE){
 
@@ -42,7 +81,7 @@ deg2str <- function(deg = NULL, latitude = NULL, longitude = NULL, clip = TRUE,
    if (!is.null(latitude)){
       latitude.str <- rep("", length(latitude))
       for (i in 1:length(latitude)){
-         latitude.str[i] <- deg.str(latitude[i], clip = clip)
+         latitude.str[i] <- deg2str(latitude[i], clip = clip)
          if (northing){
             if (latitude[i] < 0) latitude.str[i] <- paste0(latitude.str[i], "S") else latitude.str[i] <- paste0(latitude.str[i], "N")
          }
@@ -55,7 +94,7 @@ deg2str <- function(deg = NULL, latitude = NULL, longitude = NULL, clip = TRUE,
    if (!is.null(longitude)){
       longitude.str <- rep("", length(longitude))
       for (i in 1:length(longitude)){
-         longitude.str[i] <- deg.str(longitude[i], clip = clip)
+         longitude.str[i] <- deg2str(longitude[i], clip = clip)
          if (easting){
             if (longitude[i] < 0) longitude.str[i] <- paste0(longitude.str[i], "W") else longitude.str[i] <- paste0(longitude.str[i], "E")
          }

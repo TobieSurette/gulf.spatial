@@ -11,15 +11,16 @@
 #' deg2dmm(60+5*runif(100)) # Convert 100 random coordinates to DMM format.
 #'
 #' # Degree-minute-second conversions:
-#' deg2dms(66.5) # Returns 6630.00
-#' dms2deg(6630) # Returns 66.5
+#' deg2dms(66.5) # Returns 663000
+#' dms2deg(663000) # Returns 66.5
 #' deg2dms(60+5*runif(100)) # Convert 100 random coordinates to DMS format.
+#'
 #' @export deg2dmm
 #' @export dmm2deg
 #' @export deg2dms
 #' @export dms2deg
 #'
-#' @seealso loran2deg deg2grid grid2deg
+#' @seealso loran2deg deg2grid deg2grid
 #'
 #' Convert from decimal degree to degree decimal-minute format.
 deg2dmm <- function(x){
@@ -29,7 +30,7 @@ deg2dmm <- function(x){
    return(r)
 }
 
-#' Convert from degree-decimal minute to decimal degree format.
+#' @describeIn deg2dmm Convert from degree-decimal minute to decimal degree format.
 dmm2deg <- function(x){
    deg <- round(abs(x), -2) / 100
    min <- (abs(x) - round(abs(x), -2))
@@ -37,7 +38,7 @@ dmm2deg <- function(x){
    return(r)
 }
 
-#' Convert from decimal degree to degree-minute-second format.
+#' @describeIn deg2dmm Convert from decimal degree to degree-minute-second format.
 deg2dms <- function(x){
    deg <- floor(abs(x))
    min <- 60 * (abs(x) - deg)
@@ -46,7 +47,7 @@ deg2dms <- function(x){
    return(r)
 }
 
-#' Convert from degree-minute-second to decimal degree format.
+#' @describeIn deg2dmm Convert from degree-minute-second to decimal degree format.
 dms2deg <- function(x){
    deg <- round(abs(x), -4) / 10000
    min <- round(abs(x) - round(abs(x), -4), -2) / 100

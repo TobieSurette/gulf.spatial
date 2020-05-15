@@ -12,7 +12,8 @@
 #' @param method Method used to calculate distance.
 #'
 #' @export distance
-#' @exprot distance.default
+#' @export distance.default
+#'
 #' @seealso deg2km
 #'
 distance <- function(x, ...) UseMethod("distance")
