@@ -8,23 +8,40 @@
 #'          in the field variable names. In the latter case, partial matching is used.
 #'
 #' @export coordinates
+#' @export coordinates.default
 #' @export longitude
 #' @export latitude
 #' @export longitude.list
 #' @export latitude.list
-#' @export lat
-#' @export lon
 #' @export long
+#' @export lon
+#' @export lat
+#'
+#' @section Functions:
+#' \describe{
+#'   \item{\code{longitude}, \code{latitude}}{Extract longitude or latitude coordinates from a data frame or list.}
+#'   \item{\code{lon}, \code{long}}{Alias functions for \code{longitude}.}
+#'   \item{\code{lat}}{Alias function for \code{latitude}.}
+#' }
 #'
 coordinates <- function(x, ...) UseMethod("coordinates")
 
-#' @describeIn coordinates Generic \code{longitude} function.
+coordinates.default <- function(x, ...) if (is.installed("sp")) return(sp::coordinates(x, ...))
+
+#' @rdname coordinates
 longitude <- function(x, ...) UseMethod("longitude")
 
-#' @describeIn coordinates Generic \code{latitude} function.
+#' @rdname coordinates
 latitude <- function(x, ...) UseMethod("latitude")
 
-#' @describeIn coordinates Extract longitude coordinates from a data frame or list.
+#' @rdname coordinates
+longitude.default <- function(x, ...) return(NULL)
+
+#' @rdname coordinates
+latitude.default <- function(x, ...) return(NULL)
+
+#' @rdname coordinates
+#' @method longitude list
 longitude.list <- function(x, ...){
    n <- tolower(names(x))
    if (is.null(n)) return(NULL)
@@ -35,7 +52,8 @@ longitude.list <- function(x, ...){
    return(x[[index]])
 }
 
-#' @describeIn coordinates Extract latitude coordinates from a data frame or list.
+#' @rdname coordinates
+#' @method latitude list
 latitude.list <- function(x, ...){
    n <- tolower(names(x))
    if (is.null(n)) return(NULL)
@@ -45,12 +63,12 @@ latitude.list <- function(x, ...){
    return(x[[index]])
 }
 
-# Alias functions:
-#' @describeIn coordinates Alias function for \code{longitude}.
+#' @rdname coordinates
 lon <- longitude
 
-#' @describeIn coordinates Alias function for \code{latitude}.
+#' @rdname coordinates
 lat <- latitude
 
-#' @describeIn coordinates Alias function for \code{longitude}.
+#' @rdname coordinates
 long <- longitude
+

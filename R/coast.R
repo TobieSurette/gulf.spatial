@@ -17,7 +17,8 @@
 #'
 #' @return A spatial object containing the coastline coordinates is returned invisibly.
 #'
-#' \code{\link[graphics]{polygon}}
+#' @seealso \code{\link[graphics]{polygon}}
+#'
 #' @examples
 #' # Display simple map:
 #' plot(c(-66.5, -60), c(45, 49), type = "n")

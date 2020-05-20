@@ -1,4 +1,4 @@
-#' Coordinates and Grids
+#' @title Coordinates and Grids
 #'
 #' @description Functions to assign a grid label(s) given coordinates, and vice versa.
 #'
@@ -38,9 +38,13 @@
 #' @export grid2deg
 #' @export plot.grid
 #'
-# Functions to return numeric index from letter index, and vice versa:
-abc2num <- function(x) return(26*(match(substr(toupper(x), 1, 1), LETTERS)-1) + match(substr(toupper(x), 2, 2), LETTERS)-1)
-num2abc <- function(x) return(paste0(LETTERS[floor(x / 26) + 1], LETTERS[x %% 26 + 1]))
+#' @section Functions:
+#' \describe{
+#'   \item{\code{deg2grid}}{Returns a grid name for a given coordinate(s).}
+#'   \item{\code{grid2deg}}{Returns the corner coordinates of a grid.}
+#'   \item{\code{plot.grid}}{Graphically display grid.}
+#' }
+#'
 
 deg2grid <- function(x, y,  quarter.grid = FALSE, xref = -66-1/3, yref = 45, dx = 1/6, dy = 1/6, reference = "HP23"){
    # Parse 'x':
@@ -63,7 +67,10 @@ deg2grid <- function(x, y,  quarter.grid = FALSE, xref = -66-1/3, yref = 45, dx 
    return(paste0(ystr, xstr))
 }
 
-#' @describeIn deg2grid Returns the corner coordinates of a grid.
+abc2num <- function(x) return(26*(match(substr(toupper(x), 1, 1), LETTERS)-1) + match(substr(toupper(x), 2, 2), LETTERS)-1)
+num2abc <- function(x) return(paste0(LETTERS[floor(x / 26) + 1], LETTERS[x %% 26 + 1]))
+
+#' @rdname deg2grid
 grid2deg <- function(x, xref = -66-1/3, yref = 45, dx = 1/6, dy = 1/6, reference = "HP23", vertices = FALSE){
    x <- toupper(x)
 
@@ -89,7 +96,7 @@ grid2deg <- function(x, xref = -66-1/3, yref = 45, dx = 1/6, dy = 1/6, reference
    return(v)
 }
 
-#' @describeIn deg2grid Plot a grid.
+#' @rdname deg2grid
 plot.grid <- function(x, label = FALSE, col = "white", border = "black", ...){
    # Get grid coordinates:
    grid <- grid2deg(x,  ...)

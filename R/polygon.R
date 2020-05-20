@@ -41,22 +41,40 @@
 #' points(x[index], y[index], pch = 21, bg = "red")
 #' points(x[!index], y[!index], pch = 21, bg = "blue")
 #'
+#' @export polygon
+#' @export polygon.default
 #' @export as.polygon
 #' @export plot.polygon
 #' @export in.polygon
+#' @export which.polygon
 #' @export area.polygon
 #' @export as.data.frame.polygon
 #' @export bbox.polygon
 #' @export draw.polygon
 #' @export is.polygon
 #'
-
+#' @section Functions:
+#' \describe{
+#'   \item{\code{polygon}, \code{as.polygon}}{Creates or converts to a \sQuote{polygon} object.}
+#'   \item{\code{plot.polygon}}{Graphically display a polygon object.}
+#'   \item{\code{in.polygon}}{Determine whether a coordinate point lies within a polygon. A logical (\code{n} by \code{k}) matrix is returned where \code{n} is the number of
+#'                            component polygons in \code{p} and \code{k} is the length of the \code{x}
+#'                            and \code{y} vectors.}
+#'   \item{\code{which.polygon}}{Returns the indices specifying to which polygon(s) in a list a point belongs.}
+#'   \item{\code{area.polygon}}{Calculates the area of a polygon.}
+#'   \item{\code{as.data.frame.polygon}}{Convert polygon object to data frame.}
+#'   \item{\code{bbox.polygon}}{Determine bounding box for a polygon object.}
+#'   \item{\code{draw.polygon}}{Draw a polygon on a plot.}
+#'   \item{\code{is.polygon}}{Checks whether object is a \sQuote{polygon} object.}
+#' }
+#'
 polygon <- function(x, ...) UseMethod("polygon")
 
-#' @describeIn polygon Creates or converts to a \sQuote{polygon} object.
+#' @rdname polygon
+#' @method polygon default
 polygon.default <- function(x, ...) if (!("polygon" %in% class(x))) graphics::polygon(x, ...) else return(as.polygon(x))
 
-#' @describeIn polygon Creates or converts to a \sQuote{polygon} object.
+#' @rdname polygon
 as.polygon <- function(x, y = NULL, hole = NULL, ...){
    # AS.POLYGON - Create or convert to a 'polygon' object.
 
@@ -170,7 +188,8 @@ as.polygon <- function(x, y = NULL, hole = NULL, ...){
    return(p)
 }
 
-#' @describeIn polygon Graphically display a polygon object.
+#' @rdname polygon
+#' @method plot polygon
 plot.polygon <- function(p, labels = FALSE, as.lines = FALSE, ...){
    # PLOT.POLYGON - Plot a list of polygon objects.
 
@@ -199,13 +218,8 @@ plot.polygon <- function(p, labels = FALSE, as.lines = FALSE, ...){
    }
 }
 
-#' @describeIn polygon Determine whether a point lies within a polygon object.
-
-#' @describeIn polygon Determine whether a coordinate point lies within a polygon. A logical
-#'                     (\code{n} by \code{k}) matrix is returned where \code{n} is the number of
-#'                     component polygons in \code{p} and \code{k} is the length of the \code{x}
-#'                     and \code{y} vectors.
-in.polygon <- function(p, x, y){
+#' @rdname polygon
+in.polygon <- function(p, x, y, ...){
    # Check input arguments:
    if (missing(x) | missing(y)) stop("'x' and 'y' must be specified.")
    if (length(x) != length(y))  stop("'x' and 'y' must be the same length.")
@@ -245,7 +259,7 @@ in.polygon <- function(p, x, y){
    return(index)
 }
 
-#' @describeIn polygon  Returns the indices specifying to which polygon(s) in a list a point belongs.
+#' @rdname polygon
 which.polygon <- function(p, x, y, as.list = FALSE){
    # WHICH.POLYGON - Determine to which polygon a point belongs.
 
@@ -274,7 +288,7 @@ which.polygon <- function(p, x, y, as.list = FALSE){
    return(result)
 }
 
-#' @describeIn polygon Calculates the area of a polygon.
+#' @rdname polygon
 area.polygon <- function(p){
    # AREA.POLYGON - Calculate the area of a polygon.
 
@@ -304,7 +318,8 @@ area.polygon <- function(p){
    return(A)
 }
 
-#' @describeIn polygon Convert polygon object to data frame.
+#' @rdname polygon
+#' @method as.data.frame polygon
 as.data.frame.polygon <- function(x){
    # AS.DATA.FRAME.POLYGON - Convert a 'polygon' object to a data frame.
 
@@ -327,7 +342,7 @@ as.data.frame.polygon <- function(x){
    return(v)
 }
 
-#' @describeIn polygon Determine bounding box for a polygon object.
+#' @rdname polygon
 bbox.polygon <- function(p, ...){
    bb <- rep(NA, 4)
    for (i in 1:length(p)){
@@ -340,7 +355,7 @@ bbox.polygon <- function(p, ...){
    return(bb)
 }
 
-#' @describeIn polygon Draw a polygon on a plot.
+#' @rdname polygon
 draw.polygon <- function(x = NULL, y = NULL, n, tol = 5E-3, snap = TRUE,
                          snap.to.grid = FALSE, grid.increment, grid.offset = 0,
                          pch = 21, bg = "black", ...){
@@ -486,5 +501,6 @@ draw.polygon <- function(x = NULL, y = NULL, n, tol = 5E-3, snap = TRUE,
    return(package(xx, yy))
 }
 
-#' @description Checks whether object is a \sQuote{polygon} object.
+#' @rdname polygon
 is.polygon <- function(p) return("polygon" %in% class(p))
+
