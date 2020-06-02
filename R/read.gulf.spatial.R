@@ -27,6 +27,10 @@
 #'
 #' @export read.gulf.spatial
 #'
+
+# File extension function:
+fext <- function(x) return(tolower(unlist(lapply(strsplit(x, "[.]"), function(x) x[length(x)]))))
+
 read.gulf.spatial <- function(layer, survey, project, ...){
    if (!missing(survey) & missing(project)) project <- paste0(survey, "s")
 
@@ -36,26 +40,21 @@ read.gulf.spatial <- function(layer, survey, project, ...){
                                         "ports", "cities", "geography", "features"))
    layer <- gsub("strata", "stratum", layer)
 
-   # Get list of all data files and paths:
-   paths <- dir(path = find.package(package = "gulf.spatial"), recursive = TRUE, full.names = TRUE)
-   paths <- paths[grep("data/", paths)]
-   files <- unlist(lapply(strsplit(paths, "/"), function(x) x[length(x)]))
-   f <- data.frame(path = paths, file = files, stringsAsFactors = FALSE)
-   f$extension <- substr(f$file, nchar(f$file)-2, nchar(f$file))
-   f$path <- substr(f$path, 1, nchar(f$path)-nchar(f$file))
+   # Default project:
+   if (missing(project)) project <- ""
 
-   # Subset by project:
-   if (!missing(project)) f <- f[grep(tolower(project), f$file), ]
-   f <- f[grep(tolower(layer), f$file), ]
+   # Get list of all data files and paths:
+   file <- file.locate(package = "gulf.spatial", c(layer, project))
 
    # Remove unwanted file types:
-   f <- f[tolower(f$extension) %in% c("csv", "shp", "txt", "tab"), ]
+   extensions <- fext(file)
+   file <- file[extensions %in% c("csv", "shp", "txt", "tab")]
 
-   if (nrow(f) == 0) stop("Unable to find spatial data.")
-   if (nrow(f) > 1) stop("Arguments correspond to multiplespatial data files.")
-   if (nrow(f) == 1){
-      if (f$extension == "shp") v <- readOGR(paste0(f$path, f$file), verbose = FALSE)
-      if (f$extension == "csv") v <- read.csv(paste0(f$path, f$file), header = TRUE, stringsAsFactors = FALSE)
+   if (length(file) == 0) stop("Unable to find spatial data.")
+   if (length(file) > 1) stop("Arguments correspond to multiple spatial data files.")
+   if (length(file)== 1){
+      if (fext(file) == "shp") v <- rgdal::readOGR(file, verbose = FALSE)
+      if (fext(file) == "csv") v <- read.csv(file, header = TRUE, stringsAsFactors = FALSE)
    }
 
    subset(v, ...)

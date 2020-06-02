@@ -11,8 +11,8 @@
 #' @export coordinates.default
 #' @export longitude
 #' @export latitude
-#' @export longitude.list
-#' @export latitude.list
+#' @export longitude.data.frame
+#' @export latitude.data.frame
 #' @export long
 #' @export lon
 #' @export lat
@@ -42,7 +42,7 @@ latitude.default <- function(x, ...) return(NULL)
 
 #' @rdname coordinates
 #' @method longitude list
-longitude.list <- function(x, ...){
+longitude.data.frame <- function(x, ...){
    n <- tolower(names(x))
    if (is.null(n)) return(NULL)
    index <- grep("longitude", n)[1]
@@ -54,7 +54,7 @@ longitude.list <- function(x, ...){
 
 #' @rdname coordinates
 #' @method latitude list
-latitude.list <- function(x, ...){
+latitude.data.frame <- function(x, ...){
    n <- tolower(names(x))
    if (is.null(n)) return(NULL)
    index <- grep("latitude", n)[1]

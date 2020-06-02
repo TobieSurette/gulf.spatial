@@ -1,3 +1,5 @@
+library(sp)
+
 load("/Users/crustacean/Desktop/gulf.spatial/stratum.polygons.rda")
 
 p <- list()
