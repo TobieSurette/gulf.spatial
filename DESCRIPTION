@@ -2,9 +2,9 @@ Package: gulf.spatial
 Type: Package
 Title: DFO Gulf Region Spatial Functions
 Version: 0.1.0
-Import: sp, rgdal
+Import: sp, rgdal, gulf.utils, gulf.metadata, gulf.data
 Author: Tobie Surette & Daniel Ricard
-Maintainer: The package maintainer <yourself@somewhere.net>
+Maintainer: Tobie Surette 
 Description: Collection of spatial functions for use in DFO Gulf Region, the southern Gulf of Saint Lawrence.
 License: What license is it under?
 Encoding: UTF-8
