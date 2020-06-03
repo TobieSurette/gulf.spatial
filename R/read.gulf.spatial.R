@@ -31,7 +31,7 @@
 # File extension function:
 fext <- function(x) return(tolower(unlist(lapply(strsplit(x, "[.]"), function(x) x[length(x)]))))
 
-read.gulf.spatial <- function(layer, survey, project, file.extensions =  c("csv", "shp", "txt", "tab"), ...){
+read.gulf.spatial <- function(layer, survey, region, project, file.extensions =  c("csv", "shp", "txt", "tab"), ...){
    if (!missing(survey) & missing(project)) project <- paste0(survey, "s")
 
    # Parse map layer argument:
@@ -54,9 +54,17 @@ read.gulf.spatial <- function(layer, survey, project, file.extensions =  c("csv"
    if (length(file) == 0) stop("Unable to find spatial data.")
    if (length(file) > 1) stop("Arguments correspond to multiple spatial data files.")
    if (length(file)== 1){
-      if (fext(file) == "shp") v <- rgdal::readOGR(file, verbose = FALSE)
+      if (fext(file) == "shp"){
+         v <- rgdal::readOGR(file, verbose = FALSE)
+
+         # Subset by survey and region:
+         if (!missing(survey)) v <- v[v$survey %in% tolower(survey), ]
+         if (!missing(region)) v <- v[v$region %in% tolower(region), ]
+      }
       if (fext(file) == "csv") v <- read.csv(file, header = TRUE, stringsAsFactors = FALSE)
    }
+
+
 
    subset(v, ...)
 
