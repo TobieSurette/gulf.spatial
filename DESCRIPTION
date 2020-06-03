@@ -3,8 +3,10 @@ Type: Package
 Title: DFO Gulf Region Spatial Functions
 Version: 0.1.0
 Import: sp, rgdal, gulf.utils, gulf.metadata, gulf.data
-Author: Tobie Surette & Daniel Ricard
-Maintainer: Tobie Surette 
+Authors@R: as.person(c(
+  "Tobie Surette <Tobie.Surette@dfo-mpo.gc.ca> [aut, cre]", 
+	"Daniel Ricard <Daniel.Ricard@dfo-mpo.gc.ca> [aut]"
+  ))
 Description: Collection of spatial functions for use in DFO Gulf Region, the southern Gulf of Saint Lawrence.
 License: What license is it under?
 Encoding: UTF-8
