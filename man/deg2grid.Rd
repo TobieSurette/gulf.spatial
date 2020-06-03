@@ -27,7 +27,7 @@ grid2deg(
   vertices = FALSE
 )
 
-plot.grid(x, label = FALSE, col = "white", border = "black", ...)
+\method{plot}{grid}(x, label = FALSE, col = "white", border = "black", ...)
 }
 \arguments{
 \item{x}{Horizontal coordinate vector (e.g. decimal longitude) or grid name.}

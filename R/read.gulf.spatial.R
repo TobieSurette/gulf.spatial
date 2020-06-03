@@ -31,7 +31,7 @@
 # File extension function:
 fext <- function(x) return(tolower(unlist(lapply(strsplit(x, "[.]"), function(x) x[length(x)]))))
 
-read.gulf.spatial <- function(layer, survey, project, ...){
+read.gulf.spatial <- function(layer, survey, project, file.extensions =  c("csv", "shp", "txt", "tab"), ...){
    if (!missing(survey) & missing(project)) project <- paste0(survey, "s")
 
    # Parse map layer argument:
@@ -41,14 +41,15 @@ read.gulf.spatial <- function(layer, survey, project, ...){
    layer <- gsub("strata", "stratum", layer)
 
    # Default project:
-   if (missing(project)) project <- ""
+   if (missing(project)) if (!missing(survey)) project <- project(survey) else project <- ""
 
    # Get list of all data files and paths:
-   file <- file.locate(package = "gulf.spatial", c(layer, project))
-
-   # Remove unwanted file types:
-   extensions <- fext(file)
-   file <- file[extensions %in% c("csv", "shp", "txt", "tab")]
+   file <- file.locate(package = "gulf.spatial", layer)
+   file <- file[fext(file) %in% file.extensions]
+   if (length(file) > 1){
+      file <- file.locate(package = "gulf.spatial", c(layer, project))
+      file <- file[fext(file) %in% file.extensions]
+   }
 
    if (length(file) == 0) stop("Unable to find spatial data.")
    if (length(file) > 1) stop("Arguments correspond to multiple spatial data files.")
