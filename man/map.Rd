@@ -7,7 +7,7 @@
 \usage{
 map(x, ...)
 
-\method{map}{default}(x, ...)
+\method{map}{default}(x, layer, xlim, ylim, region = "gulf", add = TRUE, ...)
 }
 \arguments{
 \item{layer}{Layer specification}
@@ -15,11 +15,11 @@ map(x, ...)
 \description{
 Draws southern Gulf of St. Lawrence geographical features.
 }
-\section{Methods (by class)}{
-\itemize{
-\item \code{default}: Default map method.
-}}
+\examples{
+map()
+map(layer = "strata", survey = "rv", region = "gulf")
 
+}
 \seealso{
 \code{\link{read.gulf.spatial}}
 }

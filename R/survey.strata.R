@@ -42,14 +42,8 @@ stratum <- function(x, ...){
 
 #' @rdname survey.strata
 stratum.default <- function(longitude, latitude, region = "gulf", survey = "rv", ...){
-   # STRATUM.DEFAULT - Determine to which stratum a location belongs.
-
    # Load stratum polygons:
-   s <- read.gulf.spatial(layer = "strata")
-
-   # Subset by survey and region:
-   s <- s[s$survey %in% tolower(survey), ]
-   s <- s[s$region %in% tolower(region), ]
+   s <- read.gulf.spatial(layer = "strata", region = region, survey = survey, ...)
 
    # Identify strata for each coordinate point:
    p <- SpatialPoints(cbind(longitude, latitude))
