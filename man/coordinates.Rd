@@ -6,8 +6,8 @@
 \alias{latitude}
 \alias{longitude.default}
 \alias{latitude.default}
-\alias{longitude.list}
-\alias{latitude.list}
+\alias{longitude.data.frame}
+\alias{latitude.data.frame}
 \alias{lon}
 \alias{lat}
 \alias{long}
