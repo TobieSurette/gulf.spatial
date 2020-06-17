@@ -48,9 +48,6 @@ poly.15 <- st_sf(
    )
 )
 
-poly.15.coast <- st_difference(poly.15, boundaries_simple)
-
-
 zph.16 <- data.frame(
    x=-dms2deg(c(595440, 592330, 600000, 611600, 611600,611600, 600000, 595440)),
    y=dms2deg(c(501655, 495100, 492500, 495030, 501025, 502000, 502000, 501655))
@@ -63,7 +60,6 @@ poly.16 <- st_sf(
    )
 )
 
-
 zph.17 <- data.frame(
    x=-dms2deg(c(600000,600000,630000,650000,642030,611600,600000)),
    y=dms2deg(c(492500,475000,483000,495130,500630,495030,492500))
@@ -72,7 +68,7 @@ poly.17 <- st_sf(
    data.frame(
       type="fishing zone polygon",
       name="LFA17",
-      st_sfc(st_polygon(list(cbind(zph.17$x,zph.17$y))), crs=4326)
+      st_sfc(st_multipolygon(list(list(cbind(zph.17$x,zph.17$y)))), crs=4326)
    )
 )
 
@@ -84,7 +80,7 @@ poly.17A <- st_sf(
    data.frame(
       type="fishing zone polygon",
       name="LFA17A",
-      st_sfc(st_polygon(list(cbind(zph.17A$x,zph.17A$y))), crs=4326)
+      st_sfc(st_multipolygon(list(list(cbind(zph.17A$x,zph.17A$y)))), crs=4326)
    )
 )
 
@@ -96,7 +92,7 @@ poly.17B <- st_sf(
    data.frame(
       type="fishing zone polygon",
       name="LFA17B",
-      st_sfc(st_polygon(list(cbind(zph.17B$x,zph.17B$y))), crs=4326)
+      st_sfc(st_multipolygon(list(list(cbind(zph.17B$x,zph.17B$y)))), crs=4326)
    )
 )
 
@@ -108,7 +104,7 @@ poly.18 <- st_sf(
    data.frame(
       type="fishing zone polygon",
       name="LFA18",
-      st_sfc(st_polygon(list(cbind(zph.18$x,zph.18$y))), crs=4326)
+      st_sfc(st_multipolygon(list(list(cbind(zph.18$x,zph.18$y)))), crs=4326)
    )
 )
 
@@ -120,10 +116,9 @@ poly.19A <- st_sf(
    data.frame(
       type="fishing zone polygon",
       name="LFA19A",
-      st_sfc(st_polygon(list(cbind(zph.19A$x,zph.19A$y))), crs=4326)
+      st_sfc(st_multipolygon(list(list(cbind(zph.19A$x,zph.19A$y)))), crs=4326)
    )
 )
-
 
 zph.19B <- data.frame(
    x=-dms2deg(c(645500, 644400, 640500, 642400, 643000, 645500, 645500)),
@@ -133,42 +128,84 @@ poly.19B <- st_sf(
    data.frame(
       type="fishing zone polygon",
       name="LFA19B",
-      st_sfc(st_polygon(list(cbind(zph.19B$x,zph.19B$y))), crs=4326)
+      st_sfc(st_multipolygon(list(list(cbind(zph.19B$x,zph.19B$y)))), crs=4326)
    )
 )
 
 zph.19C <- data.frame(
-   x=-dms2deg(c(642400,640500,630000,641330)),
-   y=dms2deg(c(490032,491330,483000,484300))
+   x=-dms2deg(c(642400,640500,630000,641330,642400)),
+   y=dms2deg(c(490032,491330,483000,484300,490032))
+)
+poly.19C <- st_sf(
+   data.frame(
+      type="fishing zone polygon",
+      name="LFA19C",
+      st_sfc(st_multipolygon(list(list(cbind(zph.19C$x,zph.19C$y)))), crs=4326)
+   )
 )
 
 zph.20A <- data.frame(
-   x=-dms2deg(c(641330,630000,640210,643000,644136)),
-   y=dms2deg(c(484300,483000,481215,481215,481936))
+   x=-dms2deg(c(641330,630000,640210,643000,644136,641330)),
+   y=dms2deg(c(484300,483000,481215,481215,481936,484300))
+)
+poly.20A <- st_sf(
+   data.frame(
+      type="fishing zone polygon",
+      name="LFA20A",
+      st_sfc(st_multipolygon(list(list(cbind(zph.20A$x,zph.20A$y)))), crs=4326)
+   )
 )
 
 zph.20B <- data.frame(
-   x=-dms2deg(c(644136,643000,650330,652910,652910)),
-   y=dms2deg(c(481936,481215,475745,475142,480200))
+   x=-dms2deg(c(644136,643000,650330,652910,652910,644136)),
+   y=dms2deg(c(481936,481215,475745,475142,480200,481936))
+)
+poly.20B <- st_sf(
+   data.frame(
+      type="fishing zone polygon",
+      name="LFA20B",
+      st_sfc(st_multipolygon(list(list(cbind(zph.20B$x,zph.20B$y)))), crs=4326)
+   )
 )
 
 zph.21A <- data.frame(
-   x=-dms2deg(c(655410,655410,655000,652910,652910)),
-   y=dms2deg(c(481236,480147,480130,475142,480200))
+   x=-dms2deg(c(655410,655410,655000,652910,652910,655410)),
+   y=dms2deg(c(481236,480147,480130,475142,480200,481236))
+)
+poly.21A <- st_sf(
+   data.frame(
+      type="fishing zone polygon",
+      name="LFA21A",
+      st_sfc(st_multipolygon(list(list(cbind(zph.21A$x,zph.21A$y)))), crs=4326)
+   )
 )
 
 zph.21B <- data.frame(
-   x=-dms2deg(c(655410,655410,661921,662130,662048)),
-   y=dms2deg(c(481236,480147,480316,480504,480557))
+   x=-dms2deg(c(655410,655410,661921,662130,662048,655410)),
+   y=dms2deg(c(481236,480147,480316,480504,480557,481236))
+)
+poly.21B <- st_sf(
+   data.frame(
+      type="fishing zone polygon",
+      name="LFA21B",
+      st_sfc(st_multipolygon(list(list(cbind(zph.21B$x,zph.21B$y)))), crs=4326)
+   )
 )
 
 zph.22 <- data.frame(
    x=-dms2deg(c(600000, 604500, 634730, 640210, 640210, 630000, 600000)),
    y=dms2deg(c(475000, 470218, 470758, 471825, 481215, 483000, 475000))
 )
+poly.22 <- st_sf(
+   data.frame(
+      type="fishing zone polygon",
+      name="LFA22",
+      st_sfc(st_multipolygon(list(list(cbind(zph.22$x,zph.22$y)))), crs=4326)
+   )
+)
 
 
-quebec.lfas.1 <- rbind(poly.15, poly.16)
+quebec.lfas.1 <- rbind(poly.15, poly.16, poly.17, poly.17A, poly.17B, poly.18, poly.19A, poly.19B, poly.19C, poly.20A, poly.21A, poly.21B, poly.22)
 
 
 ## create 2 shapefiles:
