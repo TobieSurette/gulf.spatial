@@ -49,10 +49,10 @@ deg2dms <- function(x){
 
 #' @describeIn deg2dmm Convert from degree-minute-second to decimal degree format.
 dms2deg <- function(x){
-   deg <- round(abs(x), -4) / 10000
-   min <- round(abs(x) - round(abs(x), -4), -2) / 100
+   deg <- floor(abs(x) / 10000)
+   min <- round(abs(x) - (deg*10000), -2) / 100
    sec <- 100 * ((abs(x) / 100) %% 1)
-   r <- sign(x) * (deg + min / 60 + sec / 3060)
+   r <- sign(x) * (deg + min / 60 + sec / 3600)
    return(r)
 }
 
