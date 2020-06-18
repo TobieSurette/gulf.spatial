@@ -53,7 +53,8 @@ deg2str <- function(deg = NULL, latitude = NULL, longitude = NULL, clip = TRUE,
          deg.sec <- round((deg.min - floor(deg.min)) * 60, 1)
 
          deg.str[i] <- paste(as.character(floor(deg.deg)))
-         deg.str[i] <- paste0(deg.str[i], "°") # Add degree symbol.
+         # deg.str[i] <- paste0(deg.str[i], "°") # Add degree symbol.
+         deg.str[i] <- paste0(deg.str[i], '\u00B0') # Add degree symbol.
 
          # Get minute string:
          if ((deg.min != 0) | (deg.sec != 0)){

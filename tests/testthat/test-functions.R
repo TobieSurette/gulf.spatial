@@ -7,9 +7,9 @@ test_that("function deg2km works", {
   }
 )
 
-test_that("function deg2.str works", {
-  expect_match(gulf.spatial::deg.str(45), "45°")
-  expect_match(gulf.spatial::deg.str(47.5), "47°30'")
+test_that("function deg2str works", {
+  expect_match(gulf.spatial::deg2str(45), "45°")
+  expect_match(gulf.spatial::deg2str(47.5), "47°30'")
 }
 )
 
@@ -19,6 +19,6 @@ test_that("function deg2dmm works", {
 )
 
 test_that("function dms2deg works", {
-  expect_equal(gulf.spatial::dmm2deg(475142), 47.86167)
+  expect_equal(gulf.spatial::dms2deg(475142), 47.86167, tolerance=1e-3)
 }
 )
