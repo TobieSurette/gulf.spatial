@@ -1,11 +1,81 @@
+## creation of the fishing.zones.polygons and fishing.zones.vertices for inclusion in gulf.spatial
+##
 library(gulf.spatial)
 library(here)
 library(sf)
 
 library(tidyverse)
 
+
 #################
-## Gulf
+## Gulf, start with what is in the gulf package
+
+load(file.path(here(), "../gulf/data/fishing.zone.polygons.rda"))
+
+p <- fishing.zone.polygons
+#p <- gulf::subset.list(p, species = 2550, region = "gulf")
+
+## first fix the fishing zone polygons to make sure that they all have the same format
+list(
+   p[[1]],
+   p[[2]],
+   p[[3]],
+   p[[4]],
+   p[[5]],
+   p[[6]],
+   p[[7]],
+   p[[8]],
+   p[[9]],
+   p[[10]],
+   p[[11]],
+   p[[12]]
+)
+
+
+fz.gulf <-
+do.call(rbind,
+   lapply(p, function(i){
+   data.frame(
+      type="fishing zone polygon",
+      species.code=i$species,
+      region=i$region,
+      label=i$label
+         )
+   }
+   )
+)
+
+fz.gulf$species.group <- ifelse(fz.gulf$species.code==2550,"lobster",ifelse(fz.gulf$species.code==2526,"crab",ifelse(fz.gulf$species.code==60,"herring","other")))
+fz.gulf$name <- paste0(ifelse(fz.gulf$species.code==2550,"LFA ",ifelse(fz.gulf$species.code==2526,"CFA ",ifelse(fz.gulf$species.code==60,"HFA ","FA "))), fz.gulf$label)
+
+## create multipolygons
+fz.gulf.sf <-
+   do.call(rbind,
+           lapply(p, function(i){
+              np <- length(i)-5 ## number of polygons defined for this fishing zone
+              if(np==1){## we have only an exterior ring
+                 my.poly <- st_sfc(st_multipolygon(list(list(cbind(i[[1]]$x,i[[1]]$y)))), crs=4326)
+              } else {
+                 ## create a list of lists where the first list is the exterior ring and the subsequent ones are the holes
+                 ll <- list()
+                 for(li in 1:np){
+                    ll[[li]] <- list(cbind(i[[li]]$x,i[[li]]$y))
+                 }
+                 my.poly <- st_sfc(st_multipolygon(ll), crs=4326)
+              }
+           } ## end function
+           ) ## end lapply
+   )## end do.call
+
+
+
+## now add geometries
+gulf.poly <- st_sf(
+   cbind(
+      fz.gulf,
+      fz.gulf.sf
+      )
+   )
 
 
 
@@ -23,6 +93,7 @@ poly.15 <- st_sf(
    data.frame(
       type="fishing zone polygon",
       species.code=2550,
+      species.group="lobster",
       region="Quebec",
       name="LFA15",
       st_sfc(st_multipolygon(list(list(cbind(zph.15$x,zph.15$y)))), crs=4326)
@@ -39,6 +110,7 @@ poly.16 <- st_sf(
    data.frame(
       type="fishing zone polygon",
       species.code=2550,
+      species.group="lobster",
       region="Quebec",
       name="LFA16",
       st_sfc(st_multipolygon(list(list(cbind(zph.16$x,zph.16$y)))), crs=4326)
@@ -53,6 +125,7 @@ poly.17 <- st_sf(
    data.frame(
       type="fishing zone polygon",
       species.code=2550,
+      species.group="lobster",
       region="Quebec",
       name="LFA17",
       st_sfc(st_multipolygon(list(list(cbind(zph.17$x,zph.17$y)))), crs=4326)
@@ -67,6 +140,7 @@ poly.17A <- st_sf(
    data.frame(
       type="fishing zone polygon",
       species.code=2550,
+      species.group="lobster",
       region="Quebec",
       name="LFA17A",
       st_sfc(st_multipolygon(list(list(cbind(zph.17A$x,zph.17A$y)))), crs=4326)
@@ -81,6 +155,7 @@ poly.17B <- st_sf(
    data.frame(
       type="fishing zone polygon",
       species.code=2550,
+      species.group="lobster",
       region="Quebec",
       name="LFA17B",
       st_sfc(st_multipolygon(list(list(cbind(zph.17B$x,zph.17B$y)))), crs=4326)
@@ -95,6 +170,7 @@ poly.18 <- st_sf(
    data.frame(
       type="fishing zone polygon",
       species.code=2550,
+      species.group="lobster",
       region="Quebec",
       name="LFA18",
       st_sfc(st_multipolygon(list(list(cbind(zph.18$x,zph.18$y)))), crs=4326)
@@ -109,6 +185,7 @@ poly.19A <- st_sf(
    data.frame(
       type="fishing zone polygon",
       species.code=2550,
+      species.group="lobster",
       region="Quebec",
       name="LFA19A",
       st_sfc(st_multipolygon(list(list(cbind(zph.19A$x,zph.19A$y)))), crs=4326)
@@ -123,6 +200,7 @@ poly.19B <- st_sf(
    data.frame(
       type="fishing zone polygon",
       species.code=2550,
+      species.group="lobster",
       region="Quebec",
       name="LFA19B",
       st_sfc(st_multipolygon(list(list(cbind(zph.19B$x,zph.19B$y)))), crs=4326)
@@ -137,6 +215,7 @@ poly.19C <- st_sf(
    data.frame(
       type="fishing zone polygon",
       species.code=2550,
+      species.group="lobster",
       region="Quebec",
       name="LFA19C",
       st_sfc(st_multipolygon(list(list(cbind(zph.19C$x,zph.19C$y)))), crs=4326)
@@ -151,6 +230,7 @@ poly.20A <- st_sf(
    data.frame(
       type="fishing zone polygon",
       species.code=2550,
+      species.group="lobster",
       region="Quebec",
       name="LFA20A",
       st_sfc(st_multipolygon(list(list(cbind(zph.20A$x,zph.20A$y)))), crs=4326)
@@ -165,6 +245,7 @@ poly.20B <- st_sf(
    data.frame(
       type="fishing zone polygon",
       species.code=2550,
+      species.group="lobster",
       region="Quebec",
       name="LFA20B",
       st_sfc(st_multipolygon(list(list(cbind(zph.20B$x,zph.20B$y)))), crs=4326)
@@ -172,13 +253,14 @@ poly.20B <- st_sf(
 )
 
 zph.21A <- data.frame(
-   x=-dms2deg(c(655410,655410,655000,652910,652910,655410)),
-   y=dms2deg(c(481236,480147,480130,475142,480200,481236))
+   x=-dms2deg(c(655410,655410,655000,652910,652910,652910,655410)),
+   y=dms2deg(c(481236,480147,480130,475142,480200,480413,481236))
 )
 poly.21A <- st_sf(
    data.frame(
       type="fishing zone polygon",
       species.code=2550,
+      species.group="lobster",
       region="Quebec",
       name="LFA21A",
       st_sfc(st_multipolygon(list(list(cbind(zph.21A$x,zph.21A$y)))), crs=4326)
@@ -193,6 +275,7 @@ poly.21B <- st_sf(
    data.frame(
       type="fishing zone polygon",
       species.code=2550,
+      species.group="lobster",
       region="Quebec",
       name="LFA21B",
       st_sfc(st_multipolygon(list(list(cbind(zph.21B$x,zph.21B$y)))), crs=4326)
@@ -207,12 +290,12 @@ poly.22 <- st_sf(
    data.frame(
       type="fishing zone polygon",
       species.code=2550,
+      species.group="lobster",
       region="Quebec",
       name="LFA22",
       st_sfc(st_multipolygon(list(list(cbind(zph.22$x,zph.22$y)))), crs=4326)
    )
 )
-
 
 quebec.lfas.1 <- rbind(poly.15, poly.16, poly.17, poly.17A, poly.17B, poly.18, poly.19A, poly.19B, poly.19C, poly.20A, poly.21A, poly.21B, poly.22)
 
@@ -255,9 +338,16 @@ lfas.1 <- rbind(quebec.lfas.1)
 write_sf(lfas.1, file.path(here(), "inst/extdata/shapefiles/fishing.zone.vertices.shp")) ## silently overwrites shapefile
 #write_sf(lfas.2, file.path(here(), "inst/extdata/shapefiles/fishing.zone.polygons.shp")) ## silently overwrites shapefile
 
-## test map for Quebec LFAs
 
+## test map for Quebec LFAs
 plot(lfas.1)
 
+
+
 #################
-## Newfoundland
+## Newfoundland polygons with coastlines generated by Michael Elliot
+nfld.shp <- read_sf("inst/extdata/shapefiles/NFLD_Lobster_v2.shp")
+plot(nfld.shp)
+
+## add them to fishing.zone.polygons
+
