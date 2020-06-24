@@ -1,5 +1,5 @@
 context("Function tests")
-library(gulf)
+library(gulf.spatial)
 
 test_that("function deg2km works", {
   expect_equal(gulf.spatial::deg2km(-63.123, 47.56)$x, 490.747, tolerance=1e-3)

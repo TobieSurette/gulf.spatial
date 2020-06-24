@@ -3,12 +3,11 @@
 library(gulf.spatial)
 library(here)
 library(sf)
-
 library(tidyverse)
 
 
 #################
-## Gulf, start with what is in the gulf package
+## Gulf, start with what is already in the gulf package
 
 load(file.path(here(), "../gulf/data/fishing.zone.polygons.rda"))
 
@@ -16,42 +15,58 @@ p <- fishing.zone.polygons
 #p <- gulf::subset.list(p, species = 2550, region = "gulf")
 
 ## first fix the fishing zone polygons to make sure that they all have the same format
-list(
-   p[[1]],
-   p[[2]],
-   p[[3]],
-   p[[4]],
-   p[[5]],
-   p[[6]],
-   p[[7]],
-   p[[8]],
-   p[[9]],
-   p[[10]],
-   p[[11]],
-   p[[12]]
+## snow crab polygons
+crab.p <- list(
+   p[[1]],p[[2]],p[[3]],p[[4]] ## ,p[[5]], buffer zone excluded
 )
 
+## lobster polygons
+lobster.p <- list(
+   p[[6]],p[[7]],p[[8]],p[[9]],p[[10]],p[[11]],p[[12]],p[[13]]
+)
+lobster.p[[1]]$type="fishing.zone"
+lobster.p[[2]]$type="fishing.zone"
+lobster.p[[3]]$type="fishing.zone"
+lobster.p[[4]]$type="fishing.zone"
+lobster.p[[5]]$type="fishing.zone"
+lobster.p[[6]]$type="fishing.zone"
+lobster.p[[7]]$type="fishing.zone"
+lobster.p[[8]]$type="fishing.zone"
 
-fz.gulf <-
-do.call(rbind,
-   lapply(p, function(i){
-   data.frame(
-      type="fishing zone polygon",
-      species.code=i$species,
-      region=i$region,
-      label=i$label
-         )
-   }
+## the first 4 lists must be formatted so that the columns x, y and hole are not within a list
+
+lobster.p2 <-
+   list(
+      lobster.p[[1]], lobster.p[[2]], lobster.p[[3]], lobster.p[[4]],
+      list(list(x=lobster.p[[5]]$x, y=lobster.p[[5]]$y, lobster.p[[5]]$hole), type=lobster.p[[5]]$type, species=lobster.p[[5]]$species, region=lobster.p[[5]]$region, label=lobster.p[[5]]$label, area=lobster.p[[5]]$area),
+      list(list(x=lobster.p[[6]]$x, y=lobster.p[[6]]$y, lobster.p[[6]]$hole), type=lobster.p[[6]]$type, species=lobster.p[[6]]$species, region=lobster.p[[6]]$region, label=lobster.p[[6]]$label, area=lobster.p[[6]]$area),
+      list(list(x=lobster.p[[7]]$x, y=lobster.p[[7]]$y, lobster.p[[7]]$hole), type=lobster.p[[7]]$type, species=lobster.p[[7]]$species, region=lobster.p[[7]]$region, label=lobster.p[[7]]$label, area=lobster.p[[7]]$area),
+      list(list(x=lobster.p[[8]]$x, y=lobster.p[[8]]$y, lobster.p[[8]]$hole), type=lobster.p[[8]]$type, species=lobster.p[[8]]$species, region=lobster.p[[8]]$region, label=lobster.p[[8]]$label, area=lobster.p[[8]]$area)
+)
+
+# herring polygons
+herring.p <- list(
+   p[[14]],p[[15]],p[[16]],p[[17]],p[[18]],p[[19]],p[[20]]
+)
+herring.p2 <-
+   list(
+      list(list(x=herring.p[[1]]$x, y=herring.p[[1]]$y, herring.p[[1]]$hole), type="fishing.zone", species=herring.p[[1]]$species, region=herring.p[[1]]$region, label=herring.p[[1]]$label, area=herring.p[[1]]$area),
+      list(list(x=herring.p[[2]]$x, y=herring.p[[2]]$y, herring.p[[2]]$hole), type="fishing.zone", species=herring.p[[2]]$species, region=herring.p[[2]]$region, label=herring.p[[2]]$label, area=herring.p[[2]]$area),
+      list(list(x=herring.p[[3]]$x, y=herring.p[[3]]$y, herring.p[[3]]$hole), type="fishing.zone", species=herring.p[[3]]$species, region=herring.p[[3]]$region, label=herring.p[[3]]$label, area=herring.p[[3]]$area),
+      list(list(x=herring.p[[4]]$x, y=herring.p[[4]]$y, herring.p[[4]]$hole), type="fishing.zone", species=herring.p[[4]]$species, region=herring.p[[4]]$region, label=herring.p[[4]]$label, area=herring.p[[4]]$area),
+      list(list(x=herring.p[[5]]$x, y=herring.p[[5]]$y, herring.p[[5]]$hole), type="fishing.zone", species=herring.p[[5]]$species, region=herring.p[[5]]$region, label=herring.p[[5]]$label, area=herring.p[[5]]$area),
+      list(list(x=herring.p[[6]]$x, y=herring.p[[6]]$y, herring.p[[6]]$hole), type="fishing.zone", species=herring.p[[6]]$species, region=herring.p[[6]]$region, label=herring.p[[6]]$label, area=herring.p[[6]]$area),
+      list(list(x=herring.p[[7]]$x, y=herring.p[[7]]$y, herring.p[[7]]$hole), type="fishing.zone", species=herring.p[[7]]$species, region=herring.p[[7]]$region, label=herring.p[[7]]$label, area=herring.p[[7]]$area)
    )
-)
 
-fz.gulf$species.group <- ifelse(fz.gulf$species.code==2550,"lobster",ifelse(fz.gulf$species.code==2526,"crab",ifelse(fz.gulf$species.code==60,"herring","other")))
-fz.gulf$name <- paste0(ifelse(fz.gulf$species.code==2550,"LFA ",ifelse(fz.gulf$species.code==2526,"CFA ",ifelse(fz.gulf$species.code==60,"HFA ","FA "))), fz.gulf$label)
+gulf.p <- c(crab.p, lobster.p2, herring.p2)
 
-## create multipolygons
-fz.gulf.sf <-
+
+
+## create multipolygons for snow crab, lobster and herring
+gulf.poly <-
    do.call(rbind,
-           lapply(p, function(i){
+           lapply(gulf.p, function(i){
               np <- length(i)-5 ## number of polygons defined for this fishing zone
               if(np==1){## we have only an exterior ring
                  my.poly <- st_sfc(st_multipolygon(list(list(cbind(i[[1]]$x,i[[1]]$y)))), crs=4326)
@@ -63,20 +78,24 @@ fz.gulf.sf <-
                  }
                  my.poly <- st_sfc(st_multipolygon(ll), crs=4326)
               }
+              st_sf(
+                 data.frame(
+                    type="fishing zone polygon",
+                    species.code=i$species,
+                    region=i$region,
+                    label=i$label,
+                    my.poly
+                 )
+              )
            } ## end function
            ) ## end lapply
    )## end do.call
 
 
+fz.gulf.sf <- gulf.poly
 
-## now add geometries
-gulf.poly <- st_sf(
-   cbind(
-      fz.gulf,
-      fz.gulf.sf
-      )
-   )
-
+fz.gulf.sf$species.group <- ifelse(fz.gulf.sf$species.code==2550,"lobster",ifelse(fz.gulf.sf$species.code==2526,"crab",ifelse(fz.gulf.sf$species.code==60,"herring","other")))
+fz.gulf.sf$name <- paste0(ifelse(fz.gulf.sf$species.code==2550,"LFA ",ifelse(fz.gulf.sf$species.code==2526,"CFA ",ifelse(fz.gulf.sf$species.code==60,"HFA ","FA "))), fz.gulf.sf$label)
 
 
 #################
