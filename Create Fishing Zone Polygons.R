@@ -498,14 +498,23 @@ boundaries_simple <- boundaries %>%
 
 boundaries_simple <- st_crop(boundaries_simple, st_bbox(fz.all.for.rda))
 
-
-g <- ggplot(data=fz.all.for.rda[fz.all.for.rda$species.code==2550,]) +
-   geom_sf(data=boundaries_simple) +
-   geom_sf(color="red")
-
-
+lobster <- fz.all.for.rda[fz.all.for.rda$species.code==2550,]
+g <- ggplot(data=boundaries_simple) +
+   geom_sf(fill=grey(0.8), color=grey(0.3)) +
+   geom_sf(data=lobster, color="red", fill="mistyrose")
 ggsave(file="Gulf-of-St-Lawrence-lobster-areas.pdf", g, width = 30, height = 20, units = "cm")
 
+crab <- fz.all.for.rda[fz.all.for.rda$species.code==2526,]
+g <- ggplot(data=boundaries_simple) +
+   geom_sf(fill=grey(0.8), color=grey(0.3)) +
+   geom_sf(data=crab, color="red", fill="mistyrose")
+ggsave(file="Gulf-of-St-Lawrence-snow-crab-areas.pdf", g, width = 30, height = 20, units = "cm")
+
+herring <- fz.all.for.rda[fz.all.for.rda$species.code==60,]
+g <- ggplot(data=boundaries_simple) +
+   geom_sf(fill=grey(0.8), color=grey(0.3)) +
+   geom_sf(data=herring, color="red", fill="mistyrose")
+ggsave(file="Gulf-of-St-Lawrence-herring-areas.pdf", g, width = 30, height = 20, units = "cm")
 
 ## we can now write the Rda file that will be included in gulf.spatial
 save(fz.all.for.rda, file="./data/fishing.zone.polygons.rda")
