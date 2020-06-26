@@ -449,7 +449,7 @@ boundaries.temp <- st_crop(boundaries_simple, bb)
 poly.22.coast <- st_difference(poly.22, st_union(boundaries.temp$geometry))
 #x11(); plot(boundaries.temp$geometry, xlim=c(bb[1],bb[3]), ylim=c(bb[2],bb[4])); plot(st_geometry(poly.22), add=TRUE); plot(st_geometry(poly.22.coast), col="red", add=TRUE)
 
-quebec.lfas.2 <- rbind(poly.15.coast, poly.16.coast, poly.17.coast, poly.17A.coast, poly.17B.coast, poly.18.coast, poly.19A.coast, poly.19B.coast, poly.19C.coast, poly.20A.coast, poly.20B.coast, poly.21A.coast, poly.21B.coast, poly.22.coast)
+fz.quebec.sf <- rbind(poly.15.coast, poly.16.coast, poly.17.coast, poly.17A.coast, poly.17B.coast, poly.18.coast, poly.19A.coast, poly.19B.coast, poly.19C.coast, poly.20A.coast, poly.20B.coast, poly.21A.coast, poly.21B.coast, poly.22.coast)
 
 #library(ggplot2)
 #g <- ggplot(data=quebec.lfas.2) +
@@ -462,14 +462,48 @@ quebec.lfas.2 <- rbind(poly.15.coast, poly.16.coast, poly.17.coast, poly.17A.coa
 nfld.shp <- read_sf("inst/extdata/shapefiles/NFLD_Lobster_v2.shp")
 str(nfld.shp,3)
 
+st_crs(nfld.shp)
+
+fz.nfld.sf <- st_sf(
+   data.frame(
+      type="fishing zone",
+      species.code=2550,
+      region="newfoundland",
+      label=gsub("LFA ", "", nfld.shp$Zone),
+      st_transform(nfld.shp$geometry,4326)
+   )
+)
+
 
 ## single data frame with all the fishing zone polygons
+#st_crs(fz.nfld.sf)
+#st_crs(fz.gulf.sf)
+#st_crs(fz.quebec.sf)
+fz.all.for.rda <- rbind(fz.gulf.sf, fz.quebec.sf, fz.nfld.sf)
 
-fz.all.for.rda <- rbind(fz.gulf.sf, quebec.lfas.2)
+
+boundaries_simple <- boundaries %>%
+   filter(
+      POL_DIV %in% c(
+         "Quebec",
+         "New Brunswick",
+         "Nova Scotia",
+         "Prince Edward Island",
+         "Newfoundland and Labrador"
+      ),
+      SELECTION == "sparse"
+   ) %>%
+   st_transform(4326)
 
 
-g <- ggplot(data=fz.all.for.rda) +
-   geom_sf()
+boundaries_simple <- st_crop(boundaries_simple, st_bbox(fz.all.for.rda))
+
+
+g <- ggplot(data=fz.all.for.rda[fz.all.for.rda$species.code==2550,]) +
+   geom_sf(color="red") +
+   geom_sf(data=boundaries_simple)
+
+ggsave(file="Gulf-of-St-Lawrence-lobster-areas.pdf", g)
 
 
 ## we can now write the Rda file that will be included in gulf.spatial
