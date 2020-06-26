@@ -500,10 +500,11 @@ boundaries_simple <- st_crop(boundaries_simple, st_bbox(fz.all.for.rda))
 
 
 g <- ggplot(data=fz.all.for.rda[fz.all.for.rda$species.code==2550,]) +
-   geom_sf(color="red") +
-   geom_sf(data=boundaries_simple)
+   geom_sf(data=boundaries_simple) +
+   geom_sf(color="red")
 
-ggsave(file="Gulf-of-St-Lawrence-lobster-areas.pdf", g)
+
+ggsave(file="Gulf-of-St-Lawrence-lobster-areas.pdf", g, width = 30, height = 20, units = "cm")
 
 
 ## we can now write the Rda file that will be included in gulf.spatial
@@ -519,7 +520,7 @@ lfas.1 <- rbind(quebec.lfas.1)
 
 
 write_sf(lfas.1, file.path(here(), "inst/extdata/shapefiles/fishing.zone.vertices.shp")) ## silently overwrites shapefile
-#write_sf(lfas.2, file.path(here(), "inst/extdata/shapefiles/fishing.zone.polygons.shp")) ## silently overwrites shapefile
+write_sf(fz.all.for.rda, file.path(here(), "inst/extdata/shapefiles/fishing.zone.polygons.shp")) ## silently overwrites shapefile
 
 ## get shapefiles from the shared GIS network drive
 #fgdb <- "D:/Base Maps/FishingAreas/Groundfish"
