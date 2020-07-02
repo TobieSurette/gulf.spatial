@@ -5,6 +5,34 @@ library(here)
 library(sf)
 library(tidyverse)
 
+## coastline
+## coastline file from the Atlas of Canada
+# download.file(
+#    paste(
+#       "http://ftp.geogratis.gc.ca",
+#       "pub/nrcan_rncan/vector/framework_cadre/Atlas_of_Canada_1M",
+#       "boundary/AC_1M_BoundaryPolygons.shp.zip",
+#       sep="/"
+#    ),
+#    "AC_1M_BoundaryPolygons.shp.zip"
+# )
+#unzip("AC_1M_BoundaryPolygons.shp.zip", exdir="AC")
+
+boundaries <- read_sf("AC/AC_1M_BoundaryPolygons_shp/AC_1M_BoundaryPolygons.shp")
+
+boundaries_simple <- boundaries %>%
+   filter(
+      POL_DIV %in% c(
+         "Quebec", "Newfoundland and Labrador" #,
+         #"New York", "New Hampshire", "Vermont",
+         #"Maine", "New Brunswick", "Nova Scotia",
+         #"Prince Edward Island"
+      ),
+      SELECTION == "sparse"
+   ) %>%
+   st_transform(4326)
+
+
 
 #################
 ## Gulf, start with what is already in the gulf package
@@ -80,7 +108,7 @@ gulf.poly <-
               }
               st_sf(
                  data.frame(
-                    type="fishing zone",
+                    type="fishing zone polygon",
                     species.code=i$species,
                     region=i$region,
                     label=i$label,
@@ -105,8 +133,49 @@ fz.gulf.sf <- gulf.poly
 ## lobster
 ## https://inter-l01-uat.dfo-mpo.gc.ca/infoceans/sites/infoceans/files/Homard.pdf
 ## https://inter-l01-uat.dfo-mpo.gc.ca/infoceans/en/commercial-fisheries#carte
-
+##
+## these maps are seemingly derived from the Atlantic Fisheries Regulations https://laws-lois.justice.gc.ca/eng/regulations/SOR-86-21/index.html
+## in particular for lobster, Schedule XIII: https://laws-lois.justice.gc.ca/eng/regulations/SOR-86-21/page-25.html#h-892770
 ## polygons with points on land, to be used with a land overlay for mapping, and below for building polygons with coastline
+
+## Newfoundland and Labrador, zones 3,4,5,6,7,8,9,10,11,12,13A,13B,14A,14B,14C
+nfld.shp <- read_sf("inst/extdata/shapefiles/LobsterFishingAreas.shp")
+## this shapefile was shared with me from Newfoundland, the geometry appears as a linestring
+## cast to multipolygon
+nfld.sf <- st_transform(st_cast(st_cast(nfld.shp, "POLYGON"), "MULTIPOLYGON"), 4326)
+#plot(nfld.sf)
+
+
+
+vertices.to.multipolygon <- function(multipoly.in){
+bb <- st_bbox(st_buffer(multipoly.in,0.1))
+boundaries.temp <- st_crop(boundaries_simple, bb)
+poly.coast <- st_difference(multipoly.in, st_union(boundaries.temp$geometry))
+poly.coast$type <- "fishing zone polygon"
+return(poly.coast)
+}
+
+temp.list <- list()
+for(i in 1:nrow(nfld.sf)){
+   print(i)
+   temp.list[[i]] <- vertices.to.multipolygon(nfld.sf[i,])
+}
+
+nfld.coast <- do.call(rbind, temp.list)
+nfld.coast$species.code <- 2550
+nfld.coast$region <- "newfoundland"
+nfld.coast$label = nfld.coast$id
+
+fz.nfld.sf <- nfld.coast
+
+# g <- ggplot(data=boundaries_simple) +
+#    geom_sf(fill=grey(0.8), color=grey(0.3)) +
+#    geom_sf(data=nfld.coast, color="red", fill="mistyrose")
+#
+
+
+## Quebec, zones 15, 16, 17, 18, 19, 20, 21, 22
+
 zph.15 <- data.frame(
    x=-dms2deg(c(570645, 592330, 595440, 602000, 580000, 571000, 570645)),
    y=dms2deg(c(512500, 495100,501655, 505000, 515000, 515000, 512500))
@@ -123,8 +192,6 @@ poly.15 <- st_sf(
 
    )
 )
-
-
 
 zph.16 <- data.frame(
    x=-dms2deg(c(595440, 592330, 600000, 611600, 611600,611600, 600000, 595440, 595440)),
@@ -265,7 +332,7 @@ poly.20A <- st_sf(
       type="fishing zone vertices",
       species.code=2550,
       region="quebec",
-      label='"20A',
+      label="20A",
       st_sfc(st_multipolygon(list(list(cbind(zph.20A$x,zph.20A$y)))), crs=4326)
       # species.group="lobster",
       # name="LFA 20A"
@@ -337,119 +404,101 @@ poly.22 <- st_sf(
    )
 )
 
-quebec.lfas.1 <- rbind(poly.15, poly.16, poly.17, poly.17A, poly.17B, poly.18, poly.19A, poly.19B, poly.19C, poly.20A, poly.20B, poly.21A, poly.21B, poly.22)
+quebec.lfas <- rbind(poly.15, poly.16, poly.17, poly.17A, poly.17B, poly.18, poly.19A, poly.19B, poly.19C, poly.20A, poly.20B, poly.21A, poly.21B, poly.22)
 #library(ggplot2)
-#g <- ggplot(data=quebec.lfas.1) +
+#g <- ggplot(data=quebec.lfas) +
 #   geom_sf()
 #g
 
+## Gulf, zones 23, 24, 25, 26A, 26B
+zph.23 <- data.frame(
+   x=-dms2deg(c()),
+   y=dms2deg(c())
+)
+
+
 ## now create another set of polygons that are bounded by the coastline
-## coastline file from the Atlas of Canada
-# download.file(
-#    paste(
-#       "http://ftp.geogratis.gc.ca",
-#       "pub/nrcan_rncan/vector/framework_cadre/Atlas_of_Canada_1M",
-#       "boundary/AC_1M_BoundaryPolygons.shp.zip",
-#       sep="/"
-#    ),
-#    "AC_1M_BoundaryPolygons.shp.zip"
-# )
-#unzip("AC_1M_BoundaryPolygons.shp.zip", exdir="AC")
-
-boundaries <- read_sf("AC/AC_1M_BoundaryPolygons_shp/AC_1M_BoundaryPolygons.shp")
-
-boundaries_simple <- boundaries %>%
-   filter(
-      POL_DIV %in% c(
-         "Quebec" #,
-         #"New York", "New Hampshire", "Vermont",
-         #"Maine", "New Brunswick", "Nova Scotia",
-         #"Prince Edward Island"
-      ),
-      SELECTION == "sparse"
-   ) %>%
-   st_transform(4326)
-
 
 ## for each fishing zone, we will extract the coastline within its bounding box and apply a buffer to obtain all the require coastlines to perform a diference operation
 bb <- st_bbox(st_buffer(poly.15,0.1))
 boundaries.temp <- st_crop(boundaries_simple, bb)
 poly.15.coast <- st_difference(poly.15, st_union(boundaries.temp$geometry))
-#x11(); plot(boundaries.temp$geometry, xlim=c(bb[1],bb[3]), ylim=c(bb[2],bb[4])); plot(st_geometry(poly.15), add=TRUE); plot(st_geometry(poly.15.coast), col="red", add=TRUE)
+poly.15.coast$type <- "fishing zone polygon"
 
 bb <- st_bbox(st_buffer(poly.16,0.1))
 boundaries.temp <- st_crop(boundaries_simple, bb)
 poly.16.coast <- st_difference(poly.16, st_union(boundaries.temp$geometry))
-#x11(); plot(boundaries.temp$geometry, xlim=c(bb[1],bb[3]), ylim=c(bb[2],bb[4])); plot(st_geometry(poly.16), add=TRUE); plot(st_geometry(poly.16.coast), col="red", add=TRUE)
+poly.16.coast$type <- "fishing zone polygon"
 
 bb <- st_bbox(st_buffer(poly.17,0.1))
 boundaries.temp <- st_crop(boundaries_simple, bb)
 poly.17.coast <- st_difference(poly.17, st_union(boundaries.temp$geometry))
-#x11(); plot(boundaries.temp$geometry, xlim=c(bb[1],bb[3]), ylim=c(bb[2],bb[4])); plot(st_geometry(poly.17), add=TRUE); plot(st_geometry(poly.17.coast), col="red", add=TRUE)
+poly.17.coast$type <- "fishing zone polygon"
+
 
 bb <- st_bbox(st_buffer(poly.17A,0.1))
 boundaries.temp <- st_crop(boundaries_simple, bb)
 poly.17A.coast <- st_difference(poly.17A, st_union(boundaries.temp$geometry))
-#x11(); plot(boundaries.temp$geometry, xlim=c(bb[1],bb[3]), ylim=c(bb[2],bb[4])); plot(st_geometry(poly.17A), add=TRUE); plot(st_geometry(poly.17A.coast), col="red", add=TRUE)
+poly.17A.coast$type <- "fishing zone polygon"
+
 
 bb <- st_bbox(st_buffer(poly.17B,0.1))
 boundaries.temp <- st_crop(boundaries_simple, bb)
 poly.17B.coast <- st_difference(poly.17B, st_union(boundaries.temp$geometry))
-#x11(); plot(boundaries.temp$geometry, xlim=c(bb[1],bb[3]), ylim=c(bb[2],bb[4])); plot(st_geometry(poly.17B), add=TRUE); plot(st_geometry(poly.17B.coast), col="red", add=TRUE)
+poly.17B.coast$type <- "fishing zone polygon"
+
 
 bb <- st_bbox(st_buffer(poly.18,0.1))
 boundaries.temp <- st_crop(boundaries_simple, bb)
 poly.18.coast <- st_difference(poly.18, st_union(boundaries.temp$geometry))
-#x11(); plot(boundaries.temp$geometry, xlim=c(bb[1],bb[3]), ylim=c(bb[2],bb[4])); plot(st_geometry(poly.18), add=TRUE); plot(st_geometry(poly.18.coast), col="red", add=TRUE)
+poly.18.coast$type <- "fishing zone polygon"
+
 
 bb <- st_bbox(st_buffer(poly.19A,0.1))
 boundaries.temp <- st_crop(boundaries_simple, bb)
 poly.19A.coast <- st_difference(poly.19A, st_union(boundaries.temp$geometry))
-#x11(); plot(boundaries.temp$geometry, xlim=c(bb[1],bb[3]), ylim=c(bb[2],bb[4])); plot(st_geometry(poly.19A), add=TRUE); plot(st_geometry(poly.19A.coast), col="red", add=TRUE)
-#plot(zph.19A$x, zph.19A$y, pch=19)
-#text(zph.19A$x, zph.19A$y, paste0(deg2dms(zph.19A$x)," ", deg2dms(zph.19A$y)))
+poly.19A.coast$type <- "fishing zone polygon"
 
 
 bb <- st_bbox(st_buffer(poly.19B,0.1))
 boundaries.temp <- st_crop(boundaries_simple, bb)
 poly.19B.coast <- st_difference(poly.19B, st_union(boundaries.temp$geometry))
-#x11(); plot(boundaries.temp$geometry, xlim=c(bb[1],bb[3]), ylim=c(bb[2],bb[4])); plot(st_geometry(poly.19B), add=TRUE); plot(st_geometry(poly.19B.coast), col="red", add=TRUE)
+poly.19B.coast$type <- "fishing zone polygon"
+
 
 bb <- st_bbox(st_buffer(poly.19C,0.1))
 boundaries.temp <- st_crop(boundaries_simple, bb)
 poly.19C.coast <- st_difference(poly.19C, st_union(boundaries.temp$geometry))
-#x11(); plot(boundaries.temp$geometry, xlim=c(bb[1],bb[3]), ylim=c(bb[2],bb[4])); plot(st_geometry(poly.19C), add=TRUE); plot(st_geometry(poly.19C.coast), col="red", add=TRUE)
+poly.19C.coast$type <- "fishing zone polygon"
 
 bb <- st_bbox(st_buffer(poly.20A,0.1))
 boundaries.temp <- st_crop(boundaries_simple, bb)
 poly.20A.coast <- st_difference(poly.20A, st_union(boundaries.temp$geometry))
-#x11(); plot(boundaries.temp$geometry, xlim=c(bb[1],bb[3]), ylim=c(bb[2],bb[4])); plot(st_geometry(poly.20A), add=TRUE); plot(st_geometry(poly.20A.coast), col="red", add=TRUE)
-#dev.off()
+poly.20A.coast$type <- "fishing zone polygon"
 
 bb <- st_bbox(st_buffer(poly.20B,0.1))
 boundaries.temp <- st_crop(boundaries_simple, bb)
 poly.20B.coast <- st_difference(poly.20B, st_union(boundaries.temp$geometry))
-#x11(); plot(boundaries.temp$geometry, xlim=c(bb[1],bb[3]), ylim=c(bb[2],bb[4])); plot(st_geometry(poly.20B), add=TRUE); plot(st_geometry(poly.20B.coast), col="red", add=TRUE)
-#dev.off()
+poly.20B.coast$type <- "fishing zone polygon"
 
 bb <- st_bbox(st_buffer(poly.21A,0.1))
 boundaries.temp <- st_crop(boundaries_simple, bb)
 poly.21A.coast <- st_difference(poly.21A, st_union(boundaries.temp$geometry))
-#x11(); plot(boundaries.temp$geometry, xlim=c(bb[1],bb[3]), ylim=c(bb[2],bb[4])); plot(st_geometry(poly.21A), add=TRUE); plot(st_geometry(poly.21A.coast), col="red", add=TRUE)
-#dev.off()
+poly.21A.coast$type <- "fishing zone polygon"
 
 bb <- st_bbox(st_buffer(poly.21B,0.1))
 boundaries.temp <- st_crop(boundaries_simple, bb)
 poly.21B.coast <- st_difference(poly.21B, st_union(boundaries.temp$geometry))
-#x11(); plot(boundaries.temp$geometry, xlim=c(bb[1],bb[3]), ylim=c(bb[2],bb[4])); plot(st_geometry(poly.21B), add=TRUE); plot(st_geometry(poly.21B.coast), col="red", add=TRUE)
-#dev.off()
+poly.21B.coast$type <- "fishing zone polygon"
 
 bb <- st_bbox(st_buffer(poly.22,0.1))
 boundaries.temp <- st_crop(boundaries_simple, bb)
 poly.22.coast <- st_difference(poly.22, st_union(boundaries.temp$geometry))
-#x11(); plot(boundaries.temp$geometry, xlim=c(bb[1],bb[3]), ylim=c(bb[2],bb[4])); plot(st_geometry(poly.22), add=TRUE); plot(st_geometry(poly.22.coast), col="red", add=TRUE)
+poly.22.coast$type <- "fishing zone polygon"
 
-fz.quebec.sf <- rbind(poly.15.coast, poly.16.coast, poly.17.coast, poly.17A.coast, poly.17B.coast, poly.18.coast, poly.19A.coast, poly.19B.coast, poly.19C.coast, poly.20A.coast, poly.20B.coast, poly.21A.coast, poly.21B.coast, poly.22.coast)
+fz.quebec.sf <- rbind(quebec.lfas, poly.15.coast, poly.16.coast, poly.17.coast, poly.17A.coast, poly.17B.coast, poly.18.coast, poly.19A.coast, poly.19B.coast, poly.19C.coast, poly.20A.coast, poly.20B.coast, poly.21A.coast, poly.21B.coast, poly.22.coast)
+## object fz.quebec.sf now contains all LFAs for Quebec, both as fishing zone vertices and fishing zone polygons
+
 
 #library(ggplot2)
 #g <- ggplot(data=quebec.lfas.2) +
@@ -474,12 +523,39 @@ fz.nfld.sf <- st_sf(
    )
 )
 
+##using the same method as above, create Nfld fishing zones with coastlines
+
+
+
+## shared GIS folder mess
+## of all the folders and subfolder available on the shared drive, none of which has any metadata, one called "FishingZones.gdb" seems the most complete, so start from there
+fgdb <- "D:/Base Maps/FishingAreas/FishingZones.gdb"
+
+## lobster zones
+lobster.gdb <- st_read(fgdb, "Zones_Homard") ## DOES NOT INCLUDE Newfoundland
+
+## herring zones
+herring.gdb <- st_read(fgdb, "Zones_Hareng")
+
+## mackerel zones
+mackerel.gdb <- st_read(fgdb, "Zones_Maquereau")
+
+## snow crab zones
+snowcrab.gdb <- st_read(fgdb, "Zones_Crabe_des_neiges")
+
+## groundfish zones
+groundfish.gdb <- st_read(fgdb, "Zones_Poisson_fond")
+
+save(lobster.gdb, herring.gdb, mackerel.gdb, snowcrab.gdb, groundfish.gdb, file="from-gdb.Rda")
+#plot(lobster.gdb$Shape)
+
 
 ## single data frame with all the fishing zone polygons
 #st_crs(fz.nfld.sf)
 #st_crs(fz.gulf.sf)
 #st_crs(fz.quebec.sf)
-fz.all.for.rda <- rbind(fz.gulf.sf, fz.quebec.sf, fz.nfld.sf)
+vars <- c("type","species.code","region","label","geometry")
+fz.all.for.rda <- rbind(fz.gulf.sf, fz.quebec.sf, fz.nfld.sf[,vars])
 
 
 boundaries_simple <- boundaries %>%
@@ -498,11 +574,28 @@ boundaries_simple <- boundaries %>%
 
 boundaries_simple <- st_crop(boundaries_simple, st_bbox(fz.all.for.rda))
 
-lobster <- fz.all.for.rda[fz.all.for.rda$species.code==2550,]
+lobster <- fz.all.for.rda[fz.all.for.rda$species.code==2550 & fz.all.for.rda$type=="fishing zone polygon",]
 g <- ggplot(data=boundaries_simple) +
    geom_sf(fill=grey(0.8), color=grey(0.3)) +
    geom_sf(data=lobster, color="red", fill="mistyrose")
 ggsave(file="Gulf-of-St-Lawrence-lobster-areas.pdf", g, width = 30, height = 20, units = "cm")
+
+
+g <- ggplot(data=boundaries_simple) +
+   geom_sf(fill=grey(0.8), color=grey(0.3)) +
+   geom_sf(data=lobster.gdb, color="red", fill="mistyrose")
+ggsave(file="Gulf-of-St-Lawrence-lobster-areas-gdb.pdf", g, width = 30, height = 20, units = "cm")
+
+
+## compare LFA 15 from my sf data frame and the one read from the geospatial database
+st_area(lobster[lobster$label=="15",]$geometry)
+st_area(lobster.gdb[lobster.gdb$Unité_gest=="15",])
+
+tiff("LFA15-comparions.tiff", compression="lzw", width=2000, height=2000,res=300)
+plot((lobster.gdb[lobster.gdb$Unité_gest=="15",]$Shape), border="red")
+plot((lobster[lobster$label=="15",]$geometry), add=TRUE)
+dev.off()
+
 
 crab <- fz.all.for.rda[fz.all.for.rda$species.code==2526,]
 g <- ggplot(data=boundaries_simple) +
@@ -510,11 +603,13 @@ g <- ggplot(data=boundaries_simple) +
    geom_sf(data=crab, color="red", fill="mistyrose")
 ggsave(file="Gulf-of-St-Lawrence-snow-crab-areas.pdf", g, width = 30, height = 20, units = "cm")
 
+
 herring <- fz.all.for.rda[fz.all.for.rda$species.code==60,]
 g <- ggplot(data=boundaries_simple) +
    geom_sf(fill=grey(0.8), color=grey(0.3)) +
    geom_sf(data=herring, color="red", fill="mistyrose")
 ggsave(file="Gulf-of-St-Lawrence-herring-areas.pdf", g, width = 30, height = 20, units = "cm")
+
 
 ## we can now write the Rda file that will be included in gulf.spatial
 save(fz.all.for.rda, file="./data/fishing.zone.polygons.rda")
