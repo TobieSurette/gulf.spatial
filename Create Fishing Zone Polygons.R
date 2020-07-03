@@ -28,11 +28,11 @@ boundaries_simple <- boundaries %>%
          #"Maine", "New Brunswick", "Nova Scotia",
          #"Prince Edward Island"
       ),
-      SELECTION == "sparse"
+      SELECTION == "sparse" #"dense"
    ) %>%
    st_transform(4326)
 
-
+## g <- ggplot(data=boundaries_simple) + geom_sf()
 
 #################
 ## Gulf, start with what is already in the gulf package
@@ -277,6 +277,7 @@ zph.19A <- data.frame(
    x=-dms2deg(c(645500, 644400, 650000, 651633, 655239, 662200, 674009, 690000, 693530, 694203, 703000, 704840, 704411, 702442, 682132, 645500)),
    y=dms2deg(c(491200, 494030, 495130, 494605, 493404, 492405, 485634, 482700, 480230, 480806, 475000, 470257, 465606, 465904, 480154, 491200))
 )
+
 poly.19A <- st_sf(
    data.frame(
       type="fishing zone vertices",
@@ -289,7 +290,8 @@ poly.19A <- st_sf(
    )
 )
 
-#x11();plot(poly.19A$geometry)
+#x11();plot(zph.19A$x, zph.19A$y, pch=19)
+#lines(zph.19A$x, zph.19A$y, pch=19)
 
 zph.19B <- data.frame(
    x=-dms2deg(c(645500, 644400, 640500, 642400, 643000, 645500, 645500)),
@@ -458,7 +460,8 @@ bb <- st_bbox(st_buffer(poly.19A,0.1))
 boundaries.temp <- st_crop(boundaries_simple, bb)
 poly.19A.coast <- st_difference(poly.19A, st_union(boundaries.temp$geometry))
 poly.19A.coast$type <- "fishing zone polygon"
-
+# x11(); plot(poly.19A.coast$geometry)
+# x11(); plot(boundaries.temp$geometry)
 
 bb <- st_bbox(st_buffer(poly.19B,0.1))
 boundaries.temp <- st_crop(boundaries_simple, bb)
@@ -501,8 +504,8 @@ fz.quebec.sf <- rbind(quebec.lfas, poly.15.coast, poly.16.coast, poly.17.coast, 
 
 
 #library(ggplot2)
-#g <- ggplot(data=quebec.lfas.2) +
-#   geom_sf() +
+#g <- ggplot(data=poly.19A.coast) +
+#   geom_sf()
 
 
 
@@ -575,9 +578,12 @@ boundaries_simple <- boundaries %>%
 boundaries_simple <- st_crop(boundaries_simple, st_bbox(fz.all.for.rda))
 
 lobster <- fz.all.for.rda[fz.all.for.rda$species.code==2550 & fz.all.for.rda$type=="fishing zone polygon",]
+lobster <- cbind(lobster, st_coordinates(st_centroid(lobster)))
+
 g <- ggplot(data=boundaries_simple) +
    geom_sf(fill=grey(0.8), color=grey(0.3)) +
-   geom_sf(data=lobster, color="red", fill="mistyrose")
+   geom_sf(data=lobster, color="red", fill="mistyrose") +
+   geom_label(data=lobster, aes(X, Y, label=label))
 ggsave(file="Gulf-of-St-Lawrence-lobster-areas.pdf", g, width = 30, height = 20, units = "cm")
 
 
@@ -622,9 +628,13 @@ save(fz.all.for.rda, file="./data/fishing.zone.polygons.rda")
 
 lfas.1 <- rbind(quebec.lfas.1)
 
+polygons <- fz.all.for.rda[fz.all.for.rda$type=="fishing zone polygon",]
+vertices <- fz.all.for.rda[fz.all.for.rda$type=="fishing zone vertices",]
 
-write_sf(lfas.1, file.path(here(), "inst/extdata/shapefiles/fishing.zone.vertices.shp")) ## silently overwrites shapefile
-write_sf(fz.all.for.rda, file.path(here(), "inst/extdata/shapefiles/fishing.zone.polygons.shp")) ## silently overwrites shapefile
+
+write_sf(vertices, file.path(here(), "inst/extdata/shapefiles/fishing.zone.vertices.shp")) ## silently overwrites shapefile
+write_sf(polygons, file.path(here(), "inst/extdata/shapefiles/fishing.zone.polygons.shp")) ## silently overwrites shapefile
+
 
 ## get shapefiles from the shared GIS network drive
 #fgdb <- "D:/Base Maps/FishingAreas/Groundfish"
