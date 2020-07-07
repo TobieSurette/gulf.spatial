@@ -7,6 +7,7 @@ library(tidyverse)
 
 ## coastline
 ## coastline file from the Atlas of Canada
+## https://open.canada.ca/data/en/dataset/fec926ca-25ad-5c92-a9a7-6009c21d17b3
 # download.file(
 #    paste(
 #       "http://ftp.geogratis.gc.ca",
@@ -120,23 +121,100 @@ gulf.poly <-
    )## end do.call
 
 
-fz.gulf.sf <- gulf.poly
+fz.gulf.sf <- gulf.poly ## this is the data frame that will be saved in the data folder of the package and that will also be writtenin shapefile and KML formats
 
-#fz.gulf.sf$species.group <- ifelse(fz.gulf.sf$species.code==2550,"lobster",ifelse(fz.gulf.sf$species.code==2526,"crab",ifelse(fz.gulf.sf$species.code==60,"herring","other")))
-#fz.gulf.sf$name <- paste0(ifelse(fz.gulf.sf$species.code==2550,"LFA ",ifelse(fz.gulf.sf$species.code==2526,"CFA ",ifelse(fz.gulf.sf$species.code==60,"HFA ","FA "))), fz.gulf.sf$label)
 
-##write_sf(fz.gulf.sf, file.path(here(), "inst/extdata/shapefiles/gulf-test.shp")) ## silently overwrites shapefile
-##head(fz.gulf.sf)
 
-#################
-## now do the same for Quebec, i.e. create a simple feature data frame with the same columns as the one created above for Gulf
-## lobster
+## this is a bit ass backwards, but I am redefining the vertices for all LFAs so as to be complete
 ## https://inter-l01-uat.dfo-mpo.gc.ca/infoceans/sites/infoceans/files/Homard.pdf
 ## https://inter-l01-uat.dfo-mpo.gc.ca/infoceans/en/commercial-fisheries#carte
+## I captured the points appearing in the Atlantic Fisheries Regulations in a text file, load that
+lobster.afr <- read.table(file="lobster-atlantic-fishery-regulations-points.txt", header=TRUE, sep=" ", colClasses=c("integer",rep("character", 6)))
+lobster.afr$longitude <- -dms2deg(as.numeric(paste0(lobster.afr$lon.d,lobster.afr$lon.m,lobster.afr$lon.s)))
+lobster.afr$latitude <- dms2deg(as.numeric(paste0(lobster.afr$lat.d,lobster.afr$lat.m,lobster.afr$lat.s)))
+
+## each LFA is a series of points from this list, and some points on land
+lfa.list <- list()
+lfa.list[[1]] <- list(type="fishing zone vertices", species.code=2550, region="quebec", label="15", points=c(1,45,44))
+lfa.list[[2]] <- list(type="fishing zone vertices", species.code=2550, region="quebec", label="16", points=c(44,45,2,42,43))
+lfa.list[[3]] <- list(type="fishing zone vertices", species.code=2550, region="quebec", label="17A", points=c(72,73,78,74,75))
+lfa.list[[4]] <- list(type="fishing zone vertices", species.code=2550, region="quebec", label="17B", points=c(75,74,31,3,2,42,68,66,64,41,62,40,77,73,72))
+lfa.list[[5]] <- list(type="fishing zone vertices", species.code=2550, region="quebec", label="18A", points=c(36,37,38,54,55))
+lfa.list[[6]] <- list(type="fishing zone vertices", species.code=2550, region="quebec", label="18B", points=c(55,54,39,56,57))
+lfa.list[[7]] <- list(type="fishing zone vertices", species.code=2550, region="quebec", label="18C", points=c(57,56,58,59))
+lfa.list[[8]] <- list(type="fishing zone vertices", species.code=2550, region="quebec", label="18D", points=c(59,58,60,61))
+lfa.list[[9]] <- list(type="fishing zone vertices", species.code=2550, region="quebec", label="18E", points=c(61,60,40,62,63))
+lfa.list[[10]] <- list(type="fishing zone vertices", species.code=2550, region="quebec", label="18F", points=c(63,62,41,64,65))
+lfa.list[[11]] <- list(type="fishing zone vertices", species.code=2550, region="quebec", label="18G", points=c(65,64,66,67))
+lfa.list[[12]] <- list(type="fishing zone vertices", species.code=2550, region="quebec", label="18H", points=c(67,66,68,69))
+lfa.list[[13]] <- list(type="fishing zone vertices", species.code=2550, region="quebec", label="18I", points=c(69,68,42,43))
+lfa.list[[14]] <- list(type="fishing zone vertices", species.code=2550, region="quebec", label="19A", points=c(34,35), points=c(36,37,38,54,39,56,58,60,40,77,76))
+lfa.list[[15]] <- list(type="fishing zone vertices", species.code=2550, region="quebec", label="19B", points=c(76,77,73,78,79))
+lfa.list[[16]] <- list(type="fishing zone vertices", species.code=2550, region="quebec", label="19C", points=c(79,78,74,31,32,33))
+lfa.list[[17]] <- list(type="fishing zone vertices", species.code=2550, region="quebec", label="20A", points=c(32,31,30,29,51))
+lfa.list[[18]] <- list(type="fishing zone vertices", species.code=2550, region="quebec", label="20B", points=c(51,29,28,26,27))
+lfa.list[[19]] <- list(type="fishing zone vertices", species.code=2550, region="quebec", label="21A", points=c(27,26,25,70,71))
+lfa.list[[20]] <- list(type="fishing zone vertices", species.code=2550, region="quebec", label="21B", points=c(21,22,24,70,71))
+lfa.list[[21]] <- list(type="fishing zone vertices", species.code=2550, region="quebec", label="22", points=c(3,12,53,52,30,31,3))
+lfa.list[[22]] <- list(type="fishing zone vertices", species.code=2550, region="gulf", label="23", points=c(23,24,70,25,26,28,29,30,52,19,20))
+lfa.list[[23]] <- list(type="fishing zone vertices", species.code=2550, region="gulf", label="24", points=c(18,19,52,53,12,50,13,14))
+lfa.list[[24]] <- list(type="fishing zone vertices", species.code=2550, region="gulf", label="25", points=c(20,19,18), points=c(15,16,17))
+lfa.list[[25]] <- list(type="fishing zone vertices", species.code=2550, region="gulf", label="26A", points=c(15,16,17), points=c(14,13,50,49,48,47,46,10,9))
+lfa.list[[26]] <- list(type="fishing zone vertices", species.code=2550, region="gulf", label="26B", points=c(9,10,46,47,48,49,50,12,11))
+lfa.list[[27]] <- list(type="fishing zone vertices", species.code=2550, region="maritimes", label="27", points=c(11,12,3,4,5,6))
+
+
+create.sf.fct <- function(list.in){
+   n.ls <- length(list.in)-4 ## number of linestrings for this LFA
+   if(n.ls==1){
+      list.in$geometry <- st_linestring(as.matrix(lobster.afr[list.in$points, c("longitude","latitude")]))
+   }
+   else{
+      ll <- list()
+      for(i in 1:n.ls){
+         ll[[i]] <- st_linestring(as.matrix(lobster.afr[unlist(list.in[i+4]), c("longitude","latitude")]))
+      }
+      list.in$geometry <- st_multilinestring(ll)
+      }
+   return(list.in)
+}
+
+lfa.list.sf <- lapply(lfa.list, create.sf.fct)
+
+sf.fct <- function(li){
+   df <- data.frame(
+      type=li$type,
+      species.code=li$species.code,
+      region=li$region,
+      label=li$label,
+      geometry=st_sfc(li$geometry, crs=4326)
+   )
+   return(df)
+}
+
+lfa.sf <- st_sf(do.call(rbind, lapply(lfa.list.sf, sf.fct)))
+#x11(); plot(lfa.sf$geometry, xlim=c(-70.5,-57), ylim=c(44.75, 51.5))
+#mapply(st_bbox, lfa.sf$geometry)
+
+##
+## this doesn't work since the polygon defined from the points does not touch the land:
+temp <- st_cast(lfa.sf[1,], "POLYGON")
+bb <- st_bbox(temp)
+boundaries.temp <- st_crop(boundaries_simple, bb)
+temp.coast <- st_difference(temp, st_union(boundaries.temp$geometry))
+temp.coast$type <- "fishing zone polygon"
+plot(boundaries.temp$geometry)
+plot(temp.coast$geometry, add=TRUE)
+
+#################
+## this is good, but it won't work to add the coastline, need points on land!
+## so add points on land and use st_difference
 ##
 ## these maps are seemingly derived from the Atlantic Fisheries Regulations https://laws-lois.justice.gc.ca/eng/regulations/SOR-86-21/index.html
 ## in particular for lobster, Schedule XIII: https://laws-lois.justice.gc.ca/eng/regulations/SOR-86-21/page-25.html#h-892770
 ## polygons with points on land, to be used with a land overlay for mapping, and below for building polygons with coastline
+
+
 
 ## Newfoundland and Labrador, zones 3,4,5,6,7,8,9,10,11,12,13A,13B,14A,14B,14C
 nfld.shp <- read_sf("inst/extdata/shapefiles/LobsterFishingAreas.shp")
@@ -506,6 +584,12 @@ fz.quebec.sf <- rbind(quebec.lfas, poly.15.coast, poly.16.coast, poly.17.coast, 
 #library(ggplot2)
 #g <- ggplot(data=poly.19A.coast) +
 #   geom_sf()
+## read in the google earth kml file associated with My Places
+kml.file <- file.path("C:/Users/RicardD/AppData/LocalLow/Google/GoogleEarth","myplaces.kml")
+#st_layers(kml.file)
+kml.in <- st_read(kml.file, layer="My Places")
+pei.land.kml <- kml.in[kml.in$Name=="PEI-land-1",]
+st_coordinates(pei.land.kml)
 
 
 
@@ -558,7 +642,7 @@ save(lobster.gdb, herring.gdb, mackerel.gdb, snowcrab.gdb, groundfish.gdb, file=
 #st_crs(fz.gulf.sf)
 #st_crs(fz.quebec.sf)
 vars <- c("type","species.code","region","label","geometry")
-fz.all.for.rda <- rbind(fz.gulf.sf, fz.quebec.sf, fz.nfld.sf[,vars])
+fz.all.for.rda <- rbind(fz.gulf.sf[,vars], fz.quebec.sf[,vars], fz.nfld.sf[,vars])
 
 
 boundaries_simple <- boundaries %>%
@@ -626,8 +710,6 @@ save(fz.all.for.rda, file="./data/fishing.zone.polygons.rda")
 ## 1 - shapefile of polygon vertices without coastline (suitable to make a map with a coastline overlay)
 ## 2 - shapefile of polygons with coastlines
 
-lfas.1 <- rbind(quebec.lfas.1)
-
 polygons <- fz.all.for.rda[fz.all.for.rda$type=="fishing zone polygon",]
 vertices <- fz.all.for.rda[fz.all.for.rda$type=="fishing zone vertices",]
 
@@ -635,6 +717,8 @@ vertices <- fz.all.for.rda[fz.all.for.rda$type=="fishing zone vertices",]
 write_sf(vertices, file.path(here(), "inst/extdata/shapefiles/fishing.zone.vertices.shp")) ## silently overwrites shapefile
 write_sf(polygons, file.path(here(), "inst/extdata/shapefiles/fishing.zone.polygons.shp")) ## silently overwrites shapefile
 
+write_sf(vertices, file.path(here(), "inst/extdata/shapefiles/fishing.zone.vertices.kml")) ## silently overwrites shapefile
+write_sf(polygons, file.path(here(), "inst/extdata/shapefiles/fishing.zone.polygons.kml")) ## silently overwrites shapefile
 
 ## get shapefiles from the shared GIS network drive
 #fgdb <- "D:/Base Maps/FishingAreas/Groundfish"

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Document id="root_doc">
+<Schema name="fishing.zone.vertices" id="fishing.zone.vertices">
+	<SimpleField name="type" type="string"></SimpleField>
+	<SimpleField name="species.code" type="float"></SimpleField>
+	<SimpleField name="region" type="string"></SimpleField>
+	<SimpleField name="label" type="string"></SimpleField>
+</Schema>
+<Folder><name>fishing.zone.vertices</name>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#fishing.zone.vertices">
+		<SimpleData name="type">fishing zone vertices</SimpleData>
+		<SimpleData name="species.code">2550</SimpleData>
+		<SimpleData name="region">quebec</SimpleData>
+		<SimpleData name="label">15</SimpleData>
+	</SchemaData></ExtendedData>
+      <MultiGeometry><Polygon><outerBoundaryIs><LinearRing><coordinates>-57.1125,51.4166666666667 -59.3916666666667,49.85 -59.9111111111111,50.2986111111111 -60.3333333333333,50.8333333333333 -58.0,51.8333333333333 -57.1666666666667,51.8333333333333 -57.1125,51.4166666666667</coordinates></LinearRing></outerBoundaryIs></Polygon></MultiGeometry>
+  </Placemark>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#fishing.zone.vertices">
+		<SimpleData name="type">fishing zone vertices</SimpleData>
+		<SimpleData name="species.code">2550</SimpleData>
+		<SimpleData name="region">quebec</SimpleData>
+		<SimpleData name="label">16</SimpleData>
+	</SchemaData></ExtendedData>
+      <MultiGeometry><Polygon><outerBoundaryIs><LinearRing><coordinates>-59.9111111111111,50.2986111111111 -59.3916666666667,49.85 -60.0,49.4166666666667 -61.2666666666667,49.8416666666667 -61.2666666666667,50.1736111111111 -61.2666666666667,50.3666666666667 -60.0,50.3666666666667 -59.9111111111111,50.3666666666667 -59.9111111111111,50.2986111111111</coordinates></LinearRing></outerBoundaryIs></Polygon></MultiGeometry>
+  </Placemark>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#fishing.zone.vertices">
+		<SimpleData name="type">fishing zone vertices</SimpleData>
+		<SimpleData name="species.code">2550</SimpleData>
+		<SimpleData name="region">quebec</SimpleData>
+		<SimpleData name="label">17</SimpleData>
+	</SchemaData></ExtendedData>
+      <MultiGeometry><Polygon><outerBoundaryIs><LinearRing><coordinates>-60.0,49.4166666666667 -60.0,47.8333333333333 -63.0,48.5 -65.0,49.8583333333333 -64.3416666666667,50.1083333333333 -61.2666666666667,49.8416666666667 -60.0,49.4166666666667</coordinates></LinearRing></outerBoundaryIs></Polygon></MultiGeometry>
+  </Placemark>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#fishing.zone.vertices">
+		<SimpleData name="type">fishing zone vertices</SimpleData>
+		<SimpleData name="species.code">2550</SimpleData>
+		<SimpleData name="region">quebec</SimpleData>
+		<SimpleData name="label">17A</SimpleData>
+	</SchemaData></ExtendedData>
+      <MultiGeometry><Polygon><outerBoundaryIs><LinearRing><coordinates>-64.3666666666667,49.8116666666667 -64.625,49.6083333333333 -64.0833333333333,49.225 -63.7666666666667,49.025 -63.4,49.35 -63.4,49.4166666666667 -64.0,49.8116666666667 -64.3666666666667,49.8116666666667</coordinates></LinearRing></outerBoundaryIs></Polygon></MultiGeometry>
+  </Placemark>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#fishing.zone.vertices">
+		<SimpleData name="type">fishing zone vertices</SimpleData>
+		<SimpleData name="species.code">2550</SimpleData>
+		<SimpleData name="region">quebec</SimpleData>
+		<SimpleData name="label">17B</SimpleData>
+	</SchemaData></ExtendedData>
+      <MultiGeometry><Polygon><outerBoundaryIs><LinearRing><coordinates>-64.0,49.8116666666667 -64.3666666666667,49.8116666666667 -64.625,49.6083333333333 -65.0,49.8583333333333 -64.3416666666667,50.1083333333333 -61.2666666666667,49.8416666666667 -60.0,49.4166666666667 -60.0,47.8333333333333 -63.0,48.5 -63.7666666666667,49.025 -63.4,49.35 -64.0,49.8116666666667</coordinates></LinearRing></outerBoundaryIs></Polygon></MultiGeometry>
+  </Placemark>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#fishing.zone.vertices">
+		<SimpleData name="type">fishing zone vertices</SimpleData>
+		<SimpleData name="species.code">2550</SimpleData>
+		<SimpleData name="region">quebec</SimpleData>
+		<SimpleData name="label">18</SimpleData>
+	</SchemaData></ExtendedData>
+      <MultiGeometry><Polygon><outerBoundaryIs><LinearRing><coordinates>-69.7008333333333,48.135 -69.5916666666667,48.0416666666667 -69.0,48.45 -67.6691666666667,48.9427777777778 -66.3666666666667,49.4013888888889 -65.0,49.8583333333333 -64.3416666666667,50.1083333333333 -61.2666666666667,49.8416666666667 -61.2666666666667,50.1736111111111 -64.0,50.5 -66.0,50.5 -68,50 -69.7008333333333,48.5 -69.7008333333333,48.135</coordinates></LinearRing></outerBoundaryIs></Polygon></MultiGeometry>
+  </Placemark>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#fishing.zone.vertices">
+		<SimpleData name="type">fishing zone vertices</SimpleData>
+		<SimpleData name="species.code">2550</SimpleData>
+		<SimpleData name="region">quebec</SimpleData>
+		<SimpleData name="label">19A</SimpleData>
+	</SchemaData></ExtendedData>
+      <MultiGeometry><Polygon><outerBoundaryIs><LinearRing><coordinates>-64.9166666666667,49.2 -64.7333333333333,49.675 -65.0,49.8583333333333 -65.2758333333333,49.7680555555556 -65.8775,49.5677777777778 -66.3666666666667,49.4013888888889 -67.6691666666667,48.9427777777778 -69.0,48.45 -69.5916666666667,48.0416666666667 -69.7008333333333,48.135 -70.5,47.8333333333333 -70.8111111111111,47.0658333333333 -70.7363888888889,46.935 -70.4116666666667,46.9844444444444 -68.3588888888889,48.0483333333333 -64.9166666666667,49.2</coordinates></LinearRing></outerBoundaryIs></Polygon></MultiGeometry>
+  </Placemark>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#fishing.zone.vertices">
+		<SimpleData name="type">fishing zone vertices</SimpleData>
+		<SimpleData name="species.code">2550</SimpleData>
+		<SimpleData name="region">quebec</SimpleData>
+		<SimpleData name="label">19B</SimpleData>
+	</SchemaData></ExtendedData>
+      <MultiGeometry><Polygon><outerBoundaryIs><LinearRing><coordinates>-64.9166666666667,49.2 -64.7333333333333,49.675 -64.0833333333333,49.225 -64.4,49.0088888888889 -64.5,48.9166666666667 -64.9166666666667,49.0666666666667 -64.9166666666667,49.2</coordinates></LinearRing></outerBoundaryIs></Polygon></MultiGeometry>
+  </Placemark>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#fishing.zone.vertices">
+		<SimpleData name="type">fishing zone vertices</SimpleData>
+		<SimpleData name="species.code">2550</SimpleData>
+		<SimpleData name="region">quebec</SimpleData>
+		<SimpleData name="label">19C</SimpleData>
+	</SchemaData></ExtendedData>
+      <MultiGeometry><Polygon><outerBoundaryIs><LinearRing><coordinates>-64.4,49.0088888888889 -64.0833333333333,49.225 -63.0,48.5 -64.225,48.7166666666667 -64.1808333333333,48.7652777777778 -64.3797222222222,48.915 -64.4,49.0088888888889</coordinates></LinearRing></outerBoundaryIs></Polygon></MultiGeometry>
+  </Placemark>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#fishing.zone.vertices">
+		<SimpleData name="type">fishing zone vertices</SimpleData>
+		<SimpleData name="species.code">2550</SimpleData>
+		<SimpleData name="region">quebec</SimpleData>
+		<SimpleData name="label">20A</SimpleData>
+	</SchemaData></ExtendedData>
+      <MultiGeometry><Polygon><outerBoundaryIs><LinearRing><coordinates>-64.225,48.7166666666667 -63.0,48.5 -64.0361111111111,48.2041666666667 -64.5,48.2041666666667 -64.6933333333333,48.3266666666667 -64.225,48.7166666666667</coordinates></LinearRing></outerBoundaryIs></Polygon></MultiGeometry>
+  </Placemark>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#fishing.zone.vertices">
+		<SimpleData name="type">fishing zone vertices</SimpleData>
+		<SimpleData name="species.code">2550</SimpleData>
+		<SimpleData name="region">quebec</SimpleData>
+		<SimpleData name="label">20B</SimpleData>
+	</SchemaData></ExtendedData>
+      <MultiGeometry><Polygon><outerBoundaryIs><LinearRing><coordinates>-64.6933333333333,48.3266666666667 -64.5,48.2041666666667 -65.0583333333333,47.9625 -65.4861111111111,47.8616666666667 -65.4861111111111,48.0333333333333 -64.6933333333333,48.3266666666667</coordinates></LinearRing></outerBoundaryIs></Polygon></MultiGeometry>
+  </Placemark>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#fishing.zone.vertices">
+		<SimpleData name="type">fishing zone vertices</SimpleData>
+		<SimpleData name="species.code">2550</SimpleData>
+		<SimpleData name="region">quebec</SimpleData>
+		<SimpleData name="label">21A</SimpleData>
+	</SchemaData></ExtendedData>
+      <MultiGeometry><Polygon><outerBoundaryIs><LinearRing><coordinates>-65.9027777777778,48.21 -65.9027777777778,48.0297222222222 -65.8333333333333,48.025 -65.4861111111111,47.8616666666667 -65.4861111111111,48.0333333333333 -65.4861111111111,48.0702777777778 -65.9027777777778,48.21</coordinates></LinearRing></outerBoundaryIs></Polygon></MultiGeometry>
+  </Placemark>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#fishing.zone.vertices">
+		<SimpleData name="type">fishing zone vertices</SimpleData>
+		<SimpleData name="species.code">2550</SimpleData>
+		<SimpleData name="region">quebec</SimpleData>
+		<SimpleData name="label">21B</SimpleData>
+	</SchemaData></ExtendedData>
+      <MultiGeometry><Polygon><outerBoundaryIs><LinearRing><coordinates>-65.9027777777778,48.21 -65.9027777777778,48.0297222222222 -66.3225,48.0544444444444 -66.3583333333333,48.0844444444444 -66.3466666666667,48.1158333333333 -65.9027777777778,48.21</coordinates></LinearRing></outerBoundaryIs></Polygon></MultiGeometry>
+  </Placemark>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#fishing.zone.vertices">
+		<SimpleData name="type">fishing zone vertices</SimpleData>
+		<SimpleData name="species.code">2550</SimpleData>
+		<SimpleData name="region">quebec</SimpleData>
+		<SimpleData name="label">22</SimpleData>
+	</SchemaData></ExtendedData>
+      <MultiGeometry><Polygon><outerBoundaryIs><LinearRing><coordinates>-60.0,47.8333333333333 -60.75,47.0383333333333 -63.7916666666667,47.1494444444444 -64.0361111111111,47.3069444444444 -64.0361111111111,48.2041666666667 -63.0,48.5 -60.0,47.8333333333333</coordinates></LinearRing></outerBoundaryIs></Polygon></MultiGeometry>
+  </Placemark>
+</Folder>
+</Document></kml>
