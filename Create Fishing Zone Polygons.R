@@ -197,7 +197,7 @@ lfa.sf <- st_sf(do.call(rbind, lapply(lfa.list.sf, sf.fct)))
 #mapply(st_bbox, lfa.sf$geometry)
 
 ##
-## this doesn't work since the polygon defined from the points does not touch the land:
+## the following doesn't work since the polygon defined from the points does not touch the land:
 temp <- st_cast(lfa.sf[1,], "POLYGON")
 bb <- st_bbox(temp)
 boundaries.temp <- st_crop(boundaries_simple, bb)
@@ -210,11 +210,9 @@ plot(temp.coast$geometry, add=TRUE)
 ## this is good, but it won't work to add the coastline, need points on land!
 ## so add points on land and use st_difference
 ##
-## these maps are seemingly derived from the Atlantic Fisheries Regulations https://laws-lois.justice.gc.ca/eng/regulations/SOR-86-21/index.html
+## maps on the shared GIS drive are seemingly derived from the Atlantic Fisheries Regulations https://laws-lois.justice.gc.ca/eng/regulations/SOR-86-21/index.html
 ## in particular for lobster, Schedule XIII: https://laws-lois.justice.gc.ca/eng/regulations/SOR-86-21/page-25.html#h-892770
 ## polygons with points on land, to be used with a land overlay for mapping, and below for building polygons with coastline
-
-
 
 ## Newfoundland and Labrador, zones 3,4,5,6,7,8,9,10,11,12,13A,13B,14A,14B,14C
 nfld.shp <- read_sf("inst/extdata/shapefiles/LobsterFishingAreas.shp")
@@ -222,8 +220,6 @@ nfld.shp <- read_sf("inst/extdata/shapefiles/LobsterFishingAreas.shp")
 ## cast to multipolygon
 nfld.sf <- st_transform(st_cast(st_cast(nfld.shp, "POLYGON"), "MULTIPOLYGON"), 4326)
 #plot(nfld.sf)
-
-
 
 vertices.to.multipolygon <- function(multipoly.in){
 bb <- st_bbox(st_buffer(multipoly.in,0.1))
@@ -490,12 +486,6 @@ quebec.lfas <- rbind(poly.15, poly.16, poly.17, poly.17A, poly.17B, poly.18, pol
 #   geom_sf()
 #g
 
-## Gulf, zones 23, 24, 25, 26A, 26B
-zph.23 <- data.frame(
-   x=-dms2deg(c()),
-   y=dms2deg(c())
-)
-
 
 ## now create another set of polygons that are bounded by the coastline
 
@@ -579,6 +569,9 @@ poly.22.coast$type <- "fishing zone polygon"
 
 fz.quebec.sf <- rbind(quebec.lfas, poly.15.coast, poly.16.coast, poly.17.coast, poly.17A.coast, poly.17B.coast, poly.18.coast, poly.19A.coast, poly.19B.coast, poly.19C.coast, poly.20A.coast, poly.20B.coast, poly.21A.coast, poly.21B.coast, poly.22.coast)
 ## object fz.quebec.sf now contains all LFAs for Quebec, both as fishing zone vertices and fishing zone polygons
+
+
+## Gulf, zones 23, 24, 25, 26A, 26B
 
 
 #library(ggplot2)
