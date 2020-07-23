@@ -1,10 +1,10 @@
 # gulf.spatial
-Spatial data manipulation and mapping for the sGSL
+Southern Gulf of Saint Lawrence (sGSL) spatial data access, manipulation and mapping package.
 
 # Basic maps:
 ```
 # Draw base maps:
-map()                # Base map.         
+map()                # sGSL Base map.         
 map(land = FALSE)    # Draw map axes only.
 map(border = "grid") # Draw grid border.
 map(sea = TRUE)      # Draw bathymetry.
@@ -19,16 +19,16 @@ map(xlim = c(-66, -63), ylim = (46, 48))  # Define explicit map bounds.
 
 The following region options are implemented:
 
- `region`                                | Description
----------------------------------------- | --------------------------------------------------------------------------
-`"4t", "sgsl", "gulf", "southern.gulf"`  | Southern Gulf of St. Lawrence
-`"4rst", "gsl"`                          | Gulf of St. Lawrence
-`"4s", "ngsl", "northern.gulf"`          | Northern Gulf of St. Lawrence
-`"cb", "cape breton", "wcb", "western.cape.breton"`  | Western Cape Breton
-`"ns", "northumberland.strait"`          | Northumberland Strait
-`"PEI"`                                  | Prince Edward Island
+ `region`                                           | Description
+--------------------------------------------------- | --------------------------------------------------------------------------
+`"4t", "sgsl", "gulf", "southern.gulf"`             | Southern Gulf of St. Lawrence
+`"4rst", "gsl"`                                     | Gulf of St. Lawrence
+`"4s", "ngsl", "northern.gulf"`                     | Northern Gulf of St. Lawrence
+`"cb", "cape breton", "wcb", "western.cape.breton"` | Western Cape Breton
+`"ns", "northumberland.strait"`                     | Northumberland Strait
+`"PEI"`                                             | Prince Edward Island
       
-The most powerful feature is to use the `layer` option to successively add layers to a map. For example, the following commands draw subsets of science survey stata:
+A powerful mapping feature is to use the `layer` option to successively add layers to a map. For example, the following commands draw subsets of science survey stata:
 ```
 # Draw survey strata:
 map(layer = "strata", survey = "rv", stratum = 424:432)
@@ -46,7 +46,7 @@ map(layer = "fishing zones", species = "american lobster", lfa = "24")
 
 The following is a list of planned `layer` options:                            
                                         
-  `layer`                                  | Description
+`layer`                                    | Description
 ------------------------------------------ | -----------------------------------------------------------
 `"coast", "coastline"`                     | Coastline polygons.
 `bounds`, `boundaries`                     | Regional or survey boundaries.
@@ -59,5 +59,3 @@ The following is a list of planned `layer` options:
 `"towns", "cities"`                        | Town and city names and point locations.
 `"geography", "features"`                  | Geographical features.
       
-
-
