@@ -34,8 +34,7 @@
 #' # Convert a vector of kilometer-format coordinates to decimal degree format:
 #' km2deg(seq(0, -200, len = 21), seq(0, 100, len = 21))
 #'
-#' @export deg2km
-#' @export km2deg
+#' @export
 #'
 deg2km <- function(x, y, long.ref, lat.ref, method = "utm"){
 
@@ -44,19 +43,19 @@ deg2km <- function(x, y, long.ref, lat.ref, method = "utm"){
    # Calculate coordinates using 'rgdal' package methods:
    if (method == "utm"){
       # Load 'rgdal' R Geospatial Data Abstraction Library:
-      require(rgdal)
+      # require(rgdal)
 
       # Put coordinates in a data frame:
       x <- data.frame(longitude = x, latitude = y)
 
-      # Define which variables are corodinates:
-      coordinates(x) <- c("longitude", "latitude")
+      # Define which variables are coordinates:
+      sp::coordinates(x) <- c("longitude", "latitude")
 
       # Define projection:
-      proj4string(x) <- CRS("+proj=longlat +datum=NAD83")
+      sp::proj4string(x) <- sp::CRS("+proj=longlat +datum=NAD83")
 
       # Convert to UTM projection:
-      x.utm <- spTransform(x , CRS("+proj=utm +zone=20 +datum=NAD83 +units=m"))
+      x.utm <- sp::spTransform(x , sp::CRS("+proj=utm +zone=20 +datum=NAD83 +units=m"))
 
       # Extract coordinates:
       v <- as.data.frame(x.utm@coords)
@@ -109,6 +108,7 @@ deg2km <- function(x, y, long.ref, lat.ref, method = "utm"){
 }
 
 #' @describeIn deg2km Convert coordinates from kilometers to decimal lat-lon.
+#' @export
 km2deg <- function(x, y, long.ref, lat.ref, method = "utm"){
 
    method <- match.arg(tolower(method), c("utm", "ellipsoid"))
@@ -116,7 +116,7 @@ km2deg <- function(x, y, long.ref, lat.ref, method = "utm"){
    # Calculate coordinates using 'rgdal' package methods:
    if (method == "utm"){
       # Load 'rgdal' R Geospatial Data Abstraction Library:
-      require(rgdal)
+      # require(rgdal)
 
       # Adjust for reference coordinates:
       if (missing(long.ref) & missing(lat.ref)){
@@ -129,13 +129,13 @@ km2deg <- function(x, y, long.ref, lat.ref, method = "utm"){
       z <- data.frame(x = 1000*x, y = 1000*y)
 
       # Define which variables are corodinates:
-      coordinates(z) <- c("x", "y")
+      sp::coordinates(z) <- c("x", "y")
 
       # Define projection:
-      proj4string(z) <- CRS("+proj=utm +zone=20 +datum=NAD83 +units=m")
+      sp::proj4string(z) <- CRS("+proj=utm +zone=20 +datum=NAD83 +units=m")
 
       # Convert to UTM projection:
-      z <- spTransform(z, CRS("+proj=longlat +datum=NAD83"))
+      z <- sp::spTransform(z, CRS("+proj=longlat +datum=NAD83"))
 
       # Extract coordinates:
       v <- as.data.frame(z@coords)

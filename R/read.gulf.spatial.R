@@ -25,7 +25,7 @@
 #'   \item{\code{geography}, \code{features}}{Load land and marine geographical features.}
 #' }
 #'
-#' @export read.gulf.spatial
+#' @export
 #'
 
 # File extension function:

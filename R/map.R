@@ -10,14 +10,14 @@
 #' map()
 #' map(layer = "strata", survey = "rv", region = "gulf")
 #'
-#' @export map
-#' @export map.default
+#' @export
 #'
 
 #' @rdname map
 map <- function(x, ...) UseMethod("map")
 
 #' @rdname map
+#' @export
 map.default <- function(x, layer, xlim, ylim, region = "gulf", add = TRUE, ...){
    if (!add | length(dev.list()) == 0){
       # Parse 'region':

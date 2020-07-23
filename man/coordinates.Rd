@@ -23,9 +23,9 @@ latitude(x, ...)
 
 \method{latitude}{default}(x, ...)
 
-\method{longitude}{list}(x, ...)
+\method{longitude}{data.frame}(x, ...)
 
-\method{latitude}{list}(x, ...)
+\method{latitude}{data.frame}(x, ...)
 
 lon(x, ...)
 

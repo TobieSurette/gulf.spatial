@@ -7,15 +7,7 @@
 #'          methods already defined, or looking for \sQuote{longitude} or \sQuote{latitude}
 #'          in the field variable names. In the latter case, partial matching is used.
 #'
-#' @export coordinates
-#' @export coordinates.default
-#' @export longitude
-#' @export latitude
-#' @export longitude.data.frame
-#' @export latitude.data.frame
-#' @export long
-#' @export lon
-#' @export lat
+#' @export
 #'
 #' @section Functions:
 #' \describe{
@@ -26,22 +18,27 @@
 #'
 coordinates <- function(x, ...) UseMethod("coordinates")
 
-coordinates.default <- function(x, ...) if (is.installed("sp")) return(sp::coordinates(x, ...))
+#' @export
+coordinates.default <- function(x, ...) return(sp::coordinates(x, ...))
 
 #' @rdname coordinates
+#' @export
 longitude <- function(x, ...) UseMethod("longitude")
 
 #' @rdname coordinates
+#' @export
 latitude <- function(x, ...) UseMethod("latitude")
 
 #' @rdname coordinates
+#' @export
 longitude.default <- function(x, ...) return(NULL)
 
 #' @rdname coordinates
+#' @export
 latitude.default <- function(x, ...) return(NULL)
 
 #' @rdname coordinates
-#' @method longitude list
+#' @export
 longitude.data.frame <- function(x, ...){
    n <- tolower(names(x))
    if (is.null(n)) return(NULL)
@@ -53,7 +50,7 @@ longitude.data.frame <- function(x, ...){
 }
 
 #' @rdname coordinates
-#' @method latitude list
+#' @export
 latitude.data.frame <- function(x, ...){
    n <- tolower(names(x))
    if (is.null(n)) return(NULL)
@@ -64,11 +61,14 @@ latitude.data.frame <- function(x, ...){
 }
 
 #' @rdname coordinates
+#' @export
 lon <- longitude
 
 #' @rdname coordinates
+#' @export
 lat <- latitude
 
 #' @rdname coordinates
+#' @export
 long <- longitude
 

@@ -11,14 +11,14 @@
 #' @param pairwise Logical value specifying whether to calculate all possible pairwise combinations of coordinates.
 #' @param method Method used to calculate distance.
 #'
-#' @export distance
-#' @export distance.default
+#' @export
 #'
 #' @seealso deg2km
 #'
 distance <- function(x, ...) UseMethod("distance")
 
 #' @describeIn distance Default distance method.
+#' @export
 distance.default <- function(x, y, x0 = NULL, y0 = NULL,
                              coordinate.units = "latlon", distance.units = "km",
                              pairwise = TRUE, method = "utm", ...){

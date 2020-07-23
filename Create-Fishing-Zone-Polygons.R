@@ -24,10 +24,11 @@ boundaries <- read_sf("AC/AC_1M_BoundaryPolygons_shp/AC_1M_BoundaryPolygons.shp"
 boundaries_simple <- boundaries %>%
    filter(
       POL_DIV %in% c(
-         "Quebec", "Newfoundland and Labrador" #,
+         "Quebec", "Newfoundland and Labrador" ,
          #"New York", "New Hampshire", "Vermont",
-         #"Maine", "New Brunswick", "Nova Scotia",
-         #"Prince Edward Island"
+         #"Maine",
+         "New Brunswick", "Nova Scotia",
+         "Prince Edward Island"
       ),
       SELECTION == "sparse" #"dense"
    ) %>%
@@ -35,98 +36,61 @@ boundaries_simple <- boundaries %>%
 
 ## g <- ggplot(data=boundaries_simple) + geom_sf()
 
-#################
-## Gulf, start with what is already in the gulf package
 
-load(file.path(here(), "../gulf/data/fishing.zone.polygons.rda"))
-
-p <- fishing.zone.polygons
-#p <- gulf::subset.list(p, species = 2550, region = "gulf")
-
-## first fix the fishing zone polygons to make sure that they all have the same format
-## snow crab polygons
-crab.p <- list(
-   p[[1]],p[[2]],p[[3]],p[[4]] ## ,p[[5]], buffer zone excluded
-)
-
-## lobster polygons
-lobster.p <- list(
-   p[[6]],p[[7]],p[[8]],p[[9]],p[[10]],p[[11]],p[[12]],p[[13]]
-)
-lobster.p[[1]]$type="fishing.zone"
-lobster.p[[2]]$type="fishing.zone"
-lobster.p[[3]]$type="fishing.zone"
-lobster.p[[4]]$type="fishing.zone"
-lobster.p[[5]]$type="fishing.zone"
-lobster.p[[6]]$type="fishing.zone"
-lobster.p[[7]]$type="fishing.zone"
-lobster.p[[8]]$type="fishing.zone"
-
-## the first 4 lists must be formatted so that the columns x, y and hole are not within a list
-
-lobster.p2 <-
-   list(
-      lobster.p[[1]], lobster.p[[2]], lobster.p[[3]], lobster.p[[4]],
-      list(list(x=lobster.p[[5]]$x, y=lobster.p[[5]]$y, lobster.p[[5]]$hole), type=lobster.p[[5]]$type, species=lobster.p[[5]]$species, region=lobster.p[[5]]$region, label=lobster.p[[5]]$label, area=lobster.p[[5]]$area),
-      list(list(x=lobster.p[[6]]$x, y=lobster.p[[6]]$y, lobster.p[[6]]$hole), type=lobster.p[[6]]$type, species=lobster.p[[6]]$species, region=lobster.p[[6]]$region, label=lobster.p[[6]]$label, area=lobster.p[[6]]$area),
-      list(list(x=lobster.p[[7]]$x, y=lobster.p[[7]]$y, lobster.p[[7]]$hole), type=lobster.p[[7]]$type, species=lobster.p[[7]]$species, region=lobster.p[[7]]$region, label=lobster.p[[7]]$label, area=lobster.p[[7]]$area),
-      list(list(x=lobster.p[[8]]$x, y=lobster.p[[8]]$y, lobster.p[[8]]$hole), type=lobster.p[[8]]$type, species=lobster.p[[8]]$species, region=lobster.p[[8]]$region, label=lobster.p[[8]]$label, area=lobster.p[[8]]$area)
-)
-
-# herring polygons
-herring.p <- list(
-   p[[14]],p[[15]],p[[16]],p[[17]],p[[18]],p[[19]],p[[20]]
-)
-herring.p2 <-
-   list(
-      list(list(x=herring.p[[1]]$x, y=herring.p[[1]]$y, herring.p[[1]]$hole), type="fishing.zone", species=herring.p[[1]]$species, region=herring.p[[1]]$region, label=herring.p[[1]]$label, area=herring.p[[1]]$area),
-      list(list(x=herring.p[[2]]$x, y=herring.p[[2]]$y, herring.p[[2]]$hole), type="fishing.zone", species=herring.p[[2]]$species, region=herring.p[[2]]$region, label=herring.p[[2]]$label, area=herring.p[[2]]$area),
-      list(list(x=herring.p[[3]]$x, y=herring.p[[3]]$y, herring.p[[3]]$hole), type="fishing.zone", species=herring.p[[3]]$species, region=herring.p[[3]]$region, label=herring.p[[3]]$label, area=herring.p[[3]]$area),
-      list(list(x=herring.p[[4]]$x, y=herring.p[[4]]$y, herring.p[[4]]$hole), type="fishing.zone", species=herring.p[[4]]$species, region=herring.p[[4]]$region, label=herring.p[[4]]$label, area=herring.p[[4]]$area),
-      list(list(x=herring.p[[5]]$x, y=herring.p[[5]]$y, herring.p[[5]]$hole), type="fishing.zone", species=herring.p[[5]]$species, region=herring.p[[5]]$region, label=herring.p[[5]]$label, area=herring.p[[5]]$area),
-      list(list(x=herring.p[[6]]$x, y=herring.p[[6]]$y, herring.p[[6]]$hole), type="fishing.zone", species=herring.p[[6]]$species, region=herring.p[[6]]$region, label=herring.p[[6]]$label, area=herring.p[[6]]$area),
-      list(list(x=herring.p[[7]]$x, y=herring.p[[7]]$y, herring.p[[7]]$hole), type="fishing.zone", species=herring.p[[7]]$species, region=herring.p[[7]]$region, label=herring.p[[7]]$label, area=herring.p[[7]]$area)
+##########################################################################
+## Newfoundland and Labrador, zones 3,4,5,6,7,8,9,10,11,12,13A,13B,14A,14B,14C
+## this is the file obtained from Elisabeth from NFLD
+nfld.shp <- read_sf("inst/extdata/shapefiles/LobsterFishingAreas.shp")
+## this shapefile was shared with me from Newfoundland, the geometry appears as a linestring
+fz.nfld.sf.lines <-  st_sf(
+   data.frame(
+      type="fishing zone vertices",
+      species.code=2550,
+      region="newfoundland",
+      label=nfld.shp$id,
+      geometry=nfld.shp$geometry
    )
+)
 
-gulf.p <- c(crab.p, lobster.p2, herring.p2)
+## cast to multipolygon
+nfld.sf <- st_transform(st_cast(st_cast(nfld.shp, "POLYGON"), "MULTIPOLYGON"), 4326)
+nfld.sf <- st_transform(st_cast(st_cast(nfld.shp, "POLYGON"), "MULTIPOLYGON"), 4326)
 
-
-
-## create multipolygons for snow crab, lobster and herring
-gulf.poly <-
-   do.call(rbind,
-           lapply(gulf.p, function(i){
-              np <- length(i)-5 ## number of polygons defined for this fishing zone
-              if(np==1){## we have only an exterior ring
-                 my.poly <- st_sfc(st_multipolygon(list(list(cbind(i[[1]]$x,i[[1]]$y)))), crs=4326)
-              } else {
-                 ## create a list of lists where the first list is the exterior ring and the subsequent ones are the holes
-                 ll <- list()
-                 for(li in 1:np){
-                    ll[[li]] <- list(cbind(i[[li]]$x,i[[li]]$y))
-                 }
-                 my.poly <- st_sfc(st_multipolygon(ll), crs=4326)
-              }
-              st_sf(
-                 data.frame(
-                    type="fishing zone polygon",
-                    species.code=i$species,
-                    region=i$region,
-                    label=i$label,
-                    my.poly
-                 )
-              )
-           } ## end function
-           ) ## end lapply
-   )## end do.call
+# g <- ggplot(data=boundaries_simple) +
+#    geom_sf(fill=grey(0.8), color=grey(0.3)) +
+#    geom_sf(data=nfld.sf, color="red", fill="mistyrose")
 
 
-fz.gulf.sf <- gulf.poly ## this is the data frame that will be saved in the data folder of the package and that will also be writtenin shapefile and KML formats
+## function to add coastline
+vertices.to.multipolygon <- function(multipoly.in){
+   bb <- st_bbox(st_buffer(multipoly.in,0.1))
+   boundaries.temp <- st_crop(boundaries_simple, bb)
+   poly.coast <- st_difference(multipoly.in, st_union(boundaries.temp$geometry))
+   poly.coast$type <- "fishing zone polygon"
+   return(poly.coast)
+}
 
+temp.list <- list()
+for(i in 1:nrow(nfld.sf)){
+   print(i)
+   temp.list[[i]] <- vertices.to.multipolygon(nfld.sf[i,])
+}
 
+nfld.coast <- do.call(rbind, temp.list)
+nfld.coast$species.code <- 2550
+nfld.coast$region <- "newfoundland"
+nfld.coast$label = nfld.coast$id
 
-## this is a bit ass backwards, but I am redefining the vertices for all LFAs so as to be complete
-## https://inter-l01-uat.dfo-mpo.gc.ca/infoceans/sites/infoceans/files/Homard.pdf
+fz.nfld.sf.polygons <- nfld.coast
+## we now have all the Newfondland lobster fishing areas in simple features
+
+# g <- ggplot(data=boundaries_simple) +
+#    geom_sf(fill=grey(0.8), color=grey(0.3)) +
+#    geom_sf(data=nfld.coast, color="red", fill="mistyrose")
+#
+
+## now do Quebec and Gulf from the AFR points
+##
 ## https://inter-l01-uat.dfo-mpo.gc.ca/infoceans/en/commercial-fisheries#carte
 ## I captured the points appearing in the Atlantic Fisheries Regulations in a text file, load that
 lobster.afr <- read.table(file="lobster-atlantic-fishery-regulations-points.txt", header=TRUE, sep=" ", colClasses=c("integer",rep("character", 6)))
@@ -193,10 +157,46 @@ sf.fct <- function(li){
 }
 
 lfa.sf <- st_sf(do.call(rbind, lapply(lfa.list.sf, sf.fct)))
-#x11(); plot(lfa.sf$geometry, xlim=c(-70.5,-57), ylim=c(44.75, 51.5))
-#mapply(st_bbox, lfa.sf$geometry)
 
-##
+fz.gulf.quebec.sf.lines <- lfa.sf
+
+fz.sf.lines <- rbind(fz.nfld.sf.lines, fz.gulf.quebec.sf.lines)
+
+# g <- ggplot(data=boundaries_simple) +
+#    geom_sf(fill=grey(0.8), color=grey(0.3)) +
+#    geom_sf(data=fz.sf.lines, color="red", fill="mistyrose")
+
+lobster <- fz.sf.lines[fz.sf.lines$species.code==2550,]
+lobster <- cbind(lobster, st_coordinates(st_centroid(lobster)))
+
+g <- ggplot(data=boundaries_simple) +
+   geom_sf(fill=grey(0.8), color=grey(0.3)) +
+   geom_label(data=lobster, aes(X, Y, label=label))
+ggsave(file="Gulf-of-St-Lawrence-lobster-areas-lines.pdf", g, width = 30, height = 20, units = "cm")
+
+
+## the only issue here is that the Newfoundland lines do not end at the coast but rather at some point inland
+## but still usable, so write the corresponding OGC files
+write_sf(fz.sf.lines, file.path(here(), "inst/extdata/shapefiles/fishing.zone.vertices.shp")) ## silently overwrites shapefile
+write_sf(fz.sf.lines, file.path(here(), "inst/extdata/shapefiles/fishing.zone.vertices.kml")) ## google earth format
+write_sf(fz.sf.lines, file.path(here(), "inst/extdata/shapefiles/fishing.zone.vertices.GeoJSON")) ## google earth format
+
+save(fz.sf.lines, file="./data/fishing.zone.vertices.rda")
+
+
+##########################################################################
+## now need to create polygons with coastlines
+## already done for Newfoundland
+fz.sf.polygons <- fz.nfld.sf.polygons
+
+# g <- ggplot(data=boundaries_simple) +
+#    geom_sf(fill=grey(0.8), color=grey(0.3)) +
+#    geom_sf(data=fz.sf.lines, color="red", fill="mistyrose")
+
+
+
+
+## trying to add coastlines
 ## the following doesn't work since the polygon defined from the points does not touch the land:
 temp <- st_cast(lfa.sf[1,], "POLYGON")
 bb <- st_bbox(temp)
@@ -209,43 +209,108 @@ plot(temp.coast$geometry, add=TRUE)
 #################
 ## this is good, but it won't work to add the coastline, need points on land!
 ## so add points on land and use st_difference
+
+
+
+
+
+#################
+## Gulf, start with what is already in the gulf package
+
+load(file.path(here(), "../gulf/data/fishing.zone.polygons.rda"))
+
+p <- fishing.zone.polygons
+#p <- gulf::subset.list(p, species = 2550, region = "gulf")
+
+## first fix the fishing zone polygons to make sure that they all have the same format
+## snow crab polygons
+crab.p <- list(
+   p[[1]],p[[2]],p[[3]],p[[4]] ## ,p[[5]], buffer zone excluded
+)
+
+## lobster polygons
+lobster.p <- list(
+   p[[6]],p[[7]],p[[8]],p[[9]],p[[10]],p[[11]],p[[12]],p[[13]]
+)
+lobster.p[[1]]$type="fishing.zone"
+lobster.p[[2]]$type="fishing.zone"
+lobster.p[[3]]$type="fishing.zone"
+lobster.p[[4]]$type="fishing.zone"
+lobster.p[[5]]$type="fishing.zone"
+lobster.p[[6]]$type="fishing.zone"
+lobster.p[[7]]$type="fishing.zone"
+lobster.p[[8]]$type="fishing.zone"
+
+## the first 4 lists must be formatted so that the columns x, y and hole are not within a list
+
+lobster.p2 <-
+   list(
+      lobster.p[[1]], lobster.p[[2]], lobster.p[[3]], lobster.p[[4]],
+      list(list(x=lobster.p[[5]]$x, y=lobster.p[[5]]$y, lobster.p[[5]]$hole), type=lobster.p[[5]]$type, species=lobster.p[[5]]$species, region=lobster.p[[5]]$region, label=lobster.p[[5]]$label, area=lobster.p[[5]]$area),
+      list(list(x=lobster.p[[6]]$x, y=lobster.p[[6]]$y, lobster.p[[6]]$hole), type=lobster.p[[6]]$type, species=lobster.p[[6]]$species, region=lobster.p[[6]]$region, label=lobster.p[[6]]$label, area=lobster.p[[6]]$area),
+      list(list(x=lobster.p[[7]]$x, y=lobster.p[[7]]$y, lobster.p[[7]]$hole), type=lobster.p[[7]]$type, species=lobster.p[[7]]$species, region=lobster.p[[7]]$region, label=lobster.p[[7]]$label, area=lobster.p[[7]]$area),
+      list(list(x=lobster.p[[8]]$x, y=lobster.p[[8]]$y, lobster.p[[8]]$hole), type=lobster.p[[8]]$type, species=lobster.p[[8]]$species, region=lobster.p[[8]]$region, label=lobster.p[[8]]$label, area=lobster.p[[8]]$area)
+   )
+
+# herring polygons
+herring.p <- list(
+   p[[14]],p[[15]],p[[16]],p[[17]],p[[18]],p[[19]],p[[20]]
+)
+herring.p2 <-
+   list(
+      list(list(x=herring.p[[1]]$x, y=herring.p[[1]]$y, herring.p[[1]]$hole), type="fishing.zone", species=herring.p[[1]]$species, region=herring.p[[1]]$region, label=herring.p[[1]]$label, area=herring.p[[1]]$area),
+      list(list(x=herring.p[[2]]$x, y=herring.p[[2]]$y, herring.p[[2]]$hole), type="fishing.zone", species=herring.p[[2]]$species, region=herring.p[[2]]$region, label=herring.p[[2]]$label, area=herring.p[[2]]$area),
+      list(list(x=herring.p[[3]]$x, y=herring.p[[3]]$y, herring.p[[3]]$hole), type="fishing.zone", species=herring.p[[3]]$species, region=herring.p[[3]]$region, label=herring.p[[3]]$label, area=herring.p[[3]]$area),
+      list(list(x=herring.p[[4]]$x, y=herring.p[[4]]$y, herring.p[[4]]$hole), type="fishing.zone", species=herring.p[[4]]$species, region=herring.p[[4]]$region, label=herring.p[[4]]$label, area=herring.p[[4]]$area),
+      list(list(x=herring.p[[5]]$x, y=herring.p[[5]]$y, herring.p[[5]]$hole), type="fishing.zone", species=herring.p[[5]]$species, region=herring.p[[5]]$region, label=herring.p[[5]]$label, area=herring.p[[5]]$area),
+      list(list(x=herring.p[[6]]$x, y=herring.p[[6]]$y, herring.p[[6]]$hole), type="fishing.zone", species=herring.p[[6]]$species, region=herring.p[[6]]$region, label=herring.p[[6]]$label, area=herring.p[[6]]$area),
+      list(list(x=herring.p[[7]]$x, y=herring.p[[7]]$y, herring.p[[7]]$hole), type="fishing.zone", species=herring.p[[7]]$species, region=herring.p[[7]]$region, label=herring.p[[7]]$label, area=herring.p[[7]]$area)
+   )
+
+gulf.p <- c(crab.p, lobster.p2, herring.p2)
+
+
+
+## create multipolygons for snow crab, lobster and herring
+gulf.poly <-
+   do.call(rbind,
+           lapply(gulf.p, function(i){
+              np <- length(i)-5 ## number of polygons defined for this fishing zone
+              if(np==1){## we have only an exterior ring
+                 my.poly <- st_sfc(st_multipolygon(list(list(cbind(i[[1]]$x,i[[1]]$y)))), crs=4326)
+              } else {
+                 ## create a list of lists where the first list is the exterior ring and the subsequent ones are the holes
+                 ll <- list()
+                 for(li in 1:np){
+                    ll[[li]] <- list(cbind(i[[li]]$x,i[[li]]$y))
+                 }
+                 my.poly <- st_sfc(st_multipolygon(ll), crs=4326)
+              }
+              st_sf(
+                 data.frame(
+                    type="fishing zone polygon",
+                    species.code=i$species,
+                    region=i$region,
+                    label=i$label,
+                    my.poly
+                 )
+              )
+           } ## end function
+           ) ## end lapply
+   )## end do.call
+
+
+fz.gulf.sf <- gulf.poly ## this is the data frame that will be saved in the data folder of the package and that will also be writtenin shapefile and KML formats
+
+
+
+
+
 ##
 ## maps on the shared GIS drive are seemingly derived from the Atlantic Fisheries Regulations https://laws-lois.justice.gc.ca/eng/regulations/SOR-86-21/index.html
 ## in particular for lobster, Schedule XIII: https://laws-lois.justice.gc.ca/eng/regulations/SOR-86-21/page-25.html#h-892770
 ## polygons with points on land, to be used with a land overlay for mapping, and below for building polygons with coastline
 
-## Newfoundland and Labrador, zones 3,4,5,6,7,8,9,10,11,12,13A,13B,14A,14B,14C
-nfld.shp <- read_sf("inst/extdata/shapefiles/LobsterFishingAreas.shp")
-## this shapefile was shared with me from Newfoundland, the geometry appears as a linestring
-## cast to multipolygon
-nfld.sf <- st_transform(st_cast(st_cast(nfld.shp, "POLYGON"), "MULTIPOLYGON"), 4326)
-#plot(nfld.sf)
-
-vertices.to.multipolygon <- function(multipoly.in){
-bb <- st_bbox(st_buffer(multipoly.in,0.1))
-boundaries.temp <- st_crop(boundaries_simple, bb)
-poly.coast <- st_difference(multipoly.in, st_union(boundaries.temp$geometry))
-poly.coast$type <- "fishing zone polygon"
-return(poly.coast)
-}
-
-temp.list <- list()
-for(i in 1:nrow(nfld.sf)){
-   print(i)
-   temp.list[[i]] <- vertices.to.multipolygon(nfld.sf[i,])
-}
-
-nfld.coast <- do.call(rbind, temp.list)
-nfld.coast$species.code <- 2550
-nfld.coast$region <- "newfoundland"
-nfld.coast$label = nfld.coast$id
-
-fz.nfld.sf <- nfld.coast
-
-# g <- ggplot(data=boundaries_simple) +
-#    geom_sf(fill=grey(0.8), color=grey(0.3)) +
-#    geom_sf(data=nfld.coast, color="red", fill="mistyrose")
-#
 
 
 ## Quebec, zones 15, 16, 17, 18, 19, 20, 21, 22
@@ -719,4 +784,13 @@ write_sf(polygons, file.path(here(), "inst/extdata/shapefiles/fishing.zone.polyg
 
 #x11(); plot(st_geometry(groundfish.fc), col="black")
 
+
+
+## files that are produced in this script:
+## Gulf of St. Lawrence fishing zones lines and multilines
+## Gulf of St. Lawrence fishing zones polygons without coastline
+## - American lobster
+## - Snow crab
+## - Herring
+## - Groundfish
 

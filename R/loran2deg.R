@@ -23,9 +23,7 @@
 #' # Convert a vector of Loran XY coordinates to decimal degree format:
 #' loran2deg(seq(14000, 14500, len = 21), seq(29000, 29500, len = 21))
 #'
-#' @export loran2deg
-#' @export as.loran
-#' @export is.loran
+#' @export
 #'
 loran2deg <- function(x, y){
    x <- as.loran(x)
@@ -649,6 +647,7 @@ loran2deg <- function(x, y){
 }
 
 #' @describeIn loran2deg Clean up loran coordinate strings.
+#' @export
 as.loran <- function(x){
    # AS.LORAN - Reformats a character string to proper Loran-C numeric format.
 
@@ -685,4 +684,5 @@ as.loran <- function(x){
 }
 
 #' @describeIn loran2deg Determine if character string is a Loran-type coordinate.
+#' @export
 is.loran <- function(x) return(!is.na(as.loran(x)))

@@ -15,10 +15,7 @@
 #' dms2deg(663000) # Returns 66.5
 #' deg2dms(60+5*runif(100)) # Convert 100 random coordinates to DMS format.
 #'
-#' @export deg2dmm
-#' @export dmm2deg
-#' @export deg2dms
-#' @export dms2deg
+#' @export
 #'
 #' @seealso loran2deg deg2grid deg2grid
 #'
@@ -31,6 +28,7 @@ deg2dmm <- function(x){
 }
 
 #' @describeIn deg2dmm Convert from degree-decimal minute to decimal degree format.
+#' @export
 dmm2deg <- function(x){
    deg <- round(abs(x), -2) / 100
    min <- (abs(x) - round(abs(x), -2))
@@ -39,6 +37,7 @@ dmm2deg <- function(x){
 }
 
 #' @describeIn deg2dmm Convert from decimal degree to degree-minute-second format.
+#' @export
 deg2dms <- function(x){
    deg <- floor(abs(x))
    min <- 60 * (abs(x) - deg)
@@ -48,6 +47,7 @@ deg2dms <- function(x){
 }
 
 #' @describeIn deg2dmm Convert from degree-minute-second to decimal degree format.
+#' @export
 dms2deg <- function(x){
    deg <- floor(abs(x) / 10000)
    min <- round(abs(x) - (deg*10000), -2) / 100

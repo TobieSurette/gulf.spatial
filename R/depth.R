@@ -22,12 +22,12 @@
 #'    long <- c(-64, -61.5, -62)
 #'    depth(long, lat)
 #'
-#' @export depth
-#' @export depth.default
+#' @export
 #'
 depth <- function(x, ...) UseMethod("depth")
 
 #' @describeIn depth Default \code{depth} function.
+#' @export
 depth.default <- function(longitude, latitude, units = "m"){
    units <- match.arg(tolower(units), c("meters", "ft", "feet", "fth", "fathoms"))
 
@@ -102,6 +102,7 @@ depth.default <- function(longitude, latitude, units = "m"){
 }
 
 #' @describeIn depth Depth function for a list obejct.
+#' @export
 depth.list <- function(x, ...){
    lon <- longitude(x)
    lat <- latitude(x)

@@ -34,9 +34,7 @@
 #' coast()
 #' plot.grid(x$grid)
 #'
-#' @export deg2grid
-#' @export grid2deg
-#' @export plot.grid
+#' @export
 #'
 #' @section Functions:
 #' \describe{
@@ -67,10 +65,13 @@ deg2grid <- function(x, y,  quarter.grid = FALSE, xref = -66-1/3, yref = 45, dx 
    return(paste0(ystr, xstr))
 }
 
+#' @export
 abc2num <- function(x) return(26*(match(substr(toupper(x), 1, 1), LETTERS)-1) + match(substr(toupper(x), 2, 2), LETTERS)-1)
+#' @export
 num2abc <- function(x) return(paste0(LETTERS[floor(x / 26) + 1], LETTERS[x %% 26 + 1]))
 
 #' @rdname deg2grid
+#' @export
 grid2deg <- function(x, xref = -66-1/3, yref = 45, dx = 1/6, dy = 1/6, reference = "HP23", vertices = FALSE){
    x <- toupper(x)
 
@@ -97,6 +98,7 @@ grid2deg <- function(x, xref = -66-1/3, yref = 45, dx = 1/6, dy = 1/6, reference
 }
 
 #' @rdname deg2grid
+#' @export
 plot.grid <- function(x, label = FALSE, col = "white", border = "black", ...){
    # Get grid coordinates:
    grid <- grid2deg(x,  ...)

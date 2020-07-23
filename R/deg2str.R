@@ -36,7 +36,7 @@
 #' # Convert vectors of lat-long coordinates, which are returned as a list:
 #' deg2str(latitude = 45:47, longitude = -64:-66, clip = FALSE)
 #'
-#' @export deg2str
+#' @export
 #'
 deg2str <- function(deg = NULL, latitude = NULL, longitude = NULL, clip = TRUE,
                     northing = TRUE, easting = TRUE, as.list = FALSE){

@@ -30,8 +30,7 @@
 #' x <- read.scsset(year = 2010)
 #' stratum(longitude(x), latitude(x))
 #'
-#' @export stratum
-#' @export stratum.default
+#' @export
 #'
 
 #' @rdname survey.strata
@@ -41,12 +40,13 @@ stratum <- function(x, ...){
 }
 
 #' @rdname survey.strata
+#' @export
 stratum.default <- function(longitude, latitude, region = "gulf", survey = "rv", ...){
    # Load stratum polygons:
    s <- read.gulf.spatial(layer = "strata", region = region, survey = survey, ...)
 
    # Identify strata for each coordinate point:
-   p <- SpatialPoints(cbind(longitude, latitude))
+   p <- sp::SpatialPoints(cbind(longitude, latitude))
    v <- as.numeric(as.character(over(p, s, fn = NULL)$stratum))
 
    # Return result:

@@ -41,17 +41,7 @@
 #' points(x[index], y[index], pch = 21, bg = "red")
 #' points(x[!index], y[!index], pch = 21, bg = "blue")
 #'
-#' @export polygon
-#' @export polygon.default
-#' @export as.polygon
-#' @export plot.polygon
-#' @export in.polygon
-#' @export which.polygon
-#' @export area.polygon
-#' @export as.data.frame.polygon
-#' @export bbox.polygon
-#' @export draw.polygon
-#' @export is.polygon
+#' @export
 #'
 #' @section Functions:
 #' \describe{
@@ -72,9 +62,11 @@ polygon <- function(x, ...) UseMethod("polygon")
 
 #' @rdname polygon
 #' @method polygon default
+#' @export
 polygon.default <- function(x, ...) if (!("polygon" %in% class(x))) graphics::polygon(x, ...) else return(as.polygon(x))
 
 #' @rdname polygon
+#' @export
 as.polygon <- function(x, y = NULL, hole = NULL, ...){
    # AS.POLYGON - Create or convert to a 'polygon' object.
 
@@ -190,6 +182,7 @@ as.polygon <- function(x, y = NULL, hole = NULL, ...){
 
 #' @rdname polygon
 #' @method plot polygon
+#' @export
 plot.polygon <- function(p, labels = FALSE, as.lines = FALSE, ...){
    # PLOT.POLYGON - Plot a list of polygon objects.
 
@@ -219,6 +212,7 @@ plot.polygon <- function(p, labels = FALSE, as.lines = FALSE, ...){
 }
 
 #' @rdname polygon
+#' @export
 in.polygon <- function(p, x, y, ...){
    # Check input arguments:
    if (missing(x) | missing(y)) stop("'x' and 'y' must be specified.")
@@ -260,6 +254,7 @@ in.polygon <- function(p, x, y, ...){
 }
 
 #' @rdname polygon
+#' @export
 which.polygon <- function(p, x, y, as.list = FALSE){
    # WHICH.POLYGON - Determine to which polygon a point belongs.
 
@@ -289,6 +284,7 @@ which.polygon <- function(p, x, y, as.list = FALSE){
 }
 
 #' @rdname polygon
+#' @export
 area.polygon <- function(p){
    # AREA.POLYGON - Calculate the area of a polygon.
 
@@ -320,6 +316,7 @@ area.polygon <- function(p){
 
 #' @rdname polygon
 #' @method as.data.frame polygon
+#' @export
 as.data.frame.polygon <- function(x){
    # AS.DATA.FRAME.POLYGON - Convert a 'polygon' object to a data frame.
 
@@ -343,6 +340,7 @@ as.data.frame.polygon <- function(x){
 }
 
 #' @rdname polygon
+#' @export
 bbox.polygon <- function(p, ...){
    bb <- rep(NA, 4)
    for (i in 1:length(p)){
@@ -356,6 +354,7 @@ bbox.polygon <- function(p, ...){
 }
 
 #' @rdname polygon
+#' @export
 draw.polygon <- function(x = NULL, y = NULL, n, tol = 5E-3, snap = TRUE,
                          snap.to.grid = FALSE, grid.increment, grid.offset = 0,
                          pch = 21, bg = "black", ...){
@@ -502,5 +501,6 @@ draw.polygon <- function(x = NULL, y = NULL, n, tol = 5E-3, snap = TRUE,
 }
 
 #' @rdname polygon
+#' @export
 is.polygon <- function(p) return("polygon" %in% class(p))
 
