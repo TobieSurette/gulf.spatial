@@ -651,4 +651,10 @@ write_sf(fz.sf.polygons, file.path(here(), "inst/extdata/shapefiles/fishing.zone
 save(fz.sf.polygons, file="./data/fishing.zone.polygons.rda")
 
 
+## still to do,
+## - remove the lines on land in Nfld, for consistency with the other region
+## - generate Gulf lobster zones with coastlines from GHS instead of using those in the Gulf package
+## - add snow crab zones
+## - add herring zones
+## - add groundfish zones
 
