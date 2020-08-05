@@ -166,7 +166,7 @@
 		<SimpleData name="region">quebec</SimpleData>
 		<SimpleData name="label">15</SimpleData>
 	</SchemaData></ExtendedData>
-      <LineString><coordinates>-57.1125,51.4166666666667 -59.3916666666667,49.85 -59.9111111111111,50.2986111111111</coordinates></LineString>
+      <LineString><coordinates>-57.1125,51.4166666666667 -58.0,50.6841666666667 -59.3916666666667,49.85 -59.9111111111111,50.2986111111111</coordinates></LineString>
   </Placemark>
   <Placemark>
 	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>

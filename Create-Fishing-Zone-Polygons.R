@@ -99,7 +99,7 @@ lobster.afr$latitude <- dms2deg(as.numeric(paste0(lobster.afr$lat.d,lobster.afr$
 
 ## each LFA is a series of points from this list
 lfa.list <- list()
-lfa.list[[1]] <- list(type="fishing zone vertices", species.code=2550, region="quebec", label="15", points=c(1,45,44))
+lfa.list[[1]] <- list(type="fishing zone vertices", species.code=2550, region="quebec", label="15", points=c(1,116,45,44)) ## DR adding the point between LFA 14A and 14B, so as to remove the sliver where there is ocean that is in no LFA
 lfa.list[[2]] <- list(type="fishing zone vertices", species.code=2550, region="quebec", label="16", points=c(44,45,2,42,43))
 lfa.list[[3]] <- list(type="fishing zone vertices", species.code=2550, region="quebec", label="17A", points=c(72,73,78,74,75))
 lfa.list[[4]] <- list(type="fishing zone vertices", species.code=2550, region="quebec", label="17B", points=c(75,74,31,3,2,42,68,66,64,41,62,40,77,73,72))
@@ -199,7 +199,7 @@ fz.sf.polygons <- fz.nfld.sf.polygons
 ## this is good, but it won't work to add the coastline, need points on land!
 ## so add points on land (after point 79 in the ARC text file) and use st_difference
 lfa.list <- list()
-lfa.list[[1]] <- list(type="fishing zone vertices", species.code=2550, region="quebec", label="15", points=c(80,1,45,44,81,82,80)) ## good
+lfa.list[[1]] <- list(type="fishing zone vertices", species.code=2550, region="quebec", label="15", points=c(80,1,116,45,44,81,82,80)) ## good
 lfa.list[[2]] <- list(type="fishing zone vertices", species.code=2550, region="quebec", label="16", points=c(81,44,45,2,42,43,83,81)) ## good
 lfa.list[[3]] <- list(type="fishing zone vertices", species.code=2550, region="quebec", label="17A", points=c(72,73,78,74,75,84,72)) ## good
 lfa.list[[4]] <- list(type="fishing zone vertices", species.code=2550, region="quebec", label="17B", points=c(75,74,31,3,2,42,68,66,64,41,62,40,77,73,72,84,75)) ## good
@@ -260,15 +260,15 @@ ggsave(file="Gulf-of-St-Lawrence-lobster-areas-polygons.pdf", g, width = 30, hei
 
 write_sf(fz.sf.polygons, file.path(here(), "inst/extdata/shapefiles/fishing.zone.polygons.shp")) ## silently overwrites shapefile
 write_sf(fz.sf.polygons, file.path(here(), "inst/extdata/shapefiles/fishing.zone.polygons.kml")) ## google earth format
-write_sf(fz.sf.polygons, file.path(here(), "inst/extdata/shapefiles/fishing.zone.polygons.GeoJSON")) ## google earth format
 
 save(fz.sf.polygons, file="./data/fishing.zone.polygons.rda")
 
 
+
+
 ## still to do,
 ## - remove the lines on land in Nfld, for consistency with the other region
-## - generate Gulf lobster zones with coastlines from GHS instead of using those in the Gulf package
+## - generate Gulf lobster zones with coastlines from GSHHG instead of using those in the Gulf package
 ## - add snow crab zones
 ## - add herring zones
 ## - add groundfish zones
-
