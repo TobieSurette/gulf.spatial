@@ -172,7 +172,7 @@ lobster <- cbind(lobster, st_coordinates(st_centroid(lobster)))
 g <- ggplot(data=boundaries_simple) +
    geom_sf(fill=grey(0.8), color=grey(0.3)) +
    geom_sf(data=lobster, color="red", fill="mistyrose") +
-   geom_label(data=lobster, aes(X, Y, label=label)) +
+   geom_label(data=lobster, aes(X, Y, label=label), size=2) +
    xlim(-72,-48) + ylim(43,53)
 ggsave(file="Gulf-of-St-Lawrence-lobster-areas-lines.pdf", g, width = 30, height = 20, units = "cm")
 
@@ -263,6 +263,118 @@ write_sf(fz.sf.polygons, file.path(here(), "inst/extdata/shapefiles/fishing.zone
 
 save(fz.sf.polygons, file="./data/fishing.zone.polygons.rda")
 
+
+## now do the snow crab zones
+## https://inter-l01-uat.dfo-mpo.gc.ca/infoceans/sites/infoceans/files/Crabe_des_Neiges_en.pdf
+crab.afr <- read.table(file="snow-crab-atlantic-fishery-regulations-points.txt", header=TRUE, sep=" ", colClasses=c("numeric",rep("character", 6)))
+crab.afr$longitude <- -dms2deg(as.numeric(paste0(crab.afr$lon.d,crab.afr$lon.m,crab.afr$lon.s)))
+crab.afr$latitude <- dms2deg(as.numeric(paste0(crab.afr$lat.d,crab.afr$lat.m,crab.afr$lat.s)))
+
+## each LFA is a series of points from this list
+cfa.list <- list()
+cfa.list[[1]] <- list(type="fishing zone vertices", species.code=2526, region="gulf", label="12", points=c(40,39,38,37,16,24,35,34,32,31,30,29,43,58,57))
+cfa.list[[2]] <- list(type="fishing zone vertices", species.code=2526, region="gulf", label="12A", points=c(36,16,37,38,39,40))
+cfa.list[[3]] <- list(type="fishing zone vertices", species.code=2526, region="gulf", label="12B", points=c(15,24,23,22,20,13,14))
+cfa.list[[4]] <- list(type="fishing zone vertices", species.code=2526, region="gulf", label="12C", points=c(7,8,10,13,20,19,7))
+cfa.list[[5]] <- list(type="fishing zone vertices", species.code=2526, region="gulf", label="12E", points=c(32,33,35,34,32))
+cfa.list[[6]] <- list(type="fishing zone vertices", species.code=2526, region="gulf", label="12F", points=c(30,31,32,33,25,26,27,28,29,30))
+cfa.list[[7]] <- list(type="fishing zone vertices", species.code=2526, region="quebec", label="13", points=c(1,2,3), points=c(4,5,6))
+cfa.list[[8]] <- list(type="fishing zone vertices", species.code=2526, region="quebec", label="14", points=c(6,5,7,8,9))
+cfa.list[[9]] <- list(type="fishing zone vertices", species.code=2526, region="quebec", label="15", points=c(9,8,10,11,12))
+cfa.list[[10]] <- list(type="fishing zone vertices", species.code=2526, region="quebec", label="16", points=c(12,11,18), points=c(15,24,37,16,17))
+cfa.list[[11]] <- list(type="fishing zone vertices", species.code=2526, region="quebec", label="16A", points=c(14,13,10,11,18))
+cfa.list[[12]] <- list(type="fishing zone vertices", species.code=2526, region="quebec", label="17", points=c(59,60), points=c(17,16,36)) ## DR adding the same westmost points as LFA 19A near Quebec City
+cfa.list[[13]] <- list(type="fishing zone vertices", species.code=2526, region="gulf", label="18", points=c(53,52,51,58,57))
+cfa.list[[14]] <- list(type="fishing zone vertices", species.code=2526, region="gulf", label="19", points=c(54,43,29,56,55))
+cfa.list[[15]] <- list(type="fishing zone vertices", species.code=2526, region="gulf", label="25", points=c(50,51,58,43,48,49))
+cfa.list[[16]] <- list(type="fishing zone vertices", species.code=2526, region="gulf", label="26", points=c(41,42,48,49))
+
+
+create.sf.fct <- function(list.in){
+   n.ls <- length(list.in)-4 ## number of linestrings for this LFA
+   if(n.ls==1){
+      list.in$geometry <- st_linestring(as.matrix(crab.afr[list.in$points, c("longitude","latitude")]))
+   }
+   else{
+      ll <- list()
+      for(i in 1:n.ls){
+         ll[[i]] <- st_linestring(as.matrix(crab.afr[unlist(list.in[i+4]), c("longitude","latitude")]))
+      }
+      list.in$geometry <- st_multilinestring(ll)
+   }
+   return(list.in)
+}
+
+cfa.list.sf <- lapply(cfa.list, create.sf.fct)
+
+cfa.sf <- st_sf(do.call(rbind, lapply(cfa.list.sf, sf.fct)))
+
+crab <- cfa.sf
+crab <- cbind(crab, st_coordinates(st_centroid(crab)))
+
+g <- ggplot(data=boundaries_simple) +
+   geom_sf(fill=grey(0.8), color=grey(0.3)) +
+   geom_sf(data=crab, color="red", fill="mistyrose") +
+   geom_label(data=crab, aes(X, Y, label=label), size=2) +
+   xlim(-72,-48) + ylim(43,53)
+ggsave(file="Gulf-of-St-Lawrence-snow-crab-areas-lines.pdf", g, width = 30, height = 20, units = "cm")
+
+write_sf(crab, file.path(here(), "inst/extdata/shapefiles/crab.fishing.zone.vertices.kml")) ## google earth format
+
+
+##########################################################################
+## now need to create polygons with coastlines, so add points on land where necessary
+cfa.list <- list()
+cfa.list[[1]] <- list(type="fishing zone vertices", species.code=2526, region="gulf", label="12", points=c(40,39,38,37,16,24,35,34,32,31,30,29,43,58,57,89,90,91,92,93,94,95,96,97,40))
+cfa.list[[2]] <- list(type="fishing zone vertices", species.code=2526, region="gulf", label="12A", points=c(61,36,16,37,38,39,40,62))
+cfa.list[[3]] <- list(type="fishing zone vertices", species.code=2526, region="gulf", label="12B", points=c(15,24,23,22,20,13,14))
+cfa.list[[4]] <- list(type="fishing zone vertices", species.code=2526, region="gulf", label="12C", points=c(7,8,10,13,20,19,7)) ## completely at sea, no need to add coastline  ## good
+cfa.list[[5]] <- list(type="fishing zone vertices", species.code=2526, region="gulf", label="12E", points=c(32,33,35,34,32)) ## completely at sea, no need to add coastline  ## good
+cfa.list[[6]] <- list(type="fishing zone vertices", species.code=2526, region="gulf", label="12F", points=c(30,31,32,33,25,26,27,28,29,30)) ## completely at sea, no need to add coastline  ## good
+cfa.list[[7]] <- list(type="fishing zone vertices", species.code=2526, region="quebec", label="13", points=c(6,69,63,1,2,3,64,65,66,67,68,4,5,6)) ## good
+cfa.list[[8]] <- list(type="fishing zone vertices", species.code=2526, region="quebec", label="14", points=c(6,5,7,8,9,87,88,6))
+cfa.list[[9]] <- list(type="fishing zone vertices", species.code=2526, region="quebec", label="15", points=c(9,8,10,11,12,85,86,9))
+cfa.list[[10]] <- list(type="fishing zone vertices", species.code=2526, region="quebec", label="16", points=c(12,11,18,76,77,15,24,37,16,17,78,79,12))
+cfa.list[[11]] <- list(type="fishing zone vertices", species.code=2526, region="quebec", label="16A", points=c(14,13,10,11,18))
+cfa.list[[12]] <- list(type="fishing zone vertices", species.code=2526, region="quebec", label="17", points=c(70,17,16,36,71,72,73,59,60,74,75,70)) ## DR adding the same westmost points as LFA 19A near Quebec City
+cfa.list[[13]] <- list(type="fishing zone vertices", species.code=2526, region="gulf", label="18", points=c(53,52,51,58,57))
+cfa.list[[14]] <- list(type="fishing zone vertices", species.code=2526, region="gulf", label="19", points=c(54,43,29,56,55))
+cfa.list[[15]] <- list(type="fishing zone vertices", species.code=2526, region="gulf", label="25", points=c(50,51,58,43,48,49))
+cfa.list[[16]] <- list(type="fishing zone vertices", species.code=2526, region="gulf", label="26", points=c(41,42,48,49,80,81,82,83,84,41)) ## good
+
+
+## create.sf.fct(cfa.list[[2]])
+cfa.list.sf <- lapply(cfa.list, create.sf.fct)
+cfa.sf <- st_sf(do.call(rbind, lapply(cfa.list.sf, sf.fct)))
+
+## now use st_difference to add coast
+difference.fct <- function(li){
+   temp <- st_cast(li, "POLYGON")
+   bb <- st_bbox(temp)
+   boundaries.temp <- st_crop(boundaries_simple, bb)
+   temp.coast <- st_difference(temp, st_union(boundaries.temp$geometry))
+   return(temp.coast)
+}
+
+cfa.coast.sf <- difference.fct(cfa.sf[1,])
+for(i in 2:3){
+   print(i)
+   cfa.coast.sf <- rbind(cfa.coast.sf, difference.fct(cfa.sf[i,]))
+}
+cfa.coast.sf <- rbind(cfa.coast.sf, st_cast(cfa.sf[4:6,], "POLYGON"))
+for(i in 7:16){
+   print(i)
+   cfa.coast.sf <- rbind(cfa.coast.sf, difference.fct(cfa.sf[i,]))
+}
+
+
+fz.sf.polygons <- cfa.coast.sf
+
+g <- ggplot(data=boundaries_simple) +
+   geom_sf(fill=grey(0.8), color=grey(0.3)) +
+   geom_sf(data=fz.sf.polygons, color="red", fill="mistyrose") +
+   xlim(-72,-48) + ylim(43,53)
+ggsave(file="Gulf-of-St-Lawrence-snow-crab-areas-polygons.pdf", g, width = 30, height = 20, units = "cm")
 
 
 
