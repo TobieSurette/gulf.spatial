@@ -34,8 +34,6 @@ boundaries_simple <- boundaries %>%
    ) %>%
    st_transform(4326)
 
-## g <- ggplot(data=boundaries_simple) + geom_sf()
-
 
 ##########################################################################
 ## Newfoundland and Labrador, zones 3,4,5,6,7,8,9,10,11,12,13A,13B,14A,14B,14C
@@ -55,10 +53,6 @@ fz.nfld.sf.lines <-  st_sf(
 ## cast to multipolygon
 nfld.sf <- st_transform(st_cast(st_cast(nfld.shp, "POLYGON"), "MULTIPOLYGON"), 4326)
 nfld.sf <- st_transform(st_cast(st_cast(nfld.shp, "POLYGON"), "MULTIPOLYGON"), 4326)
-
-# g <- ggplot(data=boundaries_simple) +
-#    geom_sf(fill=grey(0.8), color=grey(0.3)) +
-#    geom_sf(data=nfld.sf, color="red", fill="mistyrose")
 
 
 ## function to add coastline
@@ -84,9 +78,6 @@ nfld.coast$label = nfld.coast$id
 fz.nfld.sf.polygons <- nfld.coast
 ## we now have all the Newfondland lobster fishing areas in simple features
 
-# g <- ggplot(data=boundaries_simple) +
-#    geom_sf(fill=grey(0.8), color=grey(0.3)) +
-#    geom_sf(data=nfld.coast, color="red", fill="mistyrose")
 #
 
 ## now do Quebec and Gulf from the AFR points
@@ -162,37 +153,11 @@ fz.gulf.quebec.sf.lines <- lfa.sf
 
 fz.sf.lines <- rbind(fz.nfld.sf.lines, fz.gulf.quebec.sf.lines)
 
-# g <- ggplot(data=boundaries_simple) +
-#    geom_sf(fill=grey(0.8), color=grey(0.3)) +
-#    geom_sf(data=fz.sf.lines, color="red", fill="mistyrose")
-
-lobster <- fz.sf.lines[fz.sf.lines$species.code==2550,]
-lobster <- cbind(lobster, st_coordinates(st_centroid(lobster)))
-
-g <- ggplot(data=boundaries_simple) +
-   geom_sf(fill=grey(0.8), color=grey(0.3)) +
-   geom_sf(data=lobster, color="red", fill="mistyrose") +
-   geom_label(data=lobster, aes(X, Y, label=label), size=2) +
-   xlim(-72,-48) + ylim(43,53)
-ggsave(file="Gulf-of-St-Lawrence-lobster-areas-lines.pdf", g, width = 30, height = 20, units = "cm")
-
-
-## the only issue here is that the Newfoundland lines do not end at the coast but rather at some point inland
-## but still usable, so write the corresponding OGC files
-write_sf(fz.sf.lines, file.path(here(), "inst/extdata/shapefiles/fishing.zone.vertices.shp")) ## silently overwrites shapefile
-write_sf(fz.sf.lines, file.path(here(), "inst/extdata/shapefiles/fishing.zone.vertices.kml")) ## google earth format
-
-save(fz.sf.lines, file="./data/fishing.zone.vertices.rda")
-
 
 ##########################################################################
 ## now need to create polygons with coastlines
 ## already done for Newfoundland
 fz.sf.polygons <- fz.nfld.sf.polygons
-
-# g <- ggplot(data=boundaries_simple) +
-#    geom_sf(fill=grey(0.8), color=grey(0.3)) +
-#    geom_sf(data=fz.sf.polygons, color="red", fill="mistyrose")
 
 
 #################
@@ -245,24 +210,9 @@ for(i in 2:27){
    lfa.coast.sf <- rbind(lfa.coast.sf, difference.fct(lfa.sf[i,]))
 }
 
-##g <- ggplot(lfa.coast.sf) + geom_sf()
-
 
 vars <- c("type", "species.code", "region", "label", "geometry")
 fz.sf.polygons <- rbind(lfa.coast.sf, fz.nfld.sf.polygons[,vars])
-##g <- ggplot(fz.sf.polygons) + geom_sf()
-g <- ggplot(data=boundaries_simple) +
-   geom_sf(fill=grey(0.8), color=grey(0.3)) +
-   geom_sf(data=fz.sf.polygons, color="red", fill="mistyrose") +
-   xlim(-72,-48) + ylim(43,53)
-ggsave(file="Gulf-of-St-Lawrence-lobster-areas-polygons.pdf", g, width = 30, height = 20, units = "cm")
-
-
-write_sf(fz.sf.polygons, file.path(here(), "inst/extdata/shapefiles/fishing.zone.polygons.shp")) ## silently overwrites shapefile
-write_sf(fz.sf.polygons, file.path(here(), "inst/extdata/shapefiles/fishing.zone.polygons.kml")) ## google earth format
-
-save(fz.sf.polygons, file="./data/fishing.zone.polygons.rda")
-
 
 ## now do the snow crab zones
 ## https://inter-l01-uat.dfo-mpo.gc.ca/infoceans/sites/infoceans/files/Crabe_des_Neiges_en.pdf
@@ -309,17 +259,7 @@ cfa.list.sf <- lapply(cfa.list, create.sf.fct)
 
 cfa.sf <- st_sf(do.call(rbind, lapply(cfa.list.sf, sf.fct)))
 
-crab <- cfa.sf
-crab <- cbind(crab, st_coordinates(st_centroid(crab)))
-
-g <- ggplot(data=boundaries_simple) +
-   geom_sf(fill=grey(0.8), color=grey(0.3)) +
-   geom_sf(data=crab, color="red", fill="mistyrose") +
-   geom_label(data=crab, aes(X, Y, label=label), size=2) +
-   xlim(-72,-48) + ylim(43,53)
-ggsave(file="Gulf-of-St-Lawrence-snow-crab-areas-lines.pdf", g, width = 30, height = 20, units = "cm")
-
-write_sf(crab, file.path(here(), "inst/extdata/shapefiles/crab.fishing.zone.vertices.kml")) ## google earth format
+fz.sf.lines <- rbind(cfa.sf, fz.sf.lines)
 
 
 ##########################################################################
@@ -368,19 +308,63 @@ for(i in 7:16){
 }
 
 
-fz.sf.polygons <- cfa.coast.sf
+fz.sf.polygons <- rbind(cfa.coast.sf, fz.sf.polygons)
+
+
+
+### final steps, make some maps showing the assembled lines and polygons for the different species, write shapefiles and KML files, and save as an .rda file
+
+## maps
+## lobster
+lobster.lines <- fz.sf.lines[fz.sf.lines$species.code==2550,]
+lobster.lines <- cbind(lobster.lines, st_coordinates(st_centroid(lobster.lines)))
+
+lobster.polygons <- fz.sf.polygons[fz.sf.polygons$species.code==2550,]
+lobster.polygons <- cbind(lobster.polygons, st_coordinates(st_centroid(lobster.polygons)))
+
+
+## snow crab
+snow.crab.lines <- fz.sf.lines[fz.sf.lines$species.code==2526,]
+snow.crab.lines <- cbind(snow.crab.lines, st_coordinates(st_centroid(snow.crab.lines)))
+
+snow.crab.polygons <- fz.sf.polygons[fz.sf.polygons$species.code==2526,]
+snow.crab.polygons <- cbind(snow.crab.polygons, st_coordinates(st_centroid(snow.crab.polygons)))
+
 
 g <- ggplot(data=boundaries_simple) +
    geom_sf(fill=grey(0.8), color=grey(0.3)) +
-   geom_sf(data=fz.sf.polygons, color="red", fill="mistyrose") +
    xlim(-72,-48) + ylim(43,53)
-ggsave(file="Gulf-of-St-Lawrence-snow-crab-areas-polygons.pdf", g, width = 30, height = 20, units = "cm")
+
+g1 <- g+geom_sf(data=snow.crab.lines, color="red", fill="mistyrose")+geom_label(data=snow.crab.lines, aes(X, Y, label=label), size=2)
+ggsave(file="Gulf-of-St-Lawrence-snow-crab-areas-lines.pdf", g1, width = 30, height = 20, units = "cm")
+
+g2 <- g+geom_sf(data=snow.crab.polygons, color="red", fill="mistyrose")+geom_label(data=snow.crab.polygons, aes(X, Y, label=label), size=2)
+ggsave(file="Gulf-of-St-Lawrence-snow-crab-areas-polygons.pdf", g2, width = 30, height = 20, units = "cm")
+
+g3 <- g+geom_sf(data=lobster.lines, color="red", fill="mistyrose")+geom_label(data=lobster.lines, aes(X, Y, label=label), size=2)
+ggsave(file="Gulf-of-St-Lawrence-lobster-areas-lines.pdf", g3, width = 30, height = 20, units = "cm")
+
+g4 <- g+geom_sf(data=lobster.polygons, color="red", fill="mistyrose")+geom_label(data=lobster.polygons, aes(X, Y, label=label), size=2)
+ggsave(file="Gulf-of-St-Lawrence-lobster-areas-polygons.pdf", g4, width = 30, height = 20, units = "cm")
+
+
+
+## write to files
+## lines
+write_sf(fz.sf.lines, file.path(here(), "inst/extdata/shapefiles/fishing.zone.vertices.shp")) ## silently overwrites shapefile
+write_sf(fz.sf.lines, file.path(here(), "inst/extdata/shapefiles/fishing.zone.vertices.kml")) ## google earth format
+save(fz.sf.lines, file="./data/fishing.zone.vertices.rda")
+
+## polygons
+write_sf(fz.sf.polygons, file.path(here(), "inst/extdata/shapefiles/fishing.zone.polygons.shp")) ## silently overwrites shapefile
+write_sf(fz.sf.polygons, file.path(here(), "inst/extdata/shapefiles/fishing.zone.polygons.kml")) ## google earth format
+save(fz.sf.polygons, file="./data/fishing.zone.polygons.rda")
 
 
 
 ## still to do,
 ## - remove the lines on land in Nfld, for consistency with the other region
-## - generate Gulf lobster zones with coastlines from GSHHG instead of using those in the Gulf package
-## - add snow crab zones
 ## - add herring zones
 ## - add groundfish zones
+## DONE - generate Gulf lobster zones with coastlines from GSHHG instead of using those in the Gulf package
+## DONE - add snow crab zones
