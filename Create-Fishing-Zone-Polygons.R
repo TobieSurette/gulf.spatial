@@ -335,13 +335,13 @@ g <- ggplot(data=boundaries_simple) +
    geom_sf(fill=grey(0.8), color=grey(0.3)) +
    xlim(-72,-48) + ylim(43,53)
 
-g1 <- g+geom_sf(data=snow.crab.lines, color="red", fill="mistyrose")+geom_label(data=snow.crab.lines, aes(X, Y, label=label), size=2)
+g1 <- g+geom_sf(data=snow.crab.lines, color="red", fill="mistyrose")+geom_label(data=snow.crab.polygons, aes(X, Y, label=label), size=2)
 ggsave(file="Gulf-of-St-Lawrence-snow-crab-areas-lines.pdf", g1, width = 30, height = 20, units = "cm")
 
 g2 <- g+geom_sf(data=snow.crab.polygons, color="red", fill="mistyrose")+geom_label(data=snow.crab.polygons, aes(X, Y, label=label), size=2)
 ggsave(file="Gulf-of-St-Lawrence-snow-crab-areas-polygons.pdf", g2, width = 30, height = 20, units = "cm")
 
-g3 <- g+geom_sf(data=lobster.lines, color="red", fill="mistyrose")+geom_label(data=lobster.lines, aes(X, Y, label=label), size=2)
+g3 <- g+geom_sf(data=lobster.lines, color="red", fill="mistyrose")+geom_label(data=lobster.polygons, aes(X, Y, label=label), size=2)
 ggsave(file="Gulf-of-St-Lawrence-lobster-areas-lines.pdf", g3, width = 30, height = 20, units = "cm")
 
 g4 <- g+geom_sf(data=lobster.polygons, color="red", fill="mistyrose")+geom_label(data=lobster.polygons, aes(X, Y, label=label), size=2)
