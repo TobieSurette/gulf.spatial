@@ -19,14 +19,14 @@ library(tidyverse)
 # )
 #unzip("AC_1M_BoundaryPolygons.shp.zip", exdir="AC")
 
-boundaries <- read_sf("AC/AC_1M_BoundaryPolygons_shp/AC_1M_BoundaryPolygons.shp")
+boundaries <- read_sf("build/AC/AC_1M_BoundaryPolygons_shp/AC_1M_BoundaryPolygons.shp")
 
 boundaries_simple <- boundaries %>%
    filter(
       POL_DIV %in% c(
          "Quebec", "Newfoundland and Labrador" ,
          #"New York", "New Hampshire", "Vermont",
-         #"Maine",
+         "Maine",
          "New Brunswick", "Nova Scotia",
          "Prince Edward Island"
       ),
@@ -76,21 +76,30 @@ nfld.coast$region <- "newfoundland"
 nfld.coast$label = nfld.coast$id
 
 fz.nfld.sf.polygons <- nfld.coast
-## we now have all the Newfondland lobster fishing areas in simple features
+## we now have all the Newfoundland lobster fishing areas in simple features
 
-#
+
+
+#library(PBSmapping)
+#plotMap(mar.csv[mar.csv$PID==27,])
+
+#g <- ggplot(data=boundaries_simple) +
+#   geom_sf(fill=grey(0.8), color=grey(0.3)) +
+#   geom_point(data=mar.csv[mar.csv$PID==27,], aes(x=X, y=Y)) +
+#   xlim(-72,-48) + ylim(43,53)
+
 
 ## now do Quebec and Gulf from the AFR points
 ##
 ## https://inter-l01-uat.dfo-mpo.gc.ca/infoceans/en/commercial-fisheries#carte
 ## I captured the points appearing in the Atlantic Fisheries Regulations in a text file, load that
-lobster.afr <- read.table(file="lobster-atlantic-fishery-regulations-points.txt", header=TRUE, sep=" ", colClasses=c("numeric",rep("character", 6)))
+lobster.afr <- read.table(file="./build/lobster-atlantic-fishery-regulations-points.txt", header=TRUE, sep=" ", colClasses=c("numeric",rep("character", 6)))
 lobster.afr$longitude <- -dms2deg(as.numeric(paste0(lobster.afr$lon.d,lobster.afr$lon.m,lobster.afr$lon.s)))
 lobster.afr$latitude <- dms2deg(as.numeric(paste0(lobster.afr$lat.d,lobster.afr$lat.m,lobster.afr$lat.s)))
 
 ## each LFA is a series of points from this list
 lfa.list <- list()
-lfa.list[[1]] <- list(type="fishing zone vertices", species.code=2550, region="quebec", label="15", points=c(1,116,45,44)) ## DR adding the point between LFA 14A and 14B, so as to remove the sliver where there is ocean that is in no LFA
+lfa.list[[1]] <- list(type="fishing zone vertices", species.code=2550, region="quebec", label="15", points=c(1,118,45,44)) ## DR adding the point between LFA 14A and 14B, so as to remove the sliver where there is ocean that is in no LFA
 lfa.list[[2]] <- list(type="fishing zone vertices", species.code=2550, region="quebec", label="16", points=c(44,45,2,42,43))
 lfa.list[[3]] <- list(type="fishing zone vertices", species.code=2550, region="quebec", label="17A", points=c(72,73,78,74,75))
 lfa.list[[4]] <- list(type="fishing zone vertices", species.code=2550, region="quebec", label="17B", points=c(75,74,31,3,2,42,68,66,64,41,62,40,77,73,72))
@@ -116,10 +125,12 @@ lfa.list[[23]] <- list(type="fishing zone vertices", species.code=2550, region="
 lfa.list[[24]] <- list(type="fishing zone vertices", species.code=2550, region="gulf", label="25", points=c(20,19,18), points=c(15,16,17))
 lfa.list[[25]] <- list(type="fishing zone vertices", species.code=2550, region="gulf", label="26A", points=c(15,16,17), points=c(14,13,50,49,48,47,46,10,9))
 lfa.list[[26]] <- list(type="fishing zone vertices", species.code=2550, region="gulf", label="26B", points=c(9,10,46,47,48,49,50,12,11))
-lfa.list[[27]] <- list(type="fishing zone vertices", species.code=2550, region="maritimes", label="27", points=c(11,12,3,4,5,6))
+lfa.list[[27]] <- list(type="fishing zone vertices", species.code=2550, region="maritimes", label="27", points=c(11,12,3,4,5,6), points=c(7,8))
+lfa.list[[28]] <- list(type="fishing zone vertices", species.code=2550, region="maritimes", label="28", points=c(7,8), points=c(119,120))
 
 
 create.sf.fct <- function(list.in){
+   print(list.in$label)
    n.ls <- length(list.in)-4 ## number of linestrings for this LFA
    if(n.ls==1){
       list.in$geometry <- st_linestring(as.matrix(lobster.afr[list.in$points, c("longitude","latitude")]))
@@ -154,6 +165,56 @@ fz.gulf.quebec.sf.lines <- lfa.sf
 fz.sf.lines <- rbind(fz.nfld.sf.lines, fz.gulf.quebec.sf.lines)
 
 
+## Maritimes LFAs
+## Part IV at https://laws-lois.justice.gc.ca/eng/regulations/SOR-86-21/page-25.html#h-892770
+
+## Part V at https://laws-lois.justice.gc.ca/eng/regulations/SOR-86-21/page-25.html#h-892770
+lobster.mar.afr <- read.table(file="./build/lobster-atlantic-fishery-regulations-points-Maritimes.txt", header=TRUE, sep=" ", colClasses=c("numeric",rep("character", 6)))
+lobster.mar.afr$longitude <- -dms2deg(as.numeric(paste0(lobster.mar.afr$lon.d,lobster.mar.afr$lon.m,lobster.mar.afr$lon.s)))
+lobster.mar.afr$latitude <- dms2deg(as.numeric(paste0(lobster.mar.afr$lat.d,lobster.mar.afr$lat.m,lobster.mar.afr$lat.s)))
+
+## each LFA is a series of points from this list
+lfa.list <- list()
+lfa.list[[1]] <- list(type="fishing zone vertices", species.code=2550, region="maritimes", label="29", points=c(1,2), points=c(7,6,8), points=c(9,10))
+lfa.list[[2]] <- list(type="fishing zone vertices", species.code=2550, region="maritimes", label="30", points=c(3,4,5,6,7))
+lfa.list[[3]] <- list(type="fishing zone vertices", species.code=2550, region="maritimes", label="31A", points=c(8,6,5,11,12,13))
+lfa.list[[4]] <- list(type="fishing zone vertices", species.code=2550, region="maritimes", label="31B", points=c(13,12,14,15))
+lfa.list[[5]] <- list(type="fishing zone vertices", species.code=2550, region="maritimes", label="32", points=c(15,14,17,16))
+lfa.list[[6]] <- list(type="fishing zone vertices", species.code=2550, region="maritimes", label="33", points=c(16,17,18,19,26,27,28))
+lfa.list[[7]] <- list(type="fishing zone vertices", species.code=2550, region="maritimes", label="34", points=c(28,27,25,24,29,30,31,32,33,34,39,40))
+lfa.list[[8]] <- list(type="fishing zone vertices", species.code=2550, region="maritimes", label="35", points=c(40,39,41,42,43))
+lfa.list[[9]] <- list(type="fishing zone vertices", species.code=2550, region="maritimes", label="36", points=c(43,42,41,39,34,38,37,36,35))
+lfa.list[[10]] <- list(type="fishing zone vertices", species.code=2550, region="maritimes", label="37", points=c(34,38,37,36,34))
+lfa.list[[11]] <- list(type="fishing zone vertices", species.code=2550, region="maritimes", label="38", points=c(32,33,34,36,35))
+lfa.list[[12]] <- list(type="fishing zone vertices", species.code=2550, region="maritimes", label="40", points=c(25,27,26,19,20,21,22,23,24,25))
+
+create.sf.mar.fct <- function(list.in){
+   print(list.in$label)
+   n.ls <- length(list.in)-4 ## number of linestrings for this LFA
+   if(n.ls==1){
+      list.in$geometry <- st_linestring(as.matrix(lobster.mar.afr[list.in$points, c("longitude","latitude")]))
+   }
+   else{
+      ll <- list()
+      for(i in 1:n.ls){
+         ll[[i]] <- st_linestring(as.matrix(lobster.mar.afr[unlist(list.in[i+4]), c("longitude","latitude")]))
+      }
+      list.in$geometry <- st_multilinestring(ll)
+   }
+   return(list.in)
+}
+
+lfa.list.sf <- lapply(lfa.list, create.sf.mar.fct)
+
+lfa.sf <- st_sf(do.call(rbind, lapply(lfa.list.sf, sf.fct)))
+
+fz.gulf.maritimes.sf.lines <- lfa.sf
+
+fz.sf.lines <- rbind(fz.sf.lines, fz.gulf.maritimes.sf.lines)
+
+
+##
+
 ##########################################################################
 ## now need to create polygons with coastlines
 ## already done for Newfoundland
@@ -164,7 +225,7 @@ fz.sf.polygons <- fz.nfld.sf.polygons
 ## this is good, but it won't work to add the coastline, need points on land!
 ## so add points on land (after point 79 in the ARC text file) and use st_difference
 lfa.list <- list()
-lfa.list[[1]] <- list(type="fishing zone vertices", species.code=2550, region="quebec", label="15", points=c(80,1,116,45,44,81,82,80)) ## good
+lfa.list[[1]] <- list(type="fishing zone vertices", species.code=2550, region="quebec", label="15", points=c(80,1,118,45,44,81,82,80)) ## good
 lfa.list[[2]] <- list(type="fishing zone vertices", species.code=2550, region="quebec", label="16", points=c(81,44,45,2,42,43,83,81)) ## good
 lfa.list[[3]] <- list(type="fishing zone vertices", species.code=2550, region="quebec", label="17A", points=c(72,73,78,74,75,84,72)) ## good
 lfa.list[[4]] <- list(type="fishing zone vertices", species.code=2550, region="quebec", label="17B", points=c(75,74,31,3,2,42,68,66,64,41,62,40,77,73,72,84,75)) ## good
@@ -190,10 +251,12 @@ lfa.list[[23]] <- list(type="fishing zone vertices", species.code=2550, region="
 lfa.list[[24]] <- list(type="fishing zone vertices", species.code=2550, region="gulf", label="25", points=c(20,19,18,107,106,105,17,16,15,108,109,20)) ## good
 lfa.list[[25]] <- list(type="fishing zone vertices", species.code=2550, region="gulf", label="26A", points=c(15,16,17,105,104,103,14,13,50,49,48,47,46,10,9,110,111,15)) ## good
 lfa.list[[26]] <- list(type="fishing zone vertices", species.code=2550, region="gulf", label="26B", points=c(9,10,46,47,48,49,50,12,11,112,113,9)) ## good
-lfa.list[[27]] <- list(type="fishing zone vertices", species.code=2550, region="maritimes", label="27", points=c(11,12,3,4,5,6,114,115,11)) ## good
+lfa.list[[27]] <- list(type="fishing zone vertices", species.code=2550, region="maritimes", label="27", points=c(11,12,3,4,5,6,114,7,8,115,116,117,11)) ## good
+lfa.list[[28]] <- list(type="fishing zone vertices", species.code=2550, region="maritimes", label="28", points=c(8,115,122,121,119,120,114,7,8))
 
 lfa.list.sf <- lapply(lfa.list, create.sf.fct)
 lfa.sf <- st_sf(do.call(rbind, lapply(lfa.list.sf, sf.fct)))
+
 
 ## now use st_difference to add coast
 difference.fct <- function(li){
@@ -205,18 +268,68 @@ difference.fct <- function(li){
 }
 
 lfa.coast.sf <- difference.fct(lfa.sf[1,])
-for(i in 2:27){
+for(i in 2:28){
    print(i)
    lfa.coast.sf <- rbind(lfa.coast.sf, difference.fct(lfa.sf[i,]))
 }
 
 
+
+## do the same for Maritimes LFAs
+## NOTE: for the function difference.fct to qork, the vertices below can't be MULTILINESTRING, it must be a LINESTRING
+lfa.list <- list()
+lfa.list[[1]] <- list(type="fishing zone vertices", species.code=2550, region="maritimes", label="29", points=c(1,2,7,6,8,9,10,1))
+lfa.list[[2]] <- list(type="fishing zone vertices", species.code=2550, region="maritimes", label="30", points=c(3,4,5,6,7,44,3))
+lfa.list[[3]] <- list(type="fishing zone vertices", species.code=2550, region="maritimes", label="31A", points=c(8,6,5,11,12,13,45,46,8))
+lfa.list[[4]] <- list(type="fishing zone vertices", species.code=2550, region="maritimes", label="31B", points=c(13,12,14,15,47,45,13))
+lfa.list[[5]] <- list(type="fishing zone vertices", species.code=2550, region="maritimes", label="32", points=c(15,14,17,16,48,45,15))
+lfa.list[[6]] <- list(type="fishing zone vertices", species.code=2550, region="maritimes", label="33", points=c(48,16,17,18,19,26,27,28,49,50,48))
+lfa.list[[7]] <- list(type="fishing zone vertices", species.code=2550, region="maritimes", label="34", points=c(49,28,27,25,24,29,30,31,32,33,34,39,40,51,49))
+lfa.list[[8]] <- list(type="fishing zone vertices", species.code=2550, region="maritimes", label="35", points=c(51,40,39,41,42,43,52,53,48,51))
+lfa.list[[9]] <- list(type="fishing zone vertices", species.code=2550, region="maritimes", label="36", points=c(52,43,42,41,39,34,38,37,35,54,52))
+lfa.list[[10]] <- list(type="fishing zone vertices", species.code=2550, region="maritimes", label="37", points=c(34,38,37,36,34))
+lfa.list[[11]] <- list(type="fishing zone vertices", species.code=2550, region="maritimes", label="38", points=c(32,33,34,36,35))
+lfa.list[[12]] <- list(type="fishing zone vertices", species.code=2550, region="maritimes", label="40", points=c(25,27,26,19,20,21,22,23,24,25))
+
+lfa.list.sf <- lapply(lfa.list, create.sf.mar.fct)
+lfa.sf <- st_sf(do.call(rbind, lapply(lfa.list.sf, sf.fct)))
+
+
+lfa.coast.mar.sf <- difference.fct(lfa.sf[1,])
+for(i in 2:9){
+   print(i)
+   lfa.coast.mar.sf <- rbind(lfa.coast.mar.sf, difference.fct(lfa.sf[i,]))
+}
+
+lfa.coast.mar.sf <- rbind(
+   lfa.coast.mar.sf,
+   st_sf(cbind(
+      as.data.frame(lfa.sf[10,])[,c("type","species.code","region","label")],
+      data.frame(geometry=st_cast(lfa.sf[10,"geometry"],"POLYGON")$geometry)
+      ))
+   ) ## no need to clip coastline, it is the zone near Grand Manan without any land
+
+lfa.coast.mar.sf <- rbind(lfa.coast.mar.sf, difference.fct(lfa.sf[11,]))
+
+lfa.coast.mar.sf <- rbind(
+   lfa.coast.mar.sf,
+   st_sf(cbind(
+      as.data.frame(lfa.sf[12,])[,c("type","species.code","region","label")],
+      data.frame(geometry=st_cast(lfa.sf[12,"geometry"],"POLYGON")$geometry)
+   ))
+) ## no need to clip coastline, it is the offshore zone without any land
+
+
+
+
 vars <- c("type", "species.code", "region", "label", "geometry")
-fz.sf.polygons <- rbind(lfa.coast.sf, fz.nfld.sf.polygons[,vars])
+fz.sf.polygons <- rbind(lfa.coast.sf, lfa.coast.mar.sf, fz.nfld.sf.polygons[,vars])
+
+
 
 ## now do the snow crab zones
 ## https://inter-l01-uat.dfo-mpo.gc.ca/infoceans/sites/infoceans/files/Crabe_des_Neiges_en.pdf
-crab.afr <- read.table(file="snow-crab-atlantic-fishery-regulations-points.txt", header=TRUE, sep=" ", colClasses=c("numeric",rep("character", 6)))
+crab.afr <- read.table(file="build/snow-crab-atlantic-fishery-regulations-points.txt", header=TRUE, sep=" ", colClasses=c("numeric",rep("character", 6)))
 crab.afr$longitude <- -dms2deg(as.numeric(paste0(crab.afr$lon.d,crab.afr$lon.m,crab.afr$lon.s)))
 crab.afr$latitude <- dms2deg(as.numeric(paste0(crab.afr$lat.d,crab.afr$lat.m,crab.afr$lat.s)))
 
@@ -333,20 +446,19 @@ snow.crab.polygons <- cbind(snow.crab.polygons, st_coordinates(st_centroid(snow.
 
 g <- ggplot(data=boundaries_simple) +
    geom_sf(fill=grey(0.8), color=grey(0.3)) +
-   xlim(-72,-48) + ylim(43,53)
+   xlim(-72,-48) + ylim(42,53)
 
 g1 <- g+geom_sf(data=snow.crab.lines, color="red", fill="mistyrose")+geom_label(data=snow.crab.polygons, aes(X, Y, label=label), size=2)
-ggsave(file="Gulf-of-St-Lawrence-snow-crab-areas-lines.pdf", g1, width = 30, height = 20, units = "cm")
+ggsave(file="build/Gulf-of-St-Lawrence-snow-crab-areas-lines.pdf", g1, width = 30, height = 20, units = "cm")
 
 g2 <- g+geom_sf(data=snow.crab.polygons, color="red", fill="mistyrose")+geom_label(data=snow.crab.polygons, aes(X, Y, label=label), size=2)
-ggsave(file="Gulf-of-St-Lawrence-snow-crab-areas-polygons.pdf", g2, width = 30, height = 20, units = "cm")
+ggsave(file="build/Gulf-of-St-Lawrence-snow-crab-areas-polygons.pdf", g2, width = 30, height = 20, units = "cm")
 
 g3 <- g+geom_sf(data=lobster.lines, color="red", fill="mistyrose")+geom_label(data=lobster.polygons, aes(X, Y, label=label), size=2)
-ggsave(file="Gulf-of-St-Lawrence-lobster-areas-lines.pdf", g3, width = 30, height = 20, units = "cm")
+ggsave(file="build/Gulf-of-St-Lawrence-lobster-areas-lines.pdf", g3, width = 30, height = 20, units = "cm")
 
 g4 <- g+geom_sf(data=lobster.polygons, color="red", fill="mistyrose")+geom_label(data=lobster.polygons, aes(X, Y, label=label), size=2)
-ggsave(file="Gulf-of-St-Lawrence-lobster-areas-polygons.pdf", g4, width = 30, height = 20, units = "cm")
-
+ggsave(file="build/Gulf-of-St-Lawrence-lobster-areas-polygons.pdf", g4, width = 30, height = 20, units = "cm")
 
 
 ## write to files
@@ -364,7 +476,11 @@ save(fz.sf.polygons, file="./data/fishing.zone.polygons.rda")
 
 ## still to do,
 ## - remove the lines on land in Nfld, for consistency with the other region
+## - for Maritimes LFAs, add Canada-US border in the polygons
 ## - add herring zones
 ## - add groundfish zones
+## - add Newfoundland snow crab zones
+## - add Maritimes LFAs
 ## DONE - generate Gulf lobster zones with coastlines from GSHHG instead of using those in the Gulf package
 ## DONE - add snow crab zones
+## DONE - clean up LFAs around Bras d'Or lake
