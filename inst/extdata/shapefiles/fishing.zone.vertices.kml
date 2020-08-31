@@ -176,7 +176,7 @@
 		<SimpleData name="region">newfoundland</SimpleData>
 		<SimpleData name="label">3</SimpleData>
 	</SchemaData></ExtendedData>
-      <LineString><coordinates>-49.6335,52.259 -49.8333,52.25 -55.4333,52.25 -55.4333,51.6333 -55.4573,51.5777 -55.5391,51.5629 -55.5625,51.5111 -55.6326,51.4297 -55.8079,51.4297 -56.1585,51.4297 -56.4667,51.4167 -56.7312,50.9707 -57.0818,50.6819 -57.5259,50.0156 -57.596,49.4012 -56.5635,49.4234 -56.2037,49.8306 -55.7001,49.9046 -55.4333,50.0 -48.0528,50.0 -48.0653,50.1719 -48.107,50.4061 -48.1732,50.6385 -48.264,50.8595 -48.3453,51.0172 -48.4458,51.1821 -48.5615,51.3433 -48.7067,51.5193 -48.9063,51.7219 -49.1299,51.9144 -49.3759,52.0957 -49.5536,52.2107</coordinates></LineString>
+      <MultiGeometry><LineString><coordinates>-55.7730555555555,52.25 -55.4333333333333,52.25 -49.6333333333333,52.25</coordinates></LineString><LineString><coordinates>-55.7730555555555,52.25 -55.4333333333333,52.25 -55.4666666666667,51.6333333333333</coordinates></LineString></MultiGeometry>
   </Placemark>
   <Placemark>
 	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
@@ -186,7 +186,7 @@
 		<SimpleData name="region">newfoundland</SimpleData>
 		<SimpleData name="label">4</SimpleData>
 	</SchemaData></ExtendedData>
-      <LineString><coordinates>-48.0528,50.0 -55.4333,50.0 -55.7001,49.9046 -56.2037,49.8306 -56.5635,49.4234 -55.868,48.9566 -54.6208,48.9186 -53.8333,49.25 -48.0203,49.25 -48.0212,49.252 -48.0453,49.3355 -48.0852,49.5445 -48.0552,49.7787 -48.0511,49.9362</coordinates></LineString>
+      <MultiGeometry><LineString><coordinates>-55.5083333333333,50.0 -48.0452777777778,50.0</coordinates></LineString><LineString><coordinates>-53.4680555555556,49.25 -48.0325,49.25</coordinates></LineString></MultiGeometry>
   </Placemark>
   <Placemark>
 	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
@@ -196,7 +196,7 @@
 		<SimpleData name="region">newfoundland</SimpleData>
 		<SimpleData name="label">5</SimpleData>
 	</SchemaData></ExtendedData>
-      <LineString><coordinates>-48.0203,49.25 -53.8333,49.25 -54.6208,48.9186 -54.333,48.2949 -53.5775,48.3177 -53.3616,48.4546 -53.1817,48.4546 -53.0833,48.7 -47.847,48.7 -47.8846,48.8714 -47.9883,49.1764</coordinates></LineString>
+      <MultiGeometry><LineString><coordinates>-53.4680555555556,49.25 -48.0325,49.25</coordinates></LineString><LineString><coordinates>-53.0841666666667,48.7 -47.8418055555556,48.7</coordinates></LineString></MultiGeometry>
   </Placemark>
   <Placemark>
 	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
@@ -206,7 +206,7 @@
 		<SimpleData name="region">newfoundland</SimpleData>
 		<SimpleData name="label">6</SimpleData>
 	</SchemaData></ExtendedData>
-      <LineString><coordinates>-47.847,48.7 -53.0833,48.7 -53.1817,48.4546 -53.3616,48.4546 -53.5775,48.3177 -54.333,48.2949 -54.0571,47.9382 -53.9732,47.8836 -53.9372,47.7664 -53.8173,47.5789 -53.7214,47.4852 -53.4575,47.4383 -53.2417,47.8445 -53.0738,48.0085 -52.9539,48.1101 -52.8333,48.1667 -47.75,48.1667 -47.7651,48.2412 -47.8114,48.4223 -47.8363,48.638</coordinates></LineString>
+      <MultiGeometry><LineString><coordinates>-53.0841666666667,48.7 -47.8418055555556,48.7</coordinates></LineString><LineString><coordinates>-52.9397222222222,48.1666666666667 -47.7472222222222,48.1666666666667</coordinates></LineString></MultiGeometry>
   </Placemark>
   <Placemark>
 	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
@@ -216,7 +216,7 @@
 		<SimpleData name="region">newfoundland</SimpleData>
 		<SimpleData name="label">7</SimpleData>
 	</SchemaData></ExtendedData>
-      <LineString><coordinates>-47.7486,48.1667 -47.75,48.1667 -52.8333,48.1667 -52.9539,48.1101 -53.0738,48.0085 -53.2417,47.8445 -53.4575,47.4383 -53.1337,47.3211 -52.786,47.5008 -52.786,47.6805 -52.75,47.81 -47.8333,47.81 -47.6986,47.8106 -47.7101,47.9422 -47.7342,48.0982</coordinates></LineString>
+      <MultiGeometry><LineString><coordinates>-52.9397222222222,48.1666666666667 -47.7472222222222,48.1666666666667</coordinates></LineString><LineString><coordinates>-52.8111111111111,47.81 -47.7147222222222,47.81</coordinates></LineString></MultiGeometry>
   </Placemark>
   <Placemark>
 	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
@@ -226,7 +226,7 @@
 		<SimpleData name="region">newfoundland</SimpleData>
 		<SimpleData name="label">8</SimpleData>
 	</SchemaData></ExtendedData>
-      <LineString><coordinates>-47.6986,47.8106 -47.8333,47.81 -52.75,47.81 -52.786,47.6805 -52.786,47.5008 -53.1337,47.3211 -53.0833,46.8333 -53.0833,43.4167 -53.0838,43.3264 -52.7038,43.3419 -52.2886,43.3826 -51.8799,43.4499 -51.5742,43.515 -51.2089,43.6172 -50.8435,43.7445 -50.4775,43.8968 -50.1289,44.0726 -49.8114,44.2623 -49.6095,44.403 -49.4834,44.4981 -49.3224,44.6317 -49.19,44.7524 -49.0639,44.8784 -48.9487,44.9978 -48.7314,45.237 -48.5286,45.5115 -48.3836,45.7496 -48.2811,45.9436 -48.1952,46.1373 -48.1171,46.2712 -47.9607,46.5628 -47.8496,46.8393 -47.7737,47.0891 -47.7134,47.3971 -47.6947,47.7086 -47.6973,47.7869</coordinates></LineString>
+      <MultiGeometry><LineString><coordinates>-52.8111111111111,47.81 -47.7147222222222,47.81</coordinates></LineString><LineString><coordinates>-53.0833333333333,46.6555555555556 -53.0833333333333,43.3494444444444</coordinates></LineString></MultiGeometry>
   </Placemark>
   <Placemark>
 	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
@@ -236,7 +236,7 @@
 		<SimpleData name="region">newfoundland</SimpleData>
 		<SimpleData name="label">9</SimpleData>
 	</SchemaData></ExtendedData>
-      <LineString><coordinates>-53.0838,43.3264 -53.0833,43.4167 -53.0833,46.8333 -53.1337,47.3211 -53.4575,47.4383 -53.7214,47.4852 -53.7573,47.2294 -53.9732,46.9789 -54.2,46.8167 -54.5,46.0 -54.5,43.4167 -54.5,43.3833 -54.2205,43.3481 -53.9078,43.3234 -53.5928,43.3129 -53.2789,43.3173 -53.0934,43.3261</coordinates></LineString>
+      <MultiGeometry><LineString><coordinates>-53.0833333333333,46.6555555555556 -53.0833333333333,43.3494444444444</coordinates></LineString><LineString><coordinates>-54.2,46.8166666666667 -54.5,46.0 -54.5,43.395</coordinates></LineString></MultiGeometry>
   </Placemark>
   <Placemark>
 	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
@@ -246,7 +246,7 @@
 		<SimpleData name="region">newfoundland</SimpleData>
 		<SimpleData name="label">10</SimpleData>
 	</SchemaData></ExtendedData>
-      <LineString><coordinates>-54.5,43.3833 -54.5,43.4167 -54.5,46.0 -54.2,46.8167 -53.9732,46.9789 -53.7573,47.2294 -53.7214,47.4852 -53.8173,47.5789 -53.9372,47.7664 -53.9732,47.8836 -54.0571,47.9382 -54.333,48.2949 -54.5488,47.6636 -55.0525,47.3964 -55.4123,47.0791 -55.844,46.9455 -55.9833,46.8333 -55.9833,44.4167 -54.829,43.4411 -54.7346,43.4232 -54.6324,43.4047 -54.5308,43.3878</coordinates></LineString>
+      <MultiGeometry><LineString><coordinates>-54.2,46.8166666666667 -54.5,46.0 -54.5,43.395 -54.8,43.4418055555556</coordinates></LineString><LineString><coordinates>-55.9833333333333,46.9416666666667 -55.9833333333333,44.4166666666667 -54.8,43.4418055555556</coordinates></LineString></MultiGeometry>
   </Placemark>
   <Placemark>
 	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
@@ -256,7 +256,7 @@
 		<SimpleData name="region">newfoundland</SimpleData>
 		<SimpleData name="label">11</SimpleData>
 	</SchemaData></ExtendedData>
-      <LineString><coordinates>-58.15,47.6667 -58.15,46.2833 -57.8333,46.0 -55.9833,44.4167 -55.9833,46.8333 -55.844,46.9455 -55.4123,47.0791 -55.0525,47.3964 -54.5488,47.6636 -54.333,48.2949 -58.0985,47.8516</coordinates></LineString>
+      <LineString><coordinates>-55.9833333333333,46.9416666666667 -55.9833333333333,44.4166666666667 -57.8333333333333,46.0 -58.15,46.2833333333333 -58.15,47.6833333333333</coordinates></LineString>
   </Placemark>
   <Placemark>
 	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
@@ -266,7 +266,7 @@
 		<SimpleData name="region">newfoundland</SimpleData>
 		<SimpleData name="label">12</SimpleData>
 	</SchemaData></ExtendedData>
-      <LineString><coordinates>-59.3167,47.6167 -59.5833,47.5 -58.15,46.2833 -58.15,47.6667 -58.0985,47.8516 -58.6022,47.8859</coordinates></LineString>
+      <LineString><coordinates>-58.15,47.6833333333333 -58.15,46.2833333333333 -59.5833333333333,47.5 -59.3166666666667,47.6166666666667</coordinates></LineString>
   </Placemark>
   <Placemark>
 	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
@@ -276,7 +276,7 @@
 		<SimpleData name="region">newfoundland</SimpleData>
 		<SimpleData name="label">13A</SimpleData>
 	</SchemaData></ExtendedData>
-      <LineString><coordinates>-59.25,48.4667 -60.0,48.4667 -60.0,47.8333 -59.5833,47.5 -59.3167,47.6167 -58.6022,47.8859 -57.6541,48.5265 -58.45,48.6037 -58.794,48.5538 -58.9558,48.5265 -59.0975,48.5447</coordinates></LineString>
+      <LineString><coordinates>-59.3166666666667,47.6166666666667 -59.5833333333333,47.5 -60.0,47.8333333333333 -60.0,48.4666666666667 -59.25,48.4666666666667</coordinates></LineString>
   </Placemark>
   <Placemark>
 	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
@@ -286,7 +286,7 @@
 		<SimpleData name="region">newfoundland</SimpleData>
 		<SimpleData name="label">13B</SimpleData>
 	</SchemaData></ExtendedData>
-      <LineString><coordinates>-58.25,49.4167 -60.0,49.4167 -60.0,48.4667 -59.25,48.4667 -59.0975,48.5447 -58.9558,48.5265 -58.794,48.5538 -58.45,48.6037 -57.6541,48.5265 -57.818,49.3716</coordinates></LineString>
+      <LineString><coordinates>-59.25,48.4666666666667 -60.0,48.4666666666667 -60.0,49.4166666666667 -58.2327777777778,49.4166666666667</coordinates></LineString>
   </Placemark>
   <Placemark>
 	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
@@ -296,7 +296,7 @@
 		<SimpleData name="region">newfoundland</SimpleData>
 		<SimpleData name="label">14A</SimpleData>
 	</SchemaData></ExtendedData>
-      <LineString><coordinates>-58.25,49.4167 -57.818,49.3716 -57.596,49.4012 -57.5259,50.0156 -57.0818,50.6819 -57.4008,50.6842 -58.0,50.6842 -59.3917,49.85 -60.0,49.4167</coordinates></LineString>
+      <LineString><coordinates>-58.2327777777778,49.4166666666667 -60.0,49.4166666666667 -59.3916666666667,49.85 -58.0,50.6841666666667 -57.4008333333333,50.6841666666667</coordinates></LineString>
   </Placemark>
   <Placemark>
 	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
@@ -306,7 +306,7 @@
 		<SimpleData name="region">newfoundland</SimpleData>
 		<SimpleData name="label">14B</SimpleData>
 	</SchemaData></ExtendedData>
-      <LineString><coordinates>-57.0818,50.6819 -56.7312,50.9707 -56.4667,51.4167 -57.1125,51.4167 -58.0,50.6842 -57.4008,50.6842</coordinates></LineString>
+      <LineString><coordinates>-57.4008333333333,50.6841666666667 -58.0,50.6841666666667 -57.1125,51.4166666666667 -56.4666666666667,51.4166666666667</coordinates></LineString>
   </Placemark>
   <Placemark>
 	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
@@ -316,7 +316,7 @@
 		<SimpleData name="region">newfoundland</SimpleData>
 		<SimpleData name="label">14C</SimpleData>
 	</SchemaData></ExtendedData>
-      <LineString><coordinates>-56.4667,51.4167 -56.1585,51.4297 -55.8079,51.4297 -55.6326,51.4297 -55.5625,51.5111 -55.5391,51.5629 -55.4573,51.5777 -55.4333,51.6333 -55.4333,52.25 -55.8333,52.25 -57.1168,51.7258 -57.1125,51.4167</coordinates></LineString>
+      <MultiGeometry><LineString><coordinates>-55.7730555555555,52.25 -55.4333333333333,52.25 -55.4666666666667,51.6333333333333</coordinates></LineString><LineString><coordinates>-57.1125,51.4166666666667 -56.4666666666667,51.4166666666667</coordinates></LineString></MultiGeometry>
   </Placemark>
   <Placemark>
 	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
