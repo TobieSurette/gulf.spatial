@@ -2,7 +2,7 @@ Package: gulf.spatial
 Type: Package
 Title: DFO Gulf Region Spatial Functions
 Version: 0.1.0
-Import: sp, rgdal, methods, gulf.utils, gulf.metadata, gulf.data
+Depends: gulf.data, sp, rgdal, methods
 Suggests: testthat
 Authors@R: as.person(c("Tobie Surette <Tobie.Surette@dfo-mpo.gc.ca> [aut, cre]", "Daniel Ricard <Daniel.Ricard@dfo-mpo.gc.ca> [aut]"))
 Description: Collection of spatial functions for use in DFO Gulf Region, the southern Gulf of Saint Lawrence.

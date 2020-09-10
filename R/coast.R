@@ -27,7 +27,8 @@
 #' # Read coastline data:
 #' x <- coast()
 #'
-#' @export
+#' @export coast
+#' @export coastline
 #'
 coast <- function(resolution = "high", col = 'grey80', border = 'grey50', lwd = 0.4, ...){
 
@@ -44,6 +45,5 @@ coast <- function(resolution = "high", col = 'grey80', border = 'grey50', lwd = 
 }
 
 #' @describeIn coast Alias for \code{coast}
-#' @export
 coastline <- coast
 
