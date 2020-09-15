@@ -53,5 +53,5 @@ deg2str(latitude = 45:47, longitude = -64:-66, clip = FALSE)
 
 }
 \seealso{
-loran2deg deg2grid deg2grid
+\code{\link{deg2dms}}, \code{\link{deg2dmm}}
 }

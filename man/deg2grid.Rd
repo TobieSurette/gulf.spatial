@@ -3,7 +3,6 @@
 \name{deg2grid}
 \alias{deg2grid}
 \alias{grid2deg}
-\alias{plot.grid}
 \title{Coordinates and Grids}
 \usage{
 deg2grid(
@@ -26,8 +25,6 @@ grid2deg(
   reference = "HP23",
   vertices = FALSE
 )
-
-\method{plot}{grid}(x, label = FALSE, col = "white", border = "black", ...)
 }
 \arguments{
 \item{x}{Horizontal coordinate vector (e.g. decimal longitude) or grid name.}
@@ -45,26 +42,16 @@ grid2deg(
 \item{dy}{A numerical value specifying the vertical height of each regular grid.}
 
 \item{reference}{A four-character string of the form XXYY, where XX are two letters and YY are two digits.}
-
-\item{vertices}{Logical value specifiying whether to output the corner coordinates of each grid.}
-
-\item{label}{Logical value specifying whether to display label inside the grids when using \code{plot.grid}.}
-
-\item{col}{Background colour when plotting a grid using \code{plot.grid}.}
-
-\item{border}{Border line colour when plotting a grid using \code{plot.grid}.}
 }
 \description{
 Functions to assign a grid label(s) given coordinates, and vice versa.
 }
 \section{Functions}{
+\itemize{
+\item \code{deg2grid}: Returns a grid name for a given coordinate(s).
 
-\describe{
-  \item{\code{deg2grid}}{Returns a grid name for a given coordinate(s).}
-  \item{\code{grid2deg}}{Returns the corner coordinates of a grid.}
-  \item{\code{plot.grid}}{Graphically display grid.}
-}
-}
+\item \code{grid2deg}: Returns the corner coordinates of a grid.
+}}
 
 \examples{
 deg2grid(-64, 47) # Returns "HD37".
@@ -76,13 +63,7 @@ lon <- -66 + 6 * runif(100)
 lat <- 45 + 4 * runif(100)
 deg2grid(lon, lat)
 
-# Generate set of snow crab 10'x10' grids:
-x <- expand.grid(seq(-66.5 + 1/12, -60 - 1/12, by  = 1/6),
-                 seq(45.5-1/12, 49 + 1/12, by  = 1/6))
-x$grid <- deg2grid(x[,1], x[,2])
-x <- grid2deg(x$grid, vertices = TRUE) # Grid corner coordinates.
-plot(c(-66.5, -60), c(45, 49), type = "n")
-coast()
-plot.grid(x$grid)
-
+}
+\seealso{
+\code{\link{plot.grid}}
 }

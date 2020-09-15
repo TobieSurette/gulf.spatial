@@ -22,8 +22,6 @@
 #' returned output is a character string vector. Otherwise, the output is
 #' returned as a list with fields \code{longitude} and \code{latitude}.
 #'
-#' @seealso loran2deg deg2grid deg2grid
-#'
 #' @examples
 #' # Convert generic coordinate:
 #' deg2str(c(45, 47.5))
@@ -36,8 +34,9 @@
 #' # Convert vectors of lat-long coordinates, which are returned as a list:
 #' deg2str(latitude = 45:47, longitude = -64:-66, clip = FALSE)
 #'
-#' @export
-#'
+#' @seealso \code{\link{deg2dms}}, \code{\link{deg2dmm}}
+
+#' @export deg2str
 deg2str <- function(deg = NULL, latitude = NULL, longitude = NULL, clip = TRUE,
                     northing = TRUE, easting = TRUE, as.list = FALSE){
 

@@ -23,6 +23,8 @@ Converts from one latitude-longitude numeric format to another.
 }
 \section{Functions}{
 \itemize{
+\item \code{deg2dmm}: Convert from decimal degree to degree-decimal minute format.
+
 \item \code{dmm2deg}: Convert from degree-decimal minute to decimal degree format.
 
 \item \code{deg2dms}: Convert from decimal degree to degree-minute-second format.
@@ -43,7 +45,5 @@ deg2dms(60+5*runif(100)) # Convert 100 random coordinates to DMS format.
 
 }
 \seealso{
-loran2deg deg2grid deg2grid
-
-Convert from decimal degree to degree decimal-minute format.
+\code{\link{loran2deg}}, \code{\link{deg2grid}}, \code{\link{deg2str}}
 }

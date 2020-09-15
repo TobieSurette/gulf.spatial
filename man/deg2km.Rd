@@ -30,6 +30,8 @@ Convert geographical coordinates to kilometers and vice versa.
 }
 \section{Functions}{
 \itemize{
+\item \code{deg2km}: Convert coordinates from decimal lat-lon to kilometers (UTM).
+
 \item \code{km2deg}: Convert coordinates from kilometers to decimal lat-lon.
 }}
 
@@ -51,5 +53,5 @@ km2deg(seq(0, -200, len = 21), seq(0, 100, len = 21))
 
 }
 \seealso{
-loran2deg deg2dms deg2dmm deg2str
+\code{\link{loran2deg}}, \code{\link{deg2dms}}, \code{\link{deg2dmm}}, \code{\link{deg2str}}
 }

@@ -16,8 +16,6 @@
 #'
 #' @return A data frame containing the converted coordinates.
 #'
-#' @seealso loran2deg deg2dms deg2dmm deg2str
-#'
 #' @examples
 #' # Convert a decimal degree coordinate to kilometers format:
 #' deg2km(-63.123, 47.56)
@@ -34,10 +32,11 @@
 #' # Convert a vector of kilometer-format coordinates to decimal degree format:
 #' km2deg(seq(0, -200, len = 21), seq(0, 100, len = 21))
 #'
-#' @export
-#'
-deg2km <- function(x, y, long.ref, lat.ref, method = "utm"){
+#' @seealso \code{\link{loran2deg}}, \code{\link{deg2dms}}, \code{\link{deg2dmm}}, \code{\link{deg2str}}
 
+#' @describeIn deg2km Convert coordinates from decimal lat-lon to kilometers (UTM).
+#' @export deg2km
+deg2km <- function(x, y, long.ref, lat.ref, method = "utm"){
    method <- match.arg(tolower(method), c("utm", "ellipsoid"))
 
    # Calculate coordinates using 'rgdal' package methods:
@@ -108,7 +107,7 @@ deg2km <- function(x, y, long.ref, lat.ref, method = "utm"){
 }
 
 #' @describeIn deg2km Convert coordinates from kilometers to decimal lat-lon.
-#' @export
+#' @export km2deg
 km2deg <- function(x, y, long.ref, lat.ref, method = "utm"){
 
    method <- match.arg(tolower(method), c("utm", "ellipsoid"))
