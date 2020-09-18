@@ -11,6 +11,8 @@
 #'
 #' @section Functions:
 #' \describe{
+#'   \item{\code{coordinates}}{Generic \code{coordinates} method.}
+#'   \item{\code{coordinates.default}}{See \code{\link[sp]{coordinates}}.}
 #'   \item{\code{longitude}, \code{latitude}}{Extract longitude or latitude coordinates from a data frame or list.}
 #'   \item{\code{lon}, \code{long}}{Alias functions for \code{longitude}.}
 #'   \item{\code{lat}}{Alias function for \code{latitude}.}
