@@ -59,7 +59,7 @@ map.default <- function(x, layer, xlim, ylim, region = "gulf", add = TRUE, ...){
    }
 }
 
-#' @describeIn map Plot \strongs{eSonar} coordinate track data.
+#' @describeIn map Plot \strong{eSonar} coordinate track data.
 #' @export
 map.esonar <- function(x, variable, ...){
    # Create map axes:
@@ -70,7 +70,7 @@ map.esonar <- function(x, variable, ...){
    gulf.map(xlim = c(rx[1] - dx*0.1, rx[2] + dx*0.1),
             ylim = c(ry[1] - dy*0.1, ry[2] + dy*0.1),
             aspect.adjust = TRUE, ...)
-   
+
    # Draw points:
    if (missing(variable)){
       points(x$longitude, x$latitude, pch = 21, bg = "blue", cex = 0.8)

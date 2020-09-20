@@ -3,11 +3,14 @@
 \name{map}
 \alias{map}
 \alias{map.default}
+\alias{map.esonar}
 \title{Map Gulf of St. Lawrence Features}
 \usage{
 map(x, ...)
 
 \method{map}{default}(x, layer, xlim, ylim, region = "gulf", add = TRUE, ...)
+
+\method{map}{esonar}(x, variable, ...)
 }
 \arguments{
 \item{layer}{Layer specification}
@@ -15,6 +18,13 @@ map(x, ...)
 \description{
 Draws southern Gulf of St. Lawrence geographical features.
 }
+\section{Methods (by class)}{
+\itemize{
+\item \code{default}: Plot Gulf of Saint Lawrence base map.
+
+\item \code{esonar}: Plot \strong{eSonar} coordinate track data.
+}}
+
 \examples{
 map()
 map(layer = "strata", survey = "rv", region = "gulf")
