@@ -1,6 +1,6 @@
 #' gulf.spatial: sGSL Utility Functions
 #'
-#' A package of spatial functions for use in the southern Gulf of Saint Lawrence
+#' @description A package of spatial functions for use in the southern Gulf of Saint Lawrence
 #' fisheries' science.
 #'
 #' @section \code{gulf.spatial} functions:

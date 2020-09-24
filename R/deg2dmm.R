@@ -16,7 +16,6 @@
 #' deg2dms(60+5*runif(100)) # Convert 100 random coordinates to DMS format.
 #'
 #' @seealso \code{\link{loran2deg}}, \code{\link{deg2grid}}, \code{\link{deg2str}}
-#'
 
 #' @describeIn deg2dmm Convert from decimal degree to degree-decimal minute format.
 #' @export deg2dmm
@@ -55,4 +54,3 @@ dms2deg <- function(x){
    r <- sign(x) * (deg + min / 60 + sec / 3600)
    return(r)
 }
-

@@ -1,4 +1,4 @@
-#' Retrieve Coordinates
+#' Retrieve Spatial Coordinates
 #'
 #' @description Functions to retrieve coordinates from an object.
 #'
