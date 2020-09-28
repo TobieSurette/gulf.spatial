@@ -36,11 +36,12 @@ Converts from one latitude-longitude numeric format to another.
 # Degree decimal-minute conversions:
 deg2dmm(66.5) # Returns 6630.00
 dmm2deg(6630) # Returns 66.5
+dmm2deg(663000) # Returns 66.5
 deg2dmm(60+5*runif(100)) # Convert 100 random coordinates to DMM format.
 
 # Degree-minute-second conversions:
-deg2dms(66.5) # Returns 663000
-dms2deg(663000) # Returns 66.5
+deg2dms(-66.5) # Returns -663000
+dms2deg(-663000) # Returns -66.5
 deg2dms(60+5*runif(100)) # Convert 100 random coordinates to DMS format.
 
 }

@@ -11,7 +11,7 @@
 \alias{lon}
 \alias{lat}
 \alias{long}
-\title{Retrieve Coordinates}
+\title{Retrieve Spatial Coordinates}
 \usage{
 coordinates(x, ...)
 

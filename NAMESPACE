@@ -2,7 +2,6 @@
 
 S3method(as.data.frame,polygon)
 S3method(coordinates,default)
-S3method(coordinates,scsset)
 S3method(depth,default)
 S3method(depth,list)
 S3method(distance,default)
