@@ -27,23 +27,24 @@
 #' # Read coastline data:
 #' x <- coast()
 #'
+
 #' @export coast
-#' @export coastline
-#'
 coast <- function(resolution = "high", col = 'grey80', border = 'grey50', lwd = 0.4, ...){
-
+   # Parse coastline resolution argument:
    resolution <- match.arg(tolower(resolution), c("low", "intermediate", "high", "full"))
+   resolution <- substr(resolution, 1, 1)
 
-   # Load coastline data file:
-   file <- paste0("data/gulf.coast.", substr(resolution, 1, 1), ".rda")
-   load(file)
+   # Read file:
+   map <- read.csv(locate(package = "gulf.spatial", keywords  = paste0("gulf.coast.", resolution)),
+                   header = TRUE, stringsAsFactors = FALSE)
 
    # Display:
-   graphics::polygon(x, col = col, border = border, lwd = lwd, ...)
+   graphics::polygon(map, col = col, border = border, lwd = lwd, ...)
 
-   invisible(x)
+   invisible(map)
 }
 
 #' @describeIn coast Alias for \code{coast}
+#' @export coastline
 coastline <- coast
 
