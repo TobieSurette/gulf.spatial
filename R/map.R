@@ -52,10 +52,20 @@ map.default <- function(x, layer, xlim, ylim, region = "gulf", add = TRUE, ...){
 
    # Load gulf coast:
    if (!missing(layer)){
-       for (i in 1:length(layer)){
-          v <- read.gulf.spatial(layer = layer[i], region = region, ...)
-          plot(v, add = TRUE)
-       }
+      # Parse map layer argument:
+      layer <- match.arg(tolower(layer), c("bounds", "stations", "stratum", "strata", "fishing.zones",
+                                           "kriging", "coastline", "altitude", "bathymetry", "depth", "dem",
+                                           "ports", "cities", "geography", "features"))
+      layer <- gsub("strata", "stratum", layer)
+      layer[layer %in% c("altitude", "depth")] <- "bathymetry"
+
+      if (layer == "coastline") coast(...)
+      if (layer == "bathymetry") bathymetry(...)
+
+      if (!(layer %in% c("coast", "bathymetry"))){
+         v <- read.gulf.spatial(layer = layer[i], region = region, ...)
+         plot(v, add = TRUE)
+      }
    }
 }
 
@@ -67,14 +77,8 @@ map.esonar <- function(x, variable, ...){
    ry <- range(lat(x))
    dx <- diff(rx)
    dy <- diff(ry)
-   gulf.map(xlim = c(rx[1] - dx*0.1, rx[2] + dx*0.1),
-            ylim = c(ry[1] - dy*0.1, ry[2] + dy*0.1),
-            aspect.adjust = TRUE, ...)
+   map(xlim = c(rx[1] - dx*0.1, rx[2] + dx*0.1), ylim = c(ry[1] - dy*0.1, ry[2] + dy*0.1))
 
    # Draw points:
-   if (missing(variable)){
-      points(x$longitude, x$latitude, pch = 21, bg = "blue", cex = 0.8)
-   }else{
-      points(x$longitude, x$latitude, pch = 21, bg = "blue", cex = 2* 0.8* x[, variable] / max(x[, variable], na.rm = TRUE))
-   }
+   points(lon(x), lat(x), pch = 21, bg = "blue", cex = 0.8, ...)
 }

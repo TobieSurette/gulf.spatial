@@ -34,10 +34,7 @@
 #'
 
 #' @rdname survey.strata
-stratum <- function(x, ...){
-   # STRATUM - Generic 'stratum' method.
-   UseMethod("stratum")
-}
+stratum <- function(x, ...) UseMethod("stratum")
 
 #' @rdname survey.strata
 #' @export

@@ -32,10 +32,7 @@ depth.default <- function(longitude, latitude, units = "m"){
    units <- match.arg(tolower(units), c("meters", "ft", "feet", "fth", "fathoms"))
 
    # Load gulf bathymetry spatial grid:
-   data(gulf.dem)
-
-   # Return all bathymetry data:
-   if (missing(longitude) & missing(latitude)) return(gulf.dem)
+   b <- gulf.spatial::read.gulf.spatial("bathymetry")
 
    # Argument checks:
    if (missing(longitude) | missing(latitude)) stop("'longitude' and 'latitude' must be specified.")
@@ -50,13 +47,13 @@ depth.default <- function(longitude, latitude, units = "m"){
 
    # Convert to image:
    I <- list()
-   I$z <- gulf.dem@data$z
-   dim(I$z) <- gulf.dem@grid@cells.dim
+   I$z <- b@data$z
+   dim(I$z) <- b@grid@cells.dim
    I$z <- I$z[, dim(I$z)[2]:1]
-   wx <- gulf.dem@grid@cellsize[1]
-   I$x <- seq(gulf.dem@bbox[1, 1] + wx/2, gulf.dem@bbox[1, 2] - wx/2, by = wx)
-   wy <- gulf.dem@grid@cellsize[2]
-   I$y <- seq(gulf.dem@bbox[2, 1] + wy/2, gulf.dem@bbox[2, 2] - wy/2, by = wy)
+   wx <- b@grid@cellsize[1]
+   I$x <- seq(b@bbox[1, 1] + wx/2, b@bbox[1, 2] - wx/2, by = wx)
+   wy <- b@grid@cellsize[2]
+   I$y <- seq(b@bbox[2, 1] + wy/2, b@bbox[2, 2] - wy/2, by = wy)
 
    # Take absolute value of latitude and longitude:
    latitude = abs(latitude)

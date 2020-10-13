@@ -5,22 +5,11 @@
 \alias{coastline}
 \title{Display Gulf Coast}
 \usage{
-coast(resolution = "high", col = "grey80", border = "grey50", lwd = 0.4, ...)
+coast(col = "grey80", border = "grey50", lwd = 0.4, ...)
 
-coastline(
-  resolution = "high",
-  col = "grey80",
-  border = "grey50",
-  lwd = 0.4,
-  ...
-)
+coastline(col = "grey80", border = "grey50", lwd = 0.4, ...)
 }
 \arguments{
-\item{resolution}{Character string specifying the resolution of the
-coastline, topographical and bathymetric data file to be loaded. It may take
-the following values: \sQuote{low} (low resolution), \sQuote{intermediate} (intermediate resolution),
-\sQuote{high} (high resolution), or \sQuote{full} (full resolution).}
-
 \item{col}{The colour to be used for in-filling the landmass. If}
 
 \item{border}{The border colour to be used for displaying the coastline.}
@@ -28,6 +17,11 @@ the following values: \sQuote{low} (low resolution), \sQuote{intermediate} (inte
 \item{lwd}{Border line width (see \code{\link[graphics]{par}}).}
 
 \item{\dots}{Further arguments to be passed to the \code{\link[graphics]{polygon}} function.}
+
+\item{resolution}{Character string specifying the resolution of the
+coastline, topographical and bathymetric data file to be loaded. It may take
+the following values: \sQuote{low} (low resolution), \sQuote{intermediate} (intermediate resolution),
+\sQuote{high} (high resolution), or \sQuote{full} (full resolution).}
 }
 \value{
 A spatial object containing the coastline coordinates is returned invisibly.

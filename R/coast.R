@@ -29,17 +29,12 @@
 #'
 
 #' @export coast
-coast <- function(resolution = "high", col = 'grey80', border = 'grey50', lwd = 0.4, ...){
-   # Parse coastline resolution argument:
-   resolution <- match.arg(tolower(resolution), c("low", "intermediate", "high", "full"))
-   resolution <- substr(resolution, 1, 1)
-
+coast <- function(col = 'grey80', border = 'grey50', lwd = 0.4, ...){
    # Read file:
-   map <- read.csv(locate(package = "gulf.spatial", keywords  = paste0("gulf.coast.", resolution)),
-                   header = TRUE, stringsAsFactors = FALSE)
+   map <- read.gulf.spatial(layer = "coast", ...)
 
    # Display:
-   graphics::polygon(map, col = col, border = border, lwd = lwd, ...)
+   graphics::polygon(map, col = col, border = border, lwd = lwd)
 
    invisible(map)
 }

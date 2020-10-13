@@ -25,48 +25,77 @@
 #'   \item{\code{geography}, \code{features}}{Load land and marine geographical features.}
 #' }
 #'
-#' @export
-#'
 
 # File extension function:
 fext <- function(x) return(tolower(unlist(lapply(strsplit(x, "[.]"), function(x) x[length(x)]))))
 
-read.gulf.spatial <- function(layer, survey, region, project, file.extensions =  c("csv", "shp", "txt", "tab"), ...){
-   if (!missing(survey) & missing(project)) project <- paste0(survey, "s")
+#' @describeIn read Locate gulf spatial data files.
+#' @export locate.gulf.spatial
+locate.gulf.spatial <- function(layer, survey, region, project,
+                                 file.extensions =  c("csv", "shp", "txt", "tab", "rda", "rdata"),
+                                 resolution = "high",
+                                 ...){
+   # File extension function:
+   fext <- function(x) return(unlist(lapply(strsplit(x, "[.]"), function(x) x[length(x)])))
 
    # Parse map layer argument:
    layer <- match.arg(tolower(layer), c("bounds", "stations", "stratum", "strata", "fishing.zones",
-                                        "kriging", "coast", "altitude", "bathymetry", "depth", "dem",
+                                        "kriging", "coastline", "altitude", "bathymetry", "depth", "dem",
                                         "ports", "cities", "geography", "features"))
    layer <- gsub("strata", "stratum", layer)
+   layer <- gsub("coastline", "coast", layer)
+
+   # Parse coastline resolution argument:
+   resolution <- match.arg(tolower(resolution), c("low", "intermediate", "high", "full"))
 
    # Default project:
-   if (missing(project)) if (!missing(survey)) project <- project(survey) else project <- ""
+   if (missing(project)) if (!missing(survey)) project <- gulf.metadata::project(survey) else project <- ""
 
    # Get list of all data files and paths:
-   file <- file.locate(package = "gulf.spatial", layer)
-   file <- file[fext(file) %in% file.extensions]
-   if (length(file) > 1){
-      file <- file.locate(package = "gulf.spatial", c(layer, project))
-      file <- file[fext(file) %in% file.extensions]
-   }
+   if (missing(project)) file <- gulf.utils::locate(package = "gulf.spatial", file = layer)
+   if (!missing(project)) file <- gulf.utils::locate(package = "gulf.spatial", file = c(layer, project))
 
-   if (length(file) == 0) stop("Unable to find spatial data.")
+   # Filter out by file extension:
+   file <- file[fext(file) %in% file.extensions]
+
+   # Add specific file filters if necessary:
+   if (length(file) > 1) file <- file[grep(resolution, file)]
+
+   return(file)
+}
+
+#' @describeIn read Read gulf spatial data files.
+#' @export read.gulf.spatial
+read.gulf.spatial <- function(layer, ...){
+   # Find file:
+   file <- locate.gulf.spatial(layer, ...)
+
+   if (length(file) == 0) stop("Unable to find spatial data layer.")
+
    if (length(file) > 1) stop("Arguments correspond to multiple spatial data files.")
-   if (length(file)== 1){
+   if (length(file) == 1){
+      # Read shapefile:
       if (fext(file) == "shp"){
          v <- rgdal::readOGR(file, verbose = FALSE)
 
          # Subset by survey and region:
-         if (!missing(survey)) v <- v[v$survey %in% tolower(survey), ]
-         if (!missing(region)) v <- v[v$region %in% tolower(region), ]
+         if (!missing(survey)) v <- gulf.utils::subset(v, survey = tolower(survey))
+         if (!missing(region)) v <- gulf.utils::subset(v, region = tolower(region))
       }
+
+      # Read CSV file:
       if (fext(file) == "csv") v <- read.csv(file, header = TRUE, stringsAsFactors = FALSE)
+
+      # Read R data files:
+      if (fext(file) %in% c("rda", "rdata")){
+         files <- ls()
+         load(file)
+         v <- setdiff(ls(), files)
+         eval(parse(text = paste0("v = ", v)))
+      }
    }
 
-
-
-   subset(v, ...)
+   #subset(v, ...)
 
    return(v)
 }

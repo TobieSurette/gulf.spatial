@@ -15,16 +15,27 @@
 #' @export
 longitude.scsset <- function(x){
    if ("longitude" %in% names(x)) v <- x$longitude else v <- rep(NA, nrow(x))
-   index <- is.na(v)
 
-   index <- which(is.na(v) & !is.na(x$longitude.start.logbook) & is.na(x$longitude.end.logbook))
+   names(x) <- gsub("longitude.end", "longitude.stop", names(x))
+
+   index <- which(is.na(v) & !is.na(x$longitude.start) & is.na(x$longitude.stop))
+   if (length(index) > 0) v[index] <- dmm2deg(x$longitude.start[index])
+
+   index <- which(is.na(v) & is.na(x$longitude.start) & !is.na(x$longitude.stop))
+   if (length(index) > 0) v[index] <- dmm2deg(x$longitude.stop[index])
+
+   index <- which(is.na(v) & !is.na(x$longitude.start) & !is.na(x$longitude.stop))
+   if (length(index) > 0) v[index] <- (dmm2deg(x$longitude.start[index]) + dmm2deg(x$longitude.stop[index])) / 2
+
+   # Use logbook values:
+   index <- which(is.na(v) & !is.na(x$longitude.start.logbook) & is.na(x$longitude.stop.logbook))
    if (length(index) > 0) v[index] <- dmm2deg(x$longitude.start.logbook[index])
 
-   index <- which(is.na(v) & is.na(x$longitude.start.logbook) & !is.na(x$longitude.end.logbook))
-   if (length(index) > 0) v[index] <- dmm2deg(x$longitude.end.logbook[index])
+   index <- which(is.na(v) & is.na(x$longitude.start.logbook) & !is.na(x$longitude.stop.logbook))
+   if (length(index) > 0) v[index] <- dmm2deg(x$longitude.stop.logbook[index])
 
-   index <- which(is.na(v) & !is.na(x$longitude.start.logbook) & !is.na(x$longitude.end.logbook))
-   if (length(index) > 0) v[index] <- (dmm2deg(x$longitude.start.logbook[index]) + dmm2deg(x$longitude.end.logbook[index])) / 2
+   index <- which(is.na(v) & !is.na(x$longitude.start.logbook) & !is.na(x$longitude.stop.logbook))
+   if (length(index) > 0) v[index] <- (dmm2deg(x$longitude.start.logbook[index]) + dmm2deg(x$longitude.stop.logbook[index])) / 2
 
    return(v)
 }
@@ -33,16 +44,27 @@ longitude.scsset <- function(x){
 #' @export
 latitude.scsset <- function(x){
    if ("latitude" %in% names(x)) v <- x$latitude else v <- rep(NA, nrow(x))
-   index <- is.na(v)
 
-   index <- which(is.na(v) & !is.na(x$latitude.start.logbook) & is.na(x$latitude.end.logbook))
+   names(x) <- gsub("latitude.end", "latgitude.stop", names(x))
+
+   index <- which(is.na(v) & !is.na(x$latitude.start) & is.na(x$latitude.stop))
+   if (length(index) > 0) v[index] <- dmm2deg(x$latitude.start[index])
+
+   index <- which(is.na(v) & is.na(x$latitude.start) & !is.na(x$latitude.stop))
+   if (length(index) > 0) v[index] <- dmm2deg(x$latitude.stop[index])
+
+   index <- which(is.na(v) & !is.na(x$latitude.start) & !is.na(x$latitude.stop))
+   if (length(index) > 0) v[index] <- (dmm2deg(x$latitude.start[index]) + dmm2deg(x$latitude.stop[index])) / 2
+
+   # Use logbook values:
+   index <- which(is.na(v) & !is.na(x$latitude.start.logbook) & is.na(x$latitude.stop.logbook))
    if (length(index) > 0) v[index] <- dmm2deg(x$latitude.start.logbook[index])
 
-   index <- which(is.na(v) & is.na(x$latitude.start.logbook) & !is.na(x$latitude.end.logbook))
-   if (length(index) > 0) v[index] <- dmm2deg(x$latitude.end.logbook[index])
+   index <- which(is.na(v) & is.na(x$latitude.start.logbook) & !is.na(x$latitude.stop.logbook))
+   if (length(index) > 0) v[index] <- dmm2deg(x$latitude.stop.logbook[index])
 
-   index <- which(is.na(v) & !is.na(x$latitude.start.logbook) & !is.na(x$latitude.end.logbook))
-   if (length(index) > 0) v[index] <- (dmm2deg(x$latitude.start.logbook[index]) + dmm2deg(x$latitude.end.logbook[index])) / 2
+   index <- which(is.na(v) & !is.na(x$latitude.start.logbook) & !is.na(x$latitude.stop.logbook))
+   if (length(index) > 0) v[index] <- (dmm2deg(x$latitude.start.logbook[index]) + dmm2deg(x$latitude.stop.logbook[index])) / 2
 
    return(v)
 }
