@@ -61,12 +61,11 @@
 polygon <- function(x, ...) UseMethod("polygon")
 
 #' @rdname polygon
-#' @method polygon default
 #' @export
 polygon.default <- function(x, ...) if (!("polygon" %in% class(x))) graphics::polygon(x, ...) else return(as.polygon(x))
 
 #' @rdname polygon
-#' @export
+#' @export as.polygon
 as.polygon <- function(x, y = NULL, hole = NULL, ...){
    # AS.POLYGON - Create or convert to a 'polygon' object.
 
@@ -181,7 +180,6 @@ as.polygon <- function(x, y = NULL, hole = NULL, ...){
 }
 
 #' @rdname polygon
-#' @method plot polygon
 #' @export
 plot.polygon <- function(p, labels = FALSE, as.lines = FALSE, ...){
    # PLOT.POLYGON - Plot a list of polygon objects.
@@ -194,7 +192,7 @@ plot.polygon <- function(p, labels = FALSE, as.lines = FALSE, ...){
    # Create new plot:
    if (is.null(dev.list())){
       bb <- bbox(p)
-      plot(bb[c(1, 3)], bb[c(2, 4)], type = "n", xlab = "", ylab = "")
+      plot(bb$x, bb$y, type = "n", xlab = "", ylab = "")
    }
 
    # Plot a single 'polygon' object:
@@ -212,7 +210,7 @@ plot.polygon <- function(p, labels = FALSE, as.lines = FALSE, ...){
 }
 
 #' @rdname polygon
-#' @export
+#' @export in.polygon
 in.polygon <- function(p, x, y, ...){
    # Check input arguments:
    if (missing(x) | missing(y)) stop("'x' and 'y' must be specified.")
@@ -254,7 +252,7 @@ in.polygon <- function(p, x, y, ...){
 }
 
 #' @rdname polygon
-#' @export
+#' @export which.polygon
 which.polygon <- function(p, x, y, as.list = FALSE){
    # WHICH.POLYGON - Determine to which polygon a point belongs.
 
@@ -284,39 +282,7 @@ which.polygon <- function(p, x, y, as.list = FALSE){
 }
 
 #' @rdname polygon
-#' @export
-area.polygon <- function(p){
-   # AREA.POLYGON - Calculate the area of a polygon.
-
-   # Initialize area result variable:
-   A <- rep(NA, length(p))
-
-   # Loop over component polygons:
-   for (i in 1:length(p)){
-      xx <- p[[i]]$x
-      yy <- p[[i]]$y
-
-      index <- unique(c(0, which(is.na(xx)), length(xx) + 1))
-      temp <- NULL
-      for (j in 1:(length(index)-1)){
-         xxx <- xx[(index[j]+1):(index[j+1]-1)]
-         yyy <- yy[(index[j]+1):(index[j+1]-1)]
-
-         n <- length(xxx)
-
-         temp[j] <- 0.5 * abs(sum(xxx[1:(n-1)]*yyy[2:n] - xxx[2:n]*yyy[1:(n-1)]))
-      }
-
-       A[i] <- sum(temp)
-       if (!is.null(p[[i]]$hole)) A[i] <- (-2*p[[i]]$hole + 1) * A[i]
-   }
-
-   return(A)
-}
-
-#' @rdname polygon
-#' @method as.data.frame polygon
-#' @export
+#' @rawNamespace S3method(as.data.frame,polygon)
 as.data.frame.polygon <- function(x){
    # AS.DATA.FRAME.POLYGON - Convert a 'polygon' object to a data frame.
 
@@ -340,21 +306,7 @@ as.data.frame.polygon <- function(x){
 }
 
 #' @rdname polygon
-#' @export
-bbox.polygon <- function(p, ...){
-   bb <- rep(NA, 4)
-   for (i in 1:length(p)){
-      bb[1] <- min(bb[1], min(p[[i]]$x), na.rm = TRUE)
-      bb[2] <- min(bb[2], min(p[[i]]$y), na.rm = TRUE)
-      bb[3] <- max(bb[3], max(p[[i]]$x), na.rm = TRUE)
-      bb[4] <- max(bb[4], max(p[[i]]$y), na.rm = TRUE)
-   }
-
-   return(bb)
-}
-
-#' @rdname polygon
-#' @export
+#' @export draw.polygon
 draw.polygon <- function(x = NULL, y = NULL, n, tol = 5E-3, snap = TRUE,
                          snap.to.grid = FALSE, grid.increment, grid.offset = 0,
                          pch = 21, bg = "black", ...){
@@ -501,6 +453,6 @@ draw.polygon <- function(x = NULL, y = NULL, n, tol = 5E-3, snap = TRUE,
 }
 
 #' @rdname polygon
-#' @export
+#' @export is.polygon
 is.polygon <- function(p) return("polygon" %in% class(p))
 

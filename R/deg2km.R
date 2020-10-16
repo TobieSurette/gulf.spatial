@@ -118,7 +118,7 @@ km2deg <- function(x, y, long.ref, lat.ref, method = "utm"){
       # require(rgdal)
 
       # Adjust for reference coordinates:
-      if (missing(long.ref) & missing(lat.ref)){
+      if (!missing(long.ref) & !missing(lat.ref)){
          ref <- deg2km(long.ref, lat.ref)
          x <- x + ref$x
          y <- y + ref$y

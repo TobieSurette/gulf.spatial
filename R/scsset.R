@@ -14,7 +14,7 @@
 #' @describeIn scsset Convert numeric longitude coordinates from \code{scsset} objects to decimal degrees.
 #' @export
 longitude.scsset <- function(x){
-   if ("longitude" %in% names(x)) v <- x$longitude else v <- rep(NA, nrow(x))
+   if ("longitude" %in% names(x)) v <- dmm2deg(x$longitude) else v <- rep(NA, nrow(x))
 
    names(x) <- gsub("longitude.end", "longitude.stop", names(x))
 
@@ -43,7 +43,7 @@ longitude.scsset <- function(x){
 #' @describeIn scsset Convert numeric latitude coordinates from \code{scsset} objects to decimal degrees.
 #' @export
 latitude.scsset <- function(x){
-   if ("latitude" %in% names(x)) v <- x$latitude else v <- rep(NA, nrow(x))
+   if ("latitude" %in% names(x)) v <- dmm2deg(x$latitude) else v <- rep(NA, nrow(x))
 
    names(x) <- gsub("latitude.end", "latgitude.stop", names(x))
 
