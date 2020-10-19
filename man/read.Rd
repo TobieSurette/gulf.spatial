@@ -20,6 +20,7 @@ read.gulf.spatial(layer = "bounds", survey = "rv")   # Read September survey bou
 read.gulf.spatial(layer = "bounds", survey = "sc")   # Read snow crab survey boundaries.
 read.gulf.spatial(layer = "stations", survey = "rv") # Read September survey stations.
 read.gulf.spatial(layer = "stations", survey = "ns") # Read Northumberland Strait survey stations.
+read.gulf.spatial("port")                            # Coordinate port coordinates.
 
 }
 \seealso{

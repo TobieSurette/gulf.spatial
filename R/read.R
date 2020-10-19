@@ -11,6 +11,7 @@
 #' read.gulf.spatial(layer = "bounds", survey = "sc")   # Read snow crab survey boundaries.
 #' read.gulf.spatial(layer = "stations", survey = "rv") # Read September survey stations.
 #' read.gulf.spatial(layer = "stations", survey = "ns") # Read Northumberland Strait survey stations.
+#' read.gulf.spatial("port")                            # Coordinate port coordinates.
 #'
 #' @seealso \code{\link{locate.gulf.spatial}}
 
@@ -25,6 +26,8 @@ read.gulf.spatial <- function(layer, ...){
    if (length(file) == 0) stop("Unable to find spatial data layer.")
 
    if (length(file) > 1) stop("Arguments correspond to multiple spatial data files.")
+
+   v <- NULL
    if (length(file) == 1){
       # Read shapefile:
       if (fext(file) == "shp"){
@@ -37,6 +40,9 @@ read.gulf.spatial <- function(layer, ...){
 
       # Read CSV file:
       if (fext(file) == "csv") v <- read.csv(file, header = TRUE, stringsAsFactors = FALSE)
+
+      # Read MIF file:
+      if (fext(file) == "mif") v <- read.mif(file)
 
       # Read R data files:
       if (fext(file) %in% c("rda", "rdata")){
