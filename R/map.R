@@ -52,20 +52,13 @@ map.default <- function(x, layer, xlim, ylim, region = "gulf", add = TRUE, ...){
 
    # Load gulf coast:
    if (!missing(layer)){
-      # Parse map layer argument:
-      layer <- match.arg(tolower(layer), c("bounds", "stations", "stratum", "strata", "fishing.zones",
-                                           "kriging", "coastline", "altitude", "bathymetry", "depth", "dem",
-                                           "ports", "cities", "geography", "features"))
-      layer <- gsub("strata", "stratum", layer)
-      layer[layer %in% c("altitude", "depth")] <- "bathymetry"
+      if (length(grep("coast", layer)) > 0){coast(...); invisible()}
+      if (length(grep("bathymetry", layer)) > 0){bathymetry(...); invisible()}
 
-      if (layer == "coastline") coast(...)
-      if (layer == "bathymetry") bathymetry(...)
+      file <- locate.gulf.spatial(layer = layer[i], ...)
+      v <- read.gulf.spatial(file = file, region = region, ...)
 
-      if (!(layer %in% c("coast", "bathymetry"))){
-         v <- read.gulf.spatial(layer = layer[i], region = region, ...)
-         plot(v, add = TRUE)
-      }
+      plot(v, add = TRUE)
    }
 }
 

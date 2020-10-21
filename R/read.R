@@ -16,12 +16,12 @@
 #' @seealso \code{\link{locate.gulf.spatial}}
 
 #' @export read.gulf.spatial
-read.gulf.spatial <- function(layer, ...){
+read.gulf.spatial <- function(layer, file, ...){
    # File extension function:
    fext <- function(x) return(tolower(unlist(lapply(strsplit(x, "[.]"), function(x) x[length(x)]))))
 
    # Find file:
-   file <- locate.gulf.spatial(layer, ...)
+   if (missing(file)) file <- locate.gulf.spatial(layer, ...)
 
    if (length(file) == 0) stop("Unable to find spatial data layer.")
 

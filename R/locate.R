@@ -19,7 +19,7 @@
 #'   \item{\code{altitude}, \code{bathymetry}, \code{dem}, \code{depth}}{Load altitude and bathymetry data.}
 #'   \item{\code{borders}, \code{bounds}}{Load the bounds or borders of a specified area.}
 #'   \item{\code{grids}}{Science survey spatial grids designs.}
-#'   \item{\code{cities}, \code{towns}}{Load towns and cities.}
+#'   \item{\code{cities}}{Load city coordinates.}
 #'   \item{\code{fishing.zones}}{Load fishing zone polygons and borders.}
 #'   \item{\code{kriging}}{Load polygons used in area abundance and biomass estimation.}
 #'   \item{\code{stations}}{Load survey or project sampling stations.}
@@ -38,12 +38,11 @@ locate.gulf.spatial <- function(layer, survey, region, project,
    fext <- function(x) return(unlist(lapply(strsplit(x, "[.]"), function(x) x[length(x)])))
 
    # Parse map layer argument:
-   layer <- match.arg(tolower(layer), c("bounds", "grids", "stations", "stratum", "strata", "fishing.zones",
-                                        "kriging", "coastline", "altitude", "bathymetry", "depth", "dem",
-                                        "ports", "cities", "geography", "features"))
    layer <- gsub("strata", "stratum", layer)
    layer <- gsub("coastline", "coast", layer)
    layer <- gsub("ports", "port", layer)
+   layer <- gsub("cities", "city", layer)
+   layer <- strsplit(layer, "[. ,;]")[[1]]
 
    # Parse coastline resolution argument:
    resolution <- match.arg(tolower(resolution), c("low", "intermediate", "high", "full"))
@@ -52,11 +51,11 @@ locate.gulf.spatial <- function(layer, survey, region, project,
    if (missing(project)) if (!missing(survey)) project <- gulf.metadata::project(survey) else project <- ""
 
    # Get list of all data files and paths:
-   if (missing(project))  file <- gulf.utils::locate(package = "gulf.spatial", file = layer, ...)
-   if (!missing(project)) file <- gulf.utils::locate(package = "gulf.spatial", file = c(layer, project), ...)
+   if (missing(project))  file <- gulf.utils::locate(package = "gulf.spatial", keywords = layer, ...)
+   if (!missing(project)) file <- gulf.utils::locate(package = "gulf.spatial", keywords = c(layer, project), ...)
 
    # Filter out by file extension:
-   file <- file[fext(file) %in% file.extensions]
+   if (length(file) > 0) file <- file[fext(file) %in% file.extensions]
 
    # Add specific file filters if necessary:
    if (length(file) > 1){
