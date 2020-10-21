@@ -37,6 +37,8 @@ longitude.scsset <- function(x){
    index <- which(is.na(v) & !is.na(x$longitude.start.logbook) & !is.na(x$longitude.stop.logbook))
    if (length(index) > 0) v[index] <- (dmm2deg(x$longitude.start.logbook[index]) + dmm2deg(x$longitude.stop.logbook[index])) / 2
 
+   v <- -abs(v)
+
    return(v)
 }
 
@@ -45,7 +47,7 @@ longitude.scsset <- function(x){
 latitude.scsset <- function(x){
    if ("latitude" %in% names(x)) v <- dmm2deg(x$latitude) else v <- rep(NA, nrow(x))
 
-   names(x) <- gsub("latitude.end", "latgitude.stop", names(x))
+   names(x) <- gsub("latitude.end", "latitude.stop", names(x))
 
    index <- which(is.na(v) & !is.na(x$latitude.start) & is.na(x$latitude.stop))
    if (length(index) > 0) v[index] <- dmm2deg(x$latitude.start[index])
@@ -65,6 +67,8 @@ latitude.scsset <- function(x){
 
    index <- which(is.na(v) & !is.na(x$latitude.start.logbook) & !is.na(x$latitude.stop.logbook))
    if (length(index) > 0) v[index] <- (dmm2deg(x$latitude.start.logbook[index]) + dmm2deg(x$latitude.stop.logbook[index])) / 2
+
+   v <- abs(v)
 
    return(v)
 }
