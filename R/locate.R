@@ -42,7 +42,7 @@ locate.gulf.spatial <- function(layer, survey, region, project,
    layer <- gsub("coastline", "coast", layer)
    layer <- gsub("ports", "port", layer)
    layer <- gsub("cities", "city", layer)
-   layer <- strsplit(layer, "[. ,;]")[[1]]
+   layer <- unlist(strsplit(layer, "[. ,;]"))
 
    # Parse coastline resolution argument:
    resolution <- match.arg(tolower(resolution), c("low", "intermediate", "high", "full"))
@@ -50,7 +50,7 @@ locate.gulf.spatial <- function(layer, survey, region, project,
    # Default project:
    if (missing(project)) if (!missing(survey)) project <- gulf.metadata::project(survey) else project <- ""
 
-   # Get list of all data files and paths:
+      # Get list of all data files and paths:
    if (missing(project))  file <- gulf.utils::locate(package = "gulf.spatial", keywords = layer, ...)
    if (!missing(project)) file <- gulf.utils::locate(package = "gulf.spatial", keywords = c(layer, project), ...)
 
