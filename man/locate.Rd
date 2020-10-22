@@ -31,7 +31,7 @@ Read southern Gulf spatial data files.
   \item{\code{altitude}, \code{bathymetry}, \code{dem}, \code{depth}}{Load altitude and bathymetry data.}
   \item{\code{borders}, \code{bounds}}{Load the bounds or borders of a specified area.}
   \item{\code{grids}}{Science survey spatial grids designs.}
-  \item{\code{cities}, \code{towns}}{Load towns and cities.}
+  \item{\code{cities}}{Load city coordinates.}
   \item{\code{fishing.zones}}{Load fishing zone polygons and borders.}
   \item{\code{kriging}}{Load polygons used in area abundance and biomass estimation.}
   \item{\code{stations}}{Load survey or project sampling stations.}

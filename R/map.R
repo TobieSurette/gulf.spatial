@@ -47,6 +47,7 @@ map.default <- function(x, layer, xlim, ylim, region = "gulf", add = TRUE, ...){
          if (region == "western.cape.breton")   ylim <- c(45.5, 47.5)
          if (region == "northumberland.strait") ylim <- c(45.5, 47.75)
       }
+      print(123)
       plot(xlim, ylim, type = "n", xlab = NA, ylab = NA)
    }
 

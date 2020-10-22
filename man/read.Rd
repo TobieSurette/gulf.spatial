@@ -5,7 +5,7 @@
 \alias{read.gulf.spatial}
 \title{Read Spatial Data}
 \usage{
-read.gulf.spatial(layer, ...)
+read.gulf.spatial(layer, file, ...)
 }
 \arguments{
 \item{layer}{Character string specifying the layer to be read.}
