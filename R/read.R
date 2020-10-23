@@ -27,7 +27,6 @@ read.gulf.spatial <- function(layer, region,  species, zone, area, lfa, ...){
 
    # Find file:
    file <- locate.gulf.spatial(layer, ...)
-   print(file)
    if (length(file) == 0) stop("Unable to find spatial data layer.")
    if (length(file) > 1) stop("Arguments correspond to multiple spatial data files.")
 

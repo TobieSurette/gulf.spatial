@@ -47,7 +47,6 @@ map.default <- function(x, layer, xlim, ylim, region = "gulf", add = TRUE, ...){
          if (region == "western.cape.breton")   ylim <- c(45.5, 47.5)
          if (region == "northumberland.strait") ylim <- c(45.5, 47.75)
       }
-      print(123)
       plot(xlim, ylim, type = "n", xlab = NA, ylab = NA)
    }
 
@@ -58,6 +57,9 @@ map.default <- function(x, layer, xlim, ylim, region = "gulf", add = TRUE, ...){
 
       file <- locate.gulf.spatial(layer = layer[i], ...)
       v <- read.gulf.spatial(file = file, region = region, ...)
+
+
+      if ("SpatialPolygonsDataFrame" %in% class(v)) plot(v, ...)
 
       plot(v, add = TRUE)
    }
