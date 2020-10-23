@@ -7,7 +7,7 @@
 \usage{
 fishing.zone(x, ...)
 
-\method{fishing.zone}{default}(longitude, latitude, species = NULL, region = "gulf", ...)
+\method{fishing.zone}{default}(longitude, latitude, species, ...)
 }
 \arguments{
 \item{longitude}{Numerical vector of longitudes in decimal degree format.}
@@ -27,19 +27,15 @@ Returns a fishing zone given a set of of coordinates.
 }}
 
 \examples{
-   # Find the fishing.zone at a single point:
-   fishing.zone(-63.8, 47.05, species = 2526)
+# Find the fishing.zone at a single point:
+fishing.zone(-63.8, 47.05, species = 2526)
 
-   # Find strata values for multiple points:
-   lat <- c(48, 47, 46.5)
-   long <- c(-64, -61.5, -62)
-   fishing.zone(long, lat, species = 2526)
+# Find strata values for multiple points:
+lat <- c(48, 47, 46.5)
+long <- c(-64, -61.5, -62)
+fishing.zone(long, lat, species = 2526)
 
-   # Read snow crab set card for 2013 and determine fishing zone:
-   x <- read.gulf(year = 2013, survey = "sc")
-   zone <- fishing.zone(longitude(x), latitude(x), species = 2526)
-
-   # Read rv set card for 2013 and determine fishing zone:
-   x <- read.gulf(year = 2013)
-   zone <- fishing.zone(longitude(x), latitude(x), species = 60)
+x <- read.scsset(2020)
+fishing.zone(lon(x), lat(x), species = 2526) # Read snow crab set card for 2013 and determine fishing zone:
+fishing.zone(lon(x), lat(x), species = 2550) # Lobster fishing areas of snow crab survey tows.
 }

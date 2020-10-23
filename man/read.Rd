@@ -5,7 +5,7 @@
 \alias{read.gulf.spatial}
 \title{Read Spatial Data}
 \usage{
-read.gulf.spatial(layer, file, ...)
+read.gulf.spatial(layer, region, species, zone, area, lfa, ...)
 }
 \arguments{
 \item{layer}{Character string specifying the layer to be read.}
@@ -21,7 +21,12 @@ read.gulf.spatial(layer = "bounds", survey = "sc")   # Read snow crab survey bou
 read.gulf.spatial(layer = "stations", survey = "rv") # Read September survey stations.
 read.gulf.spatial(layer = "stations", survey = "ns") # Read Northumberland Strait survey stations.
 read.gulf.spatial("port")                            # Coordinate port coordinates.
+read.gulf.spatial("cities")                          # City coordinates.
 
+# Fishing zones:
+read.gulf.spatial("fishing zone polygon", file = "shp", species = 2526,  region = "gulf", zone = 12)
+read.gulf.spatial("fishing zone vertices", file = "shp", species = 2550,  region = "gulf", lfa = 24)
+read.gulf.spatial("kriging", survey = "scs")
 }
 \seealso{
 \code{\link{locate.gulf.spatial}}

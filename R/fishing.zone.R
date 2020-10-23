@@ -29,10 +29,18 @@ fishing.zone.default <- function(longitude, latitude, species, ...){
    # Check 'species' argument:
    if (missing(species)) stop("'species' must be defined.")
 
+   # Read polygons:
    p <- read.gulf.spatial("fishing zone polygon", file = "shp", species = species, ...)
+
+   # Convert coordinates to 'sp' object:
    x <- data.frame(longitude = longitude, latitude = latitude)
    sp::coordinates(x) <- ~ longitude + latitude
+   w <- options("warn")$warn
+   options(warn = -1)
    sp::proj4string(x) <- sp::proj4string(p)
+   options(warn = w)
+
+   # Determine zone:
    r <- over(x, p)
 
    return(r$label)

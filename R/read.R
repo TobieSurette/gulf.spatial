@@ -24,7 +24,6 @@
 read.gulf.spatial <- function(layer, region,  species, zone, area, lfa, ...){
    # File extension function:
    fext <- function(x) return(tolower(unlist(lapply(strsplit(x, "[.]"), function(x) x[length(x)]))))
-
    # Find file:
    file <- locate.gulf.spatial(layer, ...)
    if (length(file) == 0) stop("Unable to find spatial data layer.")
