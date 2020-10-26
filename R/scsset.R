@@ -5,9 +5,8 @@
 #' @param x \code{scsset} object.
 #'
 #' @examples
-#' x <- read.scsset(2020)
+#' x <- read.scsset(2020, valid = 1)
 #' longitude(x)
-#'
 #' plot(lon(x), lat(x))
 #'
 
