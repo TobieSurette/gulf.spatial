@@ -52,9 +52,9 @@ read.gulf.spatial <- function(layer, region,  species, zone, area, lfa, ...){
 
       # Read R data files:
       if (fext(file) %in% c("rda", "rdata")){
-         files <- ls()
+         tmp <- ls()
          load(file)
-         v <- setdiff(ls(), files)
+         v <- setdiff(ls(), c(tmp, "tmp"))
          eval(parse(text = paste0("v = ", v)))
       }
    }

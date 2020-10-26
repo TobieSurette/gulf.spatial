@@ -29,16 +29,12 @@
 #' # Read a set card:
 #' x <- read.scsset(year = 2010)
 #' stratum(longitude(x), latitude(x))
-#'
-#' @export
-#'
 
-#' @rdname survey.strata
+#' @export
 stratum <- function(x, ...) UseMethod("stratum")
 
-#' @rdname survey.strata
 #' @export
-stratum.default <- function(longitude, latitude, region = "gulf", survey = "rv", ...){
+stratum.default <- function(longitude, latitude, region = "gulf", survey = "rvs", ...){
    # Load stratum polygons:
    s <- read.gulf.spatial(layer = "strata", region = region, survey = survey, ...)
 

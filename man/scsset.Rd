@@ -23,9 +23,8 @@ Spatial functions for the snow crab set \code{scsset} data class.
 }}
 
 \examples{
-x <- read.scsset(2020)
+x <- read.scsset(2020, valid = 1)
 longitude(x)
-
 plot(lon(x), lat(x))
 
 }

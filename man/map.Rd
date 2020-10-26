@@ -8,7 +8,7 @@
 \usage{
 map(x, ...)
 
-\method{map}{default}(x, layer, xlim, ylim, region = "gulf", add = TRUE, ...)
+\method{map}{default}(layer, add = TRUE, ...)
 
 \method{map}{esonar}(x, variable, ...)
 }
