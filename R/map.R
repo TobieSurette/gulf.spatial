@@ -47,7 +47,7 @@ map.new <- function(xlim, ylim, region = "gulf", ...){
    }
 
    # Blank axes:
-   plot(xlim, ylim, type = "n", xlab = NA, ylab = NA)
+   plot(xlim, ylim, type = "n", xlab = NA, ylab = NA, xaxs = "i", yaxs = "i", axes = FALSE, ...)
 }
 
 #' @describeIn map Plot Gulf of Saint Lawrence base map.

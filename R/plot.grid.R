@@ -2,7 +2,7 @@
 #'
 #' @description Functions to assign a grid label(s) given coordinates, and vice versa.
 #'
-#' @param label Logical value specifying whether to display label inside the grids when using \code{plot.grid}.
+#' @param label Logical value or character strings specifying whether or what to display as labels when plotting grids.
 #' @param col Background colour when plotting a grid using \code{plot.grid}.
 #' @param border Border line colour when plotting a grid using \code{plot.grid}.
 #' @param vertices Logical value specifiying whether to output the corner coordinates of each grid.
@@ -20,13 +20,16 @@
 #' @seealso \code{\link{deg2grid}}
 
 #' @export plot.grid
-plot.grid <- function(x, label = FALSE, col = "white", border = "black", ...){
+plot.grid <- function(x, label, col = "white", border = "black", ...){
    # Get grid coordinates:
-   grid <- grid2deg(x,  ...)
+   grid <- grid2deg(x)
 
    # Draw grid:
    rect(grid$left, grid$bottom, grid$right, grid$top, col = col, border = border, ...)
 
    # Print label:
-   if (label) text((grid$left + grids$right) / 2, (grid$bottom + grids$top) / 2, x, ...)
+   if (!missing(label)){
+      if (is.logical(label)) if (label) label <- x
+      text((grid$left + grid$right) / 2, (grid$bottom + grid$top) / 2, label, ...)
+   }
 }
