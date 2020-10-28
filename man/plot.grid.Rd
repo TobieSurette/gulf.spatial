@@ -4,10 +4,10 @@
 \alias{plot.grid}
 \title{Coordinates and Grids}
 \usage{
-\method{plot}{grid}(x, label = FALSE, col = "white", border = "black", ...)
+\method{plot}{grid}(x, label, col = "white", border = "black", ...)
 }
 \arguments{
-\item{label}{Logical value specifying whether to display label inside the grids when using \code{plot.grid}.}
+\item{label}{Logical value or character strings specifying whether or what to display as labels when plotting grids.}
 
 \item{col}{Background colour when plotting a grid using \code{plot.grid}.}
 

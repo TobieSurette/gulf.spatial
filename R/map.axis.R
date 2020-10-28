@@ -2,22 +2,21 @@
 #'
 #' @description Draws axes on a map.
 #'
-#' @param side An integer(s) specifying which side(s) of the plot the axis is to be drawn on.
-#'             The axis is placed as follows: 1=below, 2=left, 3=above and 4=right.
+#' @param side An integer(s) specifying which side(s) of the plot the axis is to be drawn on. The axis is placed
+#'             as follows: 1=below, 2=left, 3=above and 4=right.
 #' @param at A vector in decimal degrees specifying the points at which tick-marks are to be drawn.
-#' @param major.interval A numerical scalar specifying the modulus which define where major tick marks lie. The default value is 1.
+#' @param major.interval A numerical scalar specifying the modulus which define where major tick marks lie.
+#'                       The default value is 1.
 #' @param major.cex A numerical value specifying the major tick mark character expansion value.
 #' @param minor.cex A numerical value specifying the minor tick mark character expansion value.
-#' @param \dots Further parameters passed on to the \code{\link[base]{axis}} function.
+#' @param \dots Further parameters passed on to the \code{\link[graphics]{axis}} function.
 #'
-#' @seealso \code{\link{map}}, \code{\link[base]{axis}}
+#' @seealso \code{\link{map}}, \code{\link[graphics]{axis}}
 #' map.new()
 #' map.axis()
 #'
 #' @export map.axis
 map.axis <- function(side = 1, at, major.interval = 1, major.cex = 0.6, minor.cex = 0.4, cex = 1, ...){
-   # MAP.AXIS - Draw a map axis.
-
    # Loop over multiple axes:
    if (length(side) > 1){
       for (i in 1:length(side)) map.axis(side = side[i], at = at, major.interval = major.interval, major.cex = major.cex, minor.cex = minor.cex, ...)
