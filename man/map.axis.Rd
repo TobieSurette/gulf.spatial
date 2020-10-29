@@ -15,12 +15,13 @@
 )
 }
 \arguments{
-\item{side}{An integer(s) specifying which side(s) of the plot the axis is to be drawn on.
-The axis is placed as follows: 1=below, 2=left, 3=above and 4=right.}
+\item{side}{An integer(s) specifying which side(s) of the plot the axis is to be drawn on. The axis is placed
+as follows: 1=below, 2=left, 3=above and 4=right.}
 
 \item{at}{A vector in decimal degrees specifying the points at which tick-marks are to be drawn.}
 
-\item{major.interval}{A numerical scalar specifying the modulus which define where major tick marks lie. The default value is 1.}
+\item{major.interval}{A numerical scalar specifying the modulus which define where major tick marks lie.
+The default value is 1.}
 
 \item{major.cex}{A numerical value specifying the major tick mark character expansion value.}
 
