@@ -1,5 +1,6 @@
 library(gulf.utils)
 library(gulf.spatial)
+library(sf)
 
 b <- read.gulf.spatial("kriging polygons revised")
 
@@ -24,4 +25,4 @@ plot(a[, 1], a[, 2], type = "l")
 b$zone12_expanded <- list(longitude = a[, 1], latitude = a[,2], name = "zone12_expanded")
 
 kriging.polygons <- b
-save(kriging.polygons, file = "build/kriging.polygons.revised.rda")
+save(kriging.polygons, file = "inst/extdata/kriging.polygons.revised.rda")
