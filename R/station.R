@@ -10,10 +10,10 @@
 #'                       is considered to belong to the same group or station. The units are in minutes
 #'                       if the \code{time} argument belongs to a \sQuote{POSIX} class.
 
-#' @describeIn station Generic 'station' function.
+# @describeIn station Generic 'station' function.
 #' @export
 station <- function(x, ...){
-   UseMethod("station", ...)
+   UseMethod("station")
 }
 
 #' @describeIn station Assign a spatial location identifier based on spatio-temporal proximity.
@@ -46,7 +46,7 @@ station.default <- function(longitude, latitude, time, distance.tolerance = 1, t
    }
 
    # Cluster by proximate time:
-   if (!is.null(time.tolerance)){
+   if (!missing(time.tolerance)){
       tree <- stats::hclust(stats::dist(as.numeric(time) / 60))
       if (any(tree$height < time.tolerance)){
          k <- min(which(rev(tree$height) < time.tolerance))
@@ -67,17 +67,19 @@ station.default <- function(longitude, latitude, time, distance.tolerance = 1, t
 
 #' @describeIn station Return Northumberland Strait survey sampling station identifier.
 #' @export
-station.nssset <- function(x, tolerance = NULL, method){
+station.nssset <- function(x, tolerance, method = "observed"){
    # Check 'method' argument:
    method <- match.arg(tolower(method), c("observed", "latlong"))
 
    # Fetch nearest master station:
-   if (method == "latlon"){
+   if (method == "latlong"){
       # Load NS master station list:
       s <- read.gulf.spatial("nss stations")
 
       # Calculate all pairwise distances between 'x' and 'y' and the complete NS master station list:
-      d <- distance(lon(x), lat(x), s$longitude, s$latitude, pairwise = TRUE)
+      lon <- -dmm2deg(lon(x))
+      lat <- dmm2deg(lat(x))
+      d <- distance(lon, lat, s$longitude, s$latitude, pairwise = TRUE)
 
       # Find the minimum distance in each row:
       min.d <- apply(d, 1, min)
@@ -89,17 +91,17 @@ station.nssset <- function(x, tolerance = NULL, method){
       index <- apply(index, 1, function(x) which(x)[1])
 
       # Extract station numbers from the NS master station list:
-      v <- s$station.number[index]
+      v <- gulf.utils::deblank(s$station.number[index])
 
       # Set results with minimum distances beyond the threshold value to NA:
-      if (!is.null(tolerance)){
+      if (!missing(tolerance)){
          tolerance <- abs(tolerance)
          v[min.d > tolerance] <- NA
       }
    }
 
    # Fetch observed value:
-   if (missing(method)) v <- x$station
+   if (method == "observed") v <- x$station
 
    return(v)
 }
