@@ -10,7 +10,7 @@ station(x, ...)
 
 \method{station}{default}(longitude, latitude, time, distance.tolerance = 1, time.tolerance, ...)
 
-\method{station}{nssset}(x, tolerance = NULL, method)
+\method{station}{nssset}(x, tolerance, method = "observed")
 }
 \arguments{
 \item{longitude, latitude}{Coordinates in decimal degrees.}
