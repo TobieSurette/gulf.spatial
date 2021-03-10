@@ -34,9 +34,10 @@
 stratum <- function(x, ...) UseMethod("stratum")
 
 #' @export
-stratum.default <- function(longitude, latitude, region = "gulf", survey = "rvs", ...){
+stratum.default <- function(longitude, latitude, region = "gulf", survey = "rv", ...){
    # Load stratum polygons:
-   s <- read.gulf.spatial(layer = "strata", region = region, survey = survey, ...)
+   s <- read.gulf.spatial(layer = "strata", region = region, ...)
+   s <- s[which(s@data$survey %in% survey), ]
 
    # Identify strata for each coordinate point:
    p <- sp::SpatialPoints(cbind(longitude, latitude))
