@@ -498,6 +498,12 @@ hfa.list[[9]] <- list(type="fishing zone vertices", species.code=60, region="gul
 hfa.list[[10]] <- list(type="fishing zone vertices", species.code=60, region="gulf", label="16E", points=c(57,55,54,53), points=c(58,59,60))
 hfa.list[[11]] <- list(type="fishing zone vertices", species.code=60, region="gulf", label="16F", points=c(58,59,60), points=c(61,62,63), points=c(32,33))
 hfa.list[[12]] <- list(type="fishing zone vertices", species.code=60, region="gulf", label="16G", points=c(53,54,52), points=c(61,62,63))
+hfa.list[[13]] <- list(type="fishing zone vertices", species.code=60, region="gulf", label="17", points=c(43,44,40,41,42))
+hfa.list[[14]] <- list(type="fishing zone vertices", species.code=60, region="gulf", label="18", points=c(42,41,37,36,35,34))
+hfa.list[[15]] <- list(type="fishing zone vertices", species.code=60, region="gulf", label="19", points=c(34,35,36,28,29), points=c(32,33))
+
+
+
 
 create.sf.fct <- function(list.in){
 #   print(list.in$label)
@@ -521,6 +527,56 @@ hfa.sf <- st_sf(do.call(rbind, lapply(hfa.list.sf, sf.fct)))
 
 fz.sf.lines <- rbind(hfa.sf, fz.sf.lines)
 
+##########################################################################
+## now need to create polygons with coastlines, so add points on land where necessary
+hfa.list <- list()
+hfa.list[[1]] <- list(type="fishing zone vertices", species.code=60, region="newfoundland", label="11", points=c(25,26,28,36,37,38,64,65,66,67))
+hfa.list[[2]] <- list(type="fishing zone vertices", species.code=60, region="newfoundland", label="12", points=c(38,37,41,40,39,68))
+hfa.list[[3]] <- list(type="fishing zone vertices", species.code=60, region="newfoundland", label="13", points=c(39,40,44,47,48,69,70,71))
+hfa.list[[4]] <- list(type="fishing zone vertices", species.code=60, region="newfoundland", label="14", points=c(6,7,8,72,73,74,75,48,47,49,76))
+hfa.list[[5]] <- list(type="fishing zone vertices", species.code=60, region="quebec", label="15", points=c(49,47,44,51,45,46,77,78))
+hfa.list[[6]] <- list(type="fishing zone vertices", species.code=60, region="gulf", label="16A", points=c(79,46,45,51,50,80,81,82,85,86,83,84))
+hfa.list[[7]] <- list(type="fishing zone vertices", species.code=60, region="gulf", label="16B", points=c(50,51,54,55,56,87,88,89))
+hfa.list[[8]] <- list(type="fishing zone vertices", species.code=60, region="gulf", label="16C", points=c(56,55,57,90,91))
+hfa.list[[9]] <- list(type="fishing zone vertices", species.code=60, region="gulf", label="16D", points=c(52,54,51,44,43,92))
+hfa.list[[10]] <- list(type="fishing zone vertices", species.code=60, region="gulf", label="16E", points=c(57,55,54,53,58,59,60,93,94))
+hfa.list[[11]] <- list(type="fishing zone vertices", species.code=60, region="gulf", label="16F", points=c(58,59,60,95,96,32,33,97,63,62,61,98,99,100))
+hfa.list[[12]] <- list(type="fishing zone vertices", species.code=60, region="gulf", label="16G", points=c(53,54,52,92,63,62,61,98,99,100))
+hfa.list[[13]] <- list(type="fishing zone vertices", species.code=60, region="gulf", label="17", points=c(43,44,40,41,42,101,102,103,104,105))
+hfa.list[[14]] <- list(type="fishing zone vertices", species.code=60, region="gulf", label="18", points=c(42,41,37,36,35,34,106,107,108))
+hfa.list[[15]] <- list(type="fishing zone vertices", species.code=60, region="gulf", label="19", points=c(34,35,36,28,29,109,110,32,33,111,112,113,114))
+
+hfa.list.sf <- lapply(hfa.list, create.sf.fct)
+hfa.sf <- st_sf(do.call(rbind, lapply(hfa.list.sf, sf.fct)))
+
+## now use st_difference to add coast
+difference.fct <- function(li){
+   temp <- st_cast(li, "POLYGON")
+   bb <- st_bbox(temp)
+   boundaries.temp <- st_crop(boundaries_simple, bb)
+   temp.coast <- st_difference(temp, st_union(boundaries.temp$geometry))
+   return(temp.coast)
+}
+
+hfa.coast.sf <- difference.fct(hfa.sf[1,])
+hfa.coast.sf <- rbind(hfa.coast.sf, difference.fct(hfa.sf[2,]))
+hfa.coast.sf <- rbind(hfa.coast.sf, difference.fct(hfa.sf[3,]))
+hfa.coast.sf <- rbind(hfa.coast.sf, difference.fct(hfa.sf[4,]))
+hfa.coast.sf <- rbind(hfa.coast.sf, difference.fct(hfa.sf[5,]))
+hfa.coast.sf <- rbind(hfa.coast.sf, difference.fct(hfa.sf[6,]))
+hfa.coast.sf <- rbind(hfa.coast.sf, difference.fct(hfa.sf[7,]))
+hfa.coast.sf <- rbind(hfa.coast.sf, difference.fct(hfa.sf[8,]))
+hfa.coast.sf <- rbind(hfa.coast.sf, difference.fct(hfa.sf[9,]))
+hfa.coast.sf <- rbind(hfa.coast.sf, difference.fct(hfa.sf[10,]))
+hfa.coast.sf <- rbind(hfa.coast.sf, difference.fct(hfa.sf[11,]))
+hfa.coast.sf <- rbind(hfa.coast.sf, difference.fct(hfa.sf[12,]))
+hfa.coast.sf <- rbind(hfa.coast.sf, difference.fct(hfa.sf[13,]))
+hfa.coast.sf <- rbind(hfa.coast.sf, difference.fct(hfa.sf[14,]))
+hfa.coast.sf <- rbind(hfa.coast.sf, difference.fct(hfa.sf[15,]))
+
+
+
+fz.sf.polygons <- rbind(hfa.coast.sf, fz.sf.polygons)
 
 
 
@@ -545,6 +601,8 @@ snow.crab.polygons <- cbind(snow.crab.polygons, st_coordinates(st_centroid(snow.
 herring.lines <- fz.sf.lines[fz.sf.lines$species.code==60,]
 herring.lines <- cbind(herring.lines, st_coordinates(st_centroid(herring.lines)))
 
+herring.polygons <- fz.sf.polygons[fz.sf.polygons$species.code==60,]
+herring.polygons <- cbind(herring.polygons, st_coordinates(st_centroid(herring.polygons)))
 
 g <- ggplot(data=boundaries_simple) +
    geom_sf(fill=grey(0.8), color=grey(0.3)) +
@@ -562,9 +620,11 @@ ggsave(file="build/Gulf-of-St-Lawrence-lobster-areas-lines.pdf", g3, width = 30,
 g4 <- g+geom_sf(data=lobster.polygons, color="red", fill="mistyrose")+geom_label(data=lobster.polygons, aes(X, Y, label=label), size=2)
 ggsave(file="build/Gulf-of-St-Lawrence-lobster-areas-polygons.pdf", g4, width = 30, height = 20, units = "cm")
 
-g5 <- g+geom_sf(data=herring.lines, color="red", fill="mistyrose") # +geom_label(data=herring.polygons, aes(X, Y, label=label), size=2)
+g5 <- g+geom_sf(data=herring.lines, color="red", fill="mistyrose")+geom_label(data=herring.polygons, aes(X, Y, label=label), size=2)
 ggsave(file="build/Gulf-of-St-Lawrence-herring-areas-lines.pdf", g5, width = 30, height = 20, units = "cm")
 
+g6 <- g+geom_sf(data=herring.polygons, color="red", fill="mistyrose")+geom_label(data=lobster.polygons, aes(X, Y, label=label), size=2)
+ggsave(file="build/Gulf-of-St-Lawrence-herring-areas-polygons.pdf", g6, width = 30, height = 20, units = "cm")
 
 ## write to files
 ## lines
@@ -583,10 +643,10 @@ save(fz.sf.polygons, file="./data/fishing.zone.polygons.rda")
 ## - remove the lines on land in Nfld, for consistency with the other region
 ## - for Maritimes LFAs, add Canada-US border in the polygons in LFAs 36 and 38
 ## - add Maritimes offshore LFA 41
-## - add herring zones
 ## - add groundfish zones
 ## - add Newfoundland snow crab zones
 ## DONE - add Maritimes LFAs
 ## DONE - generate Gulf lobster zones with coastlines from GSHHG instead of using those in the Gulf package
 ## DONE - add snow crab zones
 ## DONE - clean up LFAs around Bras d'Or lake, LFAs 28 and 29
+## DONE - add herring zones

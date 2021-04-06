@@ -12,11 +12,161 @@
 	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
 	<ExtendedData><SchemaData schemaUrl="#fishing.zone.vertices">
 		<SimpleData name="type">fishing zone vertices</SimpleData>
+		<SimpleData name="species.code">60</SimpleData>
+		<SimpleData name="region">newfoundland</SimpleData>
+		<SimpleData name="label">11</SimpleData>
+	</SchemaData></ExtendedData>
+      <LineString><coordinates>-55.9833333333333,46.9661111111111 -55.9833333333333,44.4166666666667 -56.6,44.8666666666667 -57.4166666666667,45.6666666666667 -58.15,46.2833333333333 -58.15,47.6797222222222</coordinates></LineString>
+  </Placemark>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#fishing.zone.vertices">
+		<SimpleData name="type">fishing zone vertices</SimpleData>
+		<SimpleData name="species.code">60</SimpleData>
+		<SimpleData name="region">newfoundland</SimpleData>
+		<SimpleData name="label">12</SimpleData>
+	</SchemaData></ExtendedData>
+      <LineString><coordinates>-58.15,47.6797222222222 -58.15,46.2833333333333 -58.8333333333333,46.8333333333333 -59.5833333333333,47.5 -59.3166666666667,47.6166666666667</coordinates></LineString>
+  </Placemark>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#fishing.zone.vertices">
+		<SimpleData name="type">fishing zone vertices</SimpleData>
+		<SimpleData name="species.code">60</SimpleData>
+		<SimpleData name="region">newfoundland</SimpleData>
+		<SimpleData name="label">13</SimpleData>
+	</SchemaData></ExtendedData>
+      <LineString><coordinates>-59.3166666666667,47.6166666666667 -59.5833333333333,47.5 -60,47.8333333333333 -60,49.4166666666667 -58.2205555555556,49.4166666666667</coordinates></LineString>
+  </Placemark>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#fishing.zone.vertices">
+		<SimpleData name="type">fishing zone vertices</SimpleData>
+		<SimpleData name="species.code">60</SimpleData>
+		<SimpleData name="region">newfoundland</SimpleData>
+		<SimpleData name="label">14</SimpleData>
+	</SchemaData></ExtendedData>
+      <MultiGeometry><LineString><coordinates>-55.6666666666667,52.25 -55.4333333333333,52.25 -55.4333333333333,51.6333333333333</coordinates></LineString><LineString><coordinates>-58.2205555555556,49.4166666666667 -60,49.4166666666667 -57.1125,51.4166666666667</coordinates></LineString></MultiGeometry>
+  </Placemark>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#fishing.zone.vertices">
+		<SimpleData name="type">fishing zone vertices</SimpleData>
+		<SimpleData name="species.code">60</SimpleData>
+		<SimpleData name="region">quebec</SimpleData>
+		<SimpleData name="label">15</SimpleData>
+	</SchemaData></ExtendedData>
+      <LineString><coordinates>-57.1125,51.4166666666667 -60,49.4166666666667 -60,47.8333333333333 -62.5333333333333,48.7 -64.6666666666667,49.4166666666667 -67.3033333333333,49.4166666666667</coordinates></LineString>
+  </Placemark>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#fishing.zone.vertices">
+		<SimpleData name="type">fishing zone vertices</SimpleData>
+		<SimpleData name="species.code">60</SimpleData>
+		<SimpleData name="region">gulf</SimpleData>
+		<SimpleData name="label">16A</SimpleData>
+	</SchemaData></ExtendedData>
+      <LineString><coordinates>-67.3033333333333,49.4166666666667 -64.6666666666667,49.4166666666667 -62.5333333333333,48.7 -64.1666666666667,48.625</coordinates></LineString>
+  </Placemark>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#fishing.zone.vertices">
+		<SimpleData name="type">fishing zone vertices</SimpleData>
+		<SimpleData name="species.code">60</SimpleData>
+		<SimpleData name="region">gulf</SimpleData>
+		<SimpleData name="label">16B</SimpleData>
+	</SchemaData></ExtendedData>
+      <LineString><coordinates>-64.1666666666667,48.625 -62.5333333333333,48.7 -62.5333333333333,46.8333333333333 -63.75,47.6166666666667 -64.8866666666667,47.4333333333333</coordinates></LineString>
+  </Placemark>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#fishing.zone.vertices">
+		<SimpleData name="type">fishing zone vertices</SimpleData>
+		<SimpleData name="species.code">60</SimpleData>
+		<SimpleData name="region">gulf</SimpleData>
+		<SimpleData name="label">16C</SimpleData>
+	</SchemaData></ExtendedData>
+      <LineString><coordinates>-64.8866666666667,47.4333333333333 -63.75,47.6166666666667 -64.7166666666667,46.6666666666667</coordinates></LineString>
+  </Placemark>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#fishing.zone.vertices">
+		<SimpleData name="type">fishing zone vertices</SimpleData>
+		<SimpleData name="species.code">60</SimpleData>
+		<SimpleData name="region">gulf</SimpleData>
+		<SimpleData name="label">16D</SimpleData>
+	</SchemaData></ExtendedData>
+      <LineString><coordinates>-60.6,47.05 -62.5333333333333,46.8333333333333 -62.5333333333333,48.7 -60,47.8333333333333 -60.4319444444444,47.0375</coordinates></LineString>
+  </Placemark>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#fishing.zone.vertices">
+		<SimpleData name="type">fishing zone vertices</SimpleData>
+		<SimpleData name="species.code">60</SimpleData>
+		<SimpleData name="region">gulf</SimpleData>
+		<SimpleData name="label">16E</SimpleData>
+	</SchemaData></ExtendedData>
+      <MultiGeometry><LineString><coordinates>-64.7166666666667,46.6666666666667 -63.75,47.6166666666667 -62.5333333333333,46.8333333333333 -63.25,46.4333333333333</coordinates></LineString><LineString><coordinates>-63.4905555555556,46.2327777777778 -63.4675,46.1763888888889 -63.7116666666667,45.8625</coordinates></LineString></MultiGeometry>
+  </Placemark>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#fishing.zone.vertices">
+		<SimpleData name="type">fishing zone vertices</SimpleData>
+		<SimpleData name="species.code">60</SimpleData>
+		<SimpleData name="region">gulf</SimpleData>
+		<SimpleData name="label">16F</SimpleData>
+	</SchemaData></ExtendedData>
+      <MultiGeometry><LineString><coordinates>-63.4905555555556,46.2327777777778 -63.4675,46.1763888888889 -63.7116666666667,45.8625</coordinates></LineString><LineString><coordinates>-62.7444444444444,45.95 -62.225,45.9083333333333 -61.4166666666667,46.1833333333333</coordinates></LineString><LineString><coordinates>-61.4291666666667,45.6361111111111 -61.4041666666667,45.6416666666667</coordinates></LineString></MultiGeometry>
+  </Placemark>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#fishing.zone.vertices">
+		<SimpleData name="type">fishing zone vertices</SimpleData>
+		<SimpleData name="species.code">60</SimpleData>
+		<SimpleData name="region">gulf</SimpleData>
+		<SimpleData name="label">16G</SimpleData>
+	</SchemaData></ExtendedData>
+      <MultiGeometry><LineString><coordinates>-63.25,46.4333333333333 -62.5333333333333,46.8333333333333 -60.6,47.05</coordinates></LineString><LineString><coordinates>-62.7444444444444,45.95 -62.225,45.9083333333333 -61.4166666666667,46.1833333333333</coordinates></LineString></MultiGeometry>
+  </Placemark>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#fishing.zone.vertices">
+		<SimpleData name="type">fishing zone vertices</SimpleData>
+		<SimpleData name="species.code">60</SimpleData>
+		<SimpleData name="region">gulf</SimpleData>
+		<SimpleData name="label">17</SimpleData>
+	</SchemaData></ExtendedData>
+      <LineString><coordinates>-60.4319444444444,47.0375 -60,47.8333333333333 -59.5833333333333,47.5 -58.8333333333333,46.8333333333333 -60.3,46.3333333333333</coordinates></LineString>
+  </Placemark>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#fishing.zone.vertices">
+		<SimpleData name="type">fishing zone vertices</SimpleData>
+		<SimpleData name="species.code">60</SimpleData>
+		<SimpleData name="region">gulf</SimpleData>
+		<SimpleData name="label">18</SimpleData>
+	</SchemaData></ExtendedData>
+      <LineString><coordinates>-60.3,46.3333333333333 -58.8333333333333,46.8333333333333 -58.15,46.2833333333333 -57.4166666666667,45.6666666666667 -60,45.6666666666667 -60.25,45.7166666666667</coordinates></LineString>
+  </Placemark>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#fishing.zone.vertices">
+		<SimpleData name="type">fishing zone vertices</SimpleData>
+		<SimpleData name="species.code">60</SimpleData>
+		<SimpleData name="region">gulf</SimpleData>
+		<SimpleData name="label">19</SimpleData>
+	</SchemaData></ExtendedData>
+      <MultiGeometry><LineString><coordinates>-60.25,45.7166666666667 -60,45.6666666666667 -57.4166666666667,45.6666666666667 -56.6,44.8666666666667 -62.4480555555555,44.8666666666667</coordinates></LineString><LineString><coordinates>-61.4291666666667,45.6361111111111 -61.4041666666667,45.6416666666667</coordinates></LineString></MultiGeometry>
+  </Placemark>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#fishing.zone.vertices">
+		<SimpleData name="type">fishing zone vertices</SimpleData>
 		<SimpleData name="species.code">2526</SimpleData>
 		<SimpleData name="region">gulf</SimpleData>
 		<SimpleData name="label">12</SimpleData>
 	</SchemaData></ExtendedData>
-      <LineString><coordinates>-64.1816666666667,48.755 -63.8316666666667,48.8916666666667 -64.7333333333333,49.2833333333333 -65.5916666666667,49.3569444444444 -65.6916666666667,49.3166666666667 -64.9138888888889,49.6722222222222 -63.1416666666667,49.0 -63.1416666666667,48.5166666666667 -61.125,47.975 -61.1408333333333,47.8333333333333 -61.0,47.4458333333333 -60.7222222222222,47.5 -61.5041666666667,46.625 -61.57,46.5541666666667 -61.1858333333333,46.3611111111111</coordinates></LineString>
+      <LineString><coordinates>-64.1816666666667,48.755 -63.8316666666667,48.8916666666667 -64.7333333333333,49.2833333333333 -65.5916666666667,49.3569444444444 -65.6916666666667,49.3166666666667 -64.9138888888889,49.6722222222222 -63.1416666666667,49.0 -63.1416666666667,48.5166666666667 -61.125,47.975 -61.1408333333333,47.8333333333333 -61,47.4458333333333 -60.7222222222222,47.5 -61.5041666666667,46.625 -61.57,46.5541666666667 -61.1858333333333,46.3611111111111</coordinates></LineString>
   </Placemark>
   <Placemark>
 	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
@@ -36,7 +186,7 @@
 		<SimpleData name="region">gulf</SimpleData>
 		<SimpleData name="label">12B</SimpleData>
 	</SchemaData></ExtendedData>
-      <LineString><coordinates>-64.5238888888889,49.8805555555556 -64.9138888888889,49.6722222222222 -63,49 -60.0,48.5 -60.0,49.0833333333333 -61.2,49.0833333333333 -61.7,49.0833333333333</coordinates></LineString>
+      <LineString><coordinates>-64.5238888888889,49.8805555555556 -64.9138888888889,49.6722222222222 -63,49 -60,48.5 -60,49.0833333333333 -61.2,49.0833333333333 -61.7,49.0833333333333</coordinates></LineString>
   </Placemark>
   <Placemark>
 	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
@@ -46,7 +196,7 @@
 		<SimpleData name="region">gulf</SimpleData>
 		<SimpleData name="label">12C</SimpleData>
 	</SchemaData></ExtendedData>
-      <LineString><coordinates>-59.5,49.8666666666667 -60.0625,49.8666666666667 -61.5083333333333,49.8666666666667 -61.2,49.0833333333333 -60.0,49.0833333333333 -60.0,49.4166666666667 -59.5,49.8666666666667</coordinates></LineString>
+      <LineString><coordinates>-59.5,49.8666666666667 -60.0625,49.8666666666667 -61.5083333333333,49.8666666666667 -61.2,49.0833333333333 -60,49.0833333333333 -60,49.4166666666667 -59.5,49.8666666666667</coordinates></LineString>
   </Placemark>
   <Placemark>
 	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
@@ -66,7 +216,7 @@
 		<SimpleData name="region">gulf</SimpleData>
 		<SimpleData name="label">12F</SimpleData>
 	</SchemaData></ExtendedData>
-      <LineString><coordinates>-61.0,47.4458333333333 -61.1408333333333,47.8333333333333 -61.125,47.975 -61.1166666666667,48.0416666666667 -60.4208333333333,47.7416666666667 -60.2666666666667,47.3583333333333 -60.3,47.3083333333333 -60.7041666666667,47.5366666666667 -60.7222222222222,47.5 -61.0,47.4458333333333</coordinates></LineString>
+      <LineString><coordinates>-61,47.4458333333333 -61.1408333333333,47.8333333333333 -61.125,47.975 -61.1166666666667,48.0416666666667 -60.4208333333333,47.7416666666667 -60.2666666666667,47.3583333333333 -60.3,47.3083333333333 -60.7041666666667,47.5366666666667 -60.7222222222222,47.5 -61,47.4458333333333</coordinates></LineString>
   </Placemark>
   <Placemark>
 	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
@@ -156,7 +306,7 @@
 		<SimpleData name="region">gulf</SimpleData>
 		<SimpleData name="label">25</SimpleData>
 	</SchemaData></ExtendedData>
-      <LineString><coordinates>-62.3333333333333,46.3002777777778 -61.95,46.15 -61.57,46.5541666666667 -61.5041666666667,46.625 -62.0,46.75 -61.9666666666667,46.45</coordinates></LineString>
+      <LineString><coordinates>-62.3333333333333,46.3002777777778 -61.95,46.15 -61.57,46.5541666666667 -61.5041666666667,46.625 -62,46.75 -61.9666666666667,46.45</coordinates></LineString>
   </Placemark>
   <Placemark>
 	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
@@ -166,7 +316,7 @@
 		<SimpleData name="region">gulf</SimpleData>
 		<SimpleData name="label">26</SimpleData>
 	</SchemaData></ExtendedData>
-      <LineString><coordinates>-64.0,47.0583333333333 -64.0,47.25 -62.0,46.75 -61.9666666666667,46.45</coordinates></LineString>
+      <LineString><coordinates>-64,47.0583333333333 -64,47.25 -62,46.75 -61.9666666666667,46.45</coordinates></LineString>
   </Placemark>
   <Placemark>
 	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
@@ -276,7 +426,7 @@
 		<SimpleData name="region">newfoundland</SimpleData>
 		<SimpleData name="label">13A</SimpleData>
 	</SchemaData></ExtendedData>
-      <LineString><coordinates>-59.3166666666667,47.6166666666667 -59.5833333333333,47.5 -60.0,47.8333333333333 -60.0,48.4666666666667 -59.25,48.4666666666667</coordinates></LineString>
+      <LineString><coordinates>-59.3166666666667,47.6166666666667 -59.5833333333333,47.5 -60,47.8333333333333 -60,48.4666666666667 -59.25,48.4666666666667</coordinates></LineString>
   </Placemark>
   <Placemark>
 	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
@@ -286,7 +436,7 @@
 		<SimpleData name="region">newfoundland</SimpleData>
 		<SimpleData name="label">13B</SimpleData>
 	</SchemaData></ExtendedData>
-      <LineString><coordinates>-59.25,48.4666666666667 -60.0,48.4666666666667 -60.0,49.4166666666667 -58.2327777777778,49.4166666666667</coordinates></LineString>
+      <LineString><coordinates>-59.25,48.4666666666667 -60,48.4666666666667 -60,49.4166666666667 -58.2327777777778,49.4166666666667</coordinates></LineString>
   </Placemark>
   <Placemark>
 	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
@@ -296,7 +446,7 @@
 		<SimpleData name="region">newfoundland</SimpleData>
 		<SimpleData name="label">14A</SimpleData>
 	</SchemaData></ExtendedData>
-      <LineString><coordinates>-58.2327777777778,49.4166666666667 -60.0,49.4166666666667 -59.3916666666667,49.85 -58.0,50.6841666666667 -57.4008333333333,50.6841666666667</coordinates></LineString>
+      <LineString><coordinates>-58.2327777777778,49.4166666666667 -60,49.4166666666667 -59.3916666666667,49.85 -58,50.6841666666667 -57.4008333333333,50.6841666666667</coordinates></LineString>
   </Placemark>
   <Placemark>
 	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
@@ -306,7 +456,7 @@
 		<SimpleData name="region">newfoundland</SimpleData>
 		<SimpleData name="label">14B</SimpleData>
 	</SchemaData></ExtendedData>
-      <LineString><coordinates>-57.4008333333333,50.6841666666667 -58.0,50.6841666666667 -57.1125,51.4166666666667 -56.4666666666667,51.4166666666667</coordinates></LineString>
+      <LineString><coordinates>-57.4008333333333,50.6841666666667 -58,50.6841666666667 -57.1125,51.4166666666667 -56.4666666666667,51.4166666666667</coordinates></LineString>
   </Placemark>
   <Placemark>
 	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
@@ -326,7 +476,7 @@
 		<SimpleData name="region">quebec</SimpleData>
 		<SimpleData name="label">15</SimpleData>
 	</SchemaData></ExtendedData>
-      <LineString><coordinates>-57.1125,51.4166666666667 -58.0,50.6841666666667 -59.3916666666667,49.85 -59.9111111111111,50.2986111111111</coordinates></LineString>
+      <LineString><coordinates>-57.1125,51.4166666666667 -58,50.6841666666667 -59.3916666666667,49.85 -59.9111111111111,50.2986111111111</coordinates></LineString>
   </Placemark>
   <Placemark>
 	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
@@ -336,7 +486,7 @@
 		<SimpleData name="region">quebec</SimpleData>
 		<SimpleData name="label">16</SimpleData>
 	</SchemaData></ExtendedData>
-      <LineString><coordinates>-59.9111111111111,50.2986111111111 -59.3916666666667,49.85 -60.0,49.4166666666667 -61.2666666666667,49.8416666666667 -61.2666666666667,50.1736111111111</coordinates></LineString>
+      <LineString><coordinates>-59.9111111111111,50.2986111111111 -59.3916666666667,49.85 -60,49.4166666666667 -61.2666666666667,49.8416666666667 -61.2666666666667,50.1736111111111</coordinates></LineString>
   </Placemark>
   <Placemark>
 	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
@@ -356,7 +506,7 @@
 		<SimpleData name="region">quebec</SimpleData>
 		<SimpleData name="label">17B</SimpleData>
 	</SchemaData></ExtendedData>
-      <LineString><coordinates>-63.4,49.35 -63.7666666666667,49.025 -63.0,48.5 -60.0,47.8333333333333 -60.0,49.4166666666667 -61.2666666666667,49.8416666666667 -61.545,49.8983333333333 -62.9,49.9938888888889 -63.6666666666667,50.0569444444444 -64.3416666666667,50.1083333333333 -64.6333333333333,50.015 -65.0,49.8583333333333 -64.7333333333333,49.675 -64.625,49.6083333333333 -64.3666666666667,49.8116666666667</coordinates></LineString>
+      <LineString><coordinates>-63.4,49.35 -63.7666666666667,49.025 -63,48.5 -60,47.8333333333333 -60,49.4166666666667 -61.2666666666667,49.8416666666667 -61.545,49.8983333333333 -62.9,49.9938888888889 -63.6666666666667,50.0569444444444 -64.3416666666667,50.1083333333333 -64.6333333333333,50.015 -65,49.8583333333333 -64.7333333333333,49.675 -64.625,49.6083333333333 -64.3666666666667,49.8116666666667</coordinates></LineString>
   </Placemark>
   <Placemark>
 	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
@@ -366,7 +516,7 @@
 		<SimpleData name="region">quebec</SimpleData>
 		<SimpleData name="label">18A</SimpleData>
 	</SchemaData></ExtendedData>
-      <LineString><coordinates>-69.7008333333333,48.135 -69.5916666666667,48.0416666666667 -69.0,48.45 -67.6691666666667,48.9427777777778 -68.1277777777778,49.2333333333333</coordinates></LineString>
+      <LineString><coordinates>-69.7008333333333,48.135 -69.5916666666667,48.0416666666667 -69,48.45 -67.6691666666667,48.9427777777778 -68.1277777777778,49.2333333333333</coordinates></LineString>
   </Placemark>
   <Placemark>
 	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
@@ -406,7 +556,7 @@
 		<SimpleData name="region">quebec</SimpleData>
 		<SimpleData name="label">18E</SimpleData>
 	</SchemaData></ExtendedData>
-      <LineString><coordinates>-65.5027777777778,50.2833333333333 -65.2758333333333,49.7680555555556 -65.0,49.8583333333333 -64.6333333333333,50.015 -64.6333333333333,50.275</coordinates></LineString>
+      <LineString><coordinates>-65.5027777777778,50.2833333333333 -65.2758333333333,49.7680555555556 -65,49.8583333333333 -64.6333333333333,50.015 -64.6333333333333,50.275</coordinates></LineString>
   </Placemark>
   <Placemark>
 	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
@@ -456,7 +606,7 @@
 		<SimpleData name="region">quebec</SimpleData>
 		<SimpleData name="label">19A</SimpleData>
 	</SchemaData></ExtendedData>
-      <MultiGeometry><LineString><coordinates>-70.7363888888889,46.935 -70.8111111111111,47.0658333333333</coordinates></LineString><LineString><coordinates>-69.7008333333333,48.135 -69.5916666666667,48.0416666666667 -69.0,48.45 -67.6691666666667,48.9427777777778 -67.1833333333333,49.1625 -66.3666666666667,49.4013888888889 -65.8775,49.5677777777778 -65.2758333333333,49.7680555555556 -65.0,49.8583333333333 -64.7333333333333,49.675 -64.9166666666667,49.2</coordinates></LineString></MultiGeometry>
+      <MultiGeometry><LineString><coordinates>-70.7363888888889,46.935 -70.8111111111111,47.0658333333333</coordinates></LineString><LineString><coordinates>-69.7008333333333,48.135 -69.5916666666667,48.0416666666667 -69,48.45 -67.6691666666667,48.9427777777778 -67.1833333333333,49.1625 -66.3666666666667,49.4013888888889 -65.8775,49.5677777777778 -65.2758333333333,49.7680555555556 -65,49.8583333333333 -64.7333333333333,49.675 -64.9166666666667,49.2</coordinates></LineString></MultiGeometry>
   </Placemark>
   <Placemark>
 	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
@@ -476,7 +626,7 @@
 		<SimpleData name="region">quebec</SimpleData>
 		<SimpleData name="label">19C</SimpleData>
 	</SchemaData></ExtendedData>
-      <LineString><coordinates>-64.4,49.0088888888889 -64.0833333333333,49.225 -63.7666666666667,49.025 -63.0,48.5 -64.225,48.7166666666667 -64.1808333333333,48.7652777777778</coordinates></LineString>
+      <LineString><coordinates>-64.4,49.0088888888889 -64.0833333333333,49.225 -63.7666666666667,49.025 -63,48.5 -64.225,48.7166666666667 -64.1808333333333,48.7652777777778</coordinates></LineString>
   </Placemark>
   <Placemark>
 	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
@@ -486,7 +636,7 @@
 		<SimpleData name="region">quebec</SimpleData>
 		<SimpleData name="label">20A</SimpleData>
 	</SchemaData></ExtendedData>
-      <LineString><coordinates>-64.225,48.7166666666667 -63.0,48.5 -64.0361111111111,48.2041666666667 -64.5,48.2041666666667 -64.6933333333333,48.3266666666667</coordinates></LineString>
+      <LineString><coordinates>-64.225,48.7166666666667 -63,48.5 -64.0361111111111,48.2041666666667 -64.5,48.2041666666667 -64.6933333333333,48.3266666666667</coordinates></LineString>
   </Placemark>
   <Placemark>
 	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
@@ -516,7 +666,7 @@
 		<SimpleData name="region">quebec</SimpleData>
 		<SimpleData name="label">21B</SimpleData>
 	</SchemaData></ExtendedData>
-      <LineString><coordinates>-66.3466666666667,48.1158333333333 -66.3583333333333,48.0844444444444 -66.3225,48.0544444444444 -65.9027777777778,48.0297222222222 -65.9027777777778,48.21</coordinates></LineString>
+      <LineString><coordinates>-66.3466666666666,48.1158333333333 -66.3583333333333,48.0844444444444 -66.3225,48.0544444444444 -65.9027777777778,48.0297222222222 -65.9027777777778,48.21</coordinates></LineString>
   </Placemark>
   <Placemark>
 	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
@@ -526,7 +676,7 @@
 		<SimpleData name="region">quebec</SimpleData>
 		<SimpleData name="label">22</SimpleData>
 	</SchemaData></ExtendedData>
-      <LineString><coordinates>-60.0,47.8333333333333 -60.75,47.0383333333333 -63.7916666666667,47.1494444444444 -64.0361111111111,47.3069444444444 -64.0361111111111,48.2041666666667 -63.0,48.5 -60.0,47.8333333333333</coordinates></LineString>
+      <LineString><coordinates>-60,47.8333333333333 -60.75,47.0383333333333 -63.7916666666667,47.1494444444444 -64.0361111111111,47.3069444444444 -64.0361111111111,48.2041666666667 -63,48.5 -60,47.8333333333333</coordinates></LineString>
   </Placemark>
   <Placemark>
 	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
@@ -586,7 +736,7 @@
 		<SimpleData name="region">maritimes</SimpleData>
 		<SimpleData name="label">27</SimpleData>
 	</SchemaData></ExtendedData>
-      <MultiGeometry><LineString><coordinates>-60.6666666666667,46.9783333333333 -60.75,47.0383333333333 -60.0,47.8333333333333 -57.8333333333333,46.0 -59.7,44.9333333333333 -60.1833333333333,45.7833333333333</coordinates></LineString><LineString><coordinates>-60.7922222222222,45.9569444444444 -60.8088888888889,45.9588888888889</coordinates></LineString></MultiGeometry>
+      <MultiGeometry><LineString><coordinates>-60.6666666666667,46.9783333333333 -60.75,47.0383333333333 -60,47.8333333333333 -57.8333333333333,46.0 -59.7,44.9333333333333 -60.1833333333333,45.7833333333333</coordinates></LineString><LineString><coordinates>-60.7922222222222,45.9569444444444 -60.8088888888889,45.9588888888889</coordinates></LineString></MultiGeometry>
   </Placemark>
   <Placemark>
 	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
@@ -656,7 +806,7 @@
 		<SimpleData name="region">maritimes</SimpleData>
 		<SimpleData name="label">33</SimpleData>
 	</SchemaData></ExtendedData>
-      <LineString><coordinates>-63.4166666666667,44.6466666666667 -62.3083333333333,43.9333333333333 -63.0,43.7166666666667 -65.2166666666667,42.5833333333333 -65.2166666666667,42.9166666666667 -65.2333333333333,42.9166666666667 -65.5166666666667,43.4966666666667</coordinates></LineString>
+      <LineString><coordinates>-63.4166666666667,44.6466666666667 -62.3083333333333,43.9333333333333 -63,43.7166666666667 -65.2166666666667,42.5833333333333 -65.2166666666667,42.9166666666667 -65.2333333333333,42.9166666666667 -65.5166666666667,43.4966666666667</coordinates></LineString>
   </Placemark>
   <Placemark>
 	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
