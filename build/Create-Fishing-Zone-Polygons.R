@@ -623,7 +623,7 @@ ggsave(file="build/Gulf-of-St-Lawrence-lobster-areas-polygons.pdf", g4, width = 
 g5 <- g+geom_sf(data=herring.lines, color="red", fill="mistyrose")+geom_label(data=herring.polygons, aes(X, Y, label=label), size=2)
 ggsave(file="build/Gulf-of-St-Lawrence-herring-areas-lines.pdf", g5, width = 30, height = 20, units = "cm")
 
-g6 <- g+geom_sf(data=herring.polygons, color="red", fill="mistyrose")+geom_label(data=lobster.polygons, aes(X, Y, label=label), size=2)
+g6 <- g+geom_sf(data=herring.polygons, color="red", fill="mistyrose")+geom_label(data=herring.polygons, aes(X, Y, label=label), size=2)
 ggsave(file="build/Gulf-of-St-Lawrence-herring-areas-polygons.pdf", g6, width = 30, height = 20, units = "cm")
 
 ## write to files
