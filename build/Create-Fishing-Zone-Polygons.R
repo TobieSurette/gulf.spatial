@@ -34,7 +34,9 @@ boundaries_simple <- boundaries %>%
    ) %>%
    st_transform(4326)
 
-
+####################
+#### LOBSTER
+#############################
 ##########################################################################
 ## Newfoundland and Labrador, zones 3,4,5,6,7,8,9,10,11,12,13A,13B,14A,14B,14C
 ## this is the file obtained from Elisabeth from NFLD
@@ -371,7 +373,9 @@ vars <- c("type", "species.code", "region", "label", "geometry")
 fz.sf.polygons <- rbind(lfa.coast.sf, lfa.coast.mar.sf, fz.nfld.sf.polygons[,vars])
 
 
-
+####################
+#### SNOW CRAB
+#############################
 ## now do the snow crab zones
 ## https://inter-l01-uat.dfo-mpo.gc.ca/infoceans/sites/infoceans/files/Crabe_des_Neiges_en.pdf
 crab.afr <- read.table(file="build/snow-crab-atlantic-fishery-regulations-points.txt", header=TRUE, sep=" ", colClasses=c("numeric",rep("character", 6)))
@@ -466,7 +470,57 @@ for(i in 7:16){
 }
 
 
+
 fz.sf.polygons <- rbind(cfa.coast.sf, fz.sf.polygons)
+
+
+####################
+#### HERRING
+#############################
+## now do the snow crab zones
+## https://inter-l01-uat.dfo-mpo.gc.ca/infoceans/sites/infoceans/files/Hareng_en.pdf
+herring.afr <- read.table(file="build/herring-atlantic-fishery-regulations-points.txt", header=TRUE, sep=" ", colClasses=c("numeric",rep("character", 6)))
+herring.afr$longitude <- -dms2deg(as.numeric(paste0(herring.afr$lon.d,herring.afr$lon.m,herring.afr$lon.s)))
+herring.afr$latitude <- dms2deg(as.numeric(paste0(herring.afr$lat.d,herring.afr$lat.m,herring.afr$lat.s)))
+
+
+## each area is a series of points from this list
+hfa.list <- list()
+hfa.list[[1]] <- list(type="fishing zone vertices", species.code=60, region="newfoundland", label="11", points=c(25,26,28,36,37,38))
+hfa.list[[2]] <- list(type="fishing zone vertices", species.code=60, region="newfoundland", label="12", points=c(38,37,41,40,39))
+hfa.list[[3]] <- list(type="fishing zone vertices", species.code=60, region="newfoundland", label="13", points=c(39,40,44,47,48))
+hfa.list[[4]] <- list(type="fishing zone vertices", species.code=60, region="newfoundland", label="14", points=c(6,7,8), points=c(48,47,49))
+hfa.list[[5]] <- list(type="fishing zone vertices", species.code=60, region="quebec", label="15", points=c(49,47,44,51,45,46))
+hfa.list[[6]] <- list(type="fishing zone vertices", species.code=60, region="gulf", label="16A", points=c(46,45,51,50))
+hfa.list[[7]] <- list(type="fishing zone vertices", species.code=60, region="gulf", label="16B", points=c(50,51,54,55,56))
+hfa.list[[8]] <- list(type="fishing zone vertices", species.code=60, region="gulf", label="16C", points=c(56,55,57))
+hfa.list[[9]] <- list(type="fishing zone vertices", species.code=60, region="gulf", label="16D", points=c(52,54,51,44,43))
+hfa.list[[10]] <- list(type="fishing zone vertices", species.code=60, region="gulf", label="16E", points=c(57,55,54,53), points=c(58,59,60))
+hfa.list[[11]] <- list(type="fishing zone vertices", species.code=60, region="gulf", label="16F", points=c(58,59,60), points=c(61,62,63), points=c(32,33))
+hfa.list[[12]] <- list(type="fishing zone vertices", species.code=60, region="gulf", label="16G", points=c(53,54,52), points=c(61,62,63))
+
+create.sf.fct <- function(list.in){
+#   print(list.in$label)
+   n.ls <- length(list.in)-4 ## number of linestrings for this LFA
+   if(n.ls==1){
+      list.in$geometry <- st_linestring(as.matrix(herring.afr[list.in$points, c("longitude","latitude")]))
+   }
+   else{
+      ll <- list()
+      for(i in 1:n.ls){
+         ll[[i]] <- st_linestring(as.matrix(herring.afr[unlist(list.in[i+4]), c("longitude","latitude")]))
+      }
+      list.in$geometry <- st_multilinestring(ll)
+   }
+   return(list.in)
+}
+
+hfa.list.sf <- lapply(hfa.list, create.sf.fct)
+
+hfa.sf <- st_sf(do.call(rbind, lapply(hfa.list.sf, sf.fct)))
+
+fz.sf.lines <- rbind(hfa.sf, fz.sf.lines)
+
 
 
 
@@ -480,13 +534,16 @@ lobster.lines <- cbind(lobster.lines, st_coordinates(st_centroid(lobster.lines))
 lobster.polygons <- fz.sf.polygons[fz.sf.polygons$species.code==2550,]
 lobster.polygons <- cbind(lobster.polygons, st_coordinates(st_centroid(lobster.polygons)))
 
-
 ## snow crab
 snow.crab.lines <- fz.sf.lines[fz.sf.lines$species.code==2526,]
 snow.crab.lines <- cbind(snow.crab.lines, st_coordinates(st_centroid(snow.crab.lines)))
 
 snow.crab.polygons <- fz.sf.polygons[fz.sf.polygons$species.code==2526,]
 snow.crab.polygons <- cbind(snow.crab.polygons, st_coordinates(st_centroid(snow.crab.polygons)))
+
+## herring
+herring.lines <- fz.sf.lines[fz.sf.lines$species.code==60,]
+herring.lines <- cbind(herring.lines, st_coordinates(st_centroid(herring.lines)))
 
 
 g <- ggplot(data=boundaries_simple) +
@@ -504,6 +561,9 @@ ggsave(file="build/Gulf-of-St-Lawrence-lobster-areas-lines.pdf", g3, width = 30,
 
 g4 <- g+geom_sf(data=lobster.polygons, color="red", fill="mistyrose")+geom_label(data=lobster.polygons, aes(X, Y, label=label), size=2)
 ggsave(file="build/Gulf-of-St-Lawrence-lobster-areas-polygons.pdf", g4, width = 30, height = 20, units = "cm")
+
+g5 <- g+geom_sf(data=herring.lines, color="red", fill="mistyrose") # +geom_label(data=herring.polygons, aes(X, Y, label=label), size=2)
+ggsave(file="build/Gulf-of-St-Lawrence-herring-areas-lines.pdf", g5, width = 30, height = 20, units = "cm")
 
 
 ## write to files
