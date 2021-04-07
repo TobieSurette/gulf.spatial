@@ -46,7 +46,7 @@
 		<SimpleData name="region">newfoundland</SimpleData>
 		<SimpleData name="label">14</SimpleData>
 	</SchemaData></ExtendedData>
-      <MultiGeometry><LineString><coordinates>-55.6666666666667,52.25 -55.4333333333333,52.25 -55.4333333333333,51.6333333333333</coordinates></LineString><LineString><coordinates>-58.2205555555556,49.4166666666667 -60,49.4166666666667 -57.1125,51.4166666666667</coordinates></LineString></MultiGeometry>
+      <MultiGeometry><LineString><coordinates>-55.6666666666667,52.25 -55.4333333333333,52.25 -55.4333333333333,51.5833333333333</coordinates></LineString><LineString><coordinates>-58.2205555555556,49.4166666666667 -60,49.4166666666667 -57.1125,51.4166666666667</coordinates></LineString></MultiGeometry>
   </Placemark>
   <Placemark>
 	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>

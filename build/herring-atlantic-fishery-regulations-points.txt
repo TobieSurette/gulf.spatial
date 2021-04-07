@@ -6,7 +6,7 @@ point.number lat.d lat.m lat.s lon.d lon.m lon.s
 5 NA NA NA NA NA NA
 6 52 15 00 55 40 00
 7 52 15 00 55 26 0
-8 51 38 00 55 26 0
+8 51 35 00 55 26 0
 9 NA NA NA NA NA NA
 10 NA NA NA NA NA NA
 11 NA NA NA NA NA NA
@@ -63,7 +63,7 @@ point.number lat.d lat.m lat.s lon.d lon.m lon.s
 62 45 54 30 62 13 30
 63 46 11 00 61 25 00
 64 48 09 00 57 48 00
-65 48 00 00 54 25 00 
+65 48 00 00 54 25 00
 66 47 29 00 54 49 00
 67 47 02 00 55 34 00
 68 48 04 00 58 00 00
