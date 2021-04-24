@@ -12,6 +12,266 @@
 	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
 	<ExtendedData><SchemaData schemaUrl="#fishing.zone.vertices">
 		<SimpleData name="type">fishing zone vertices</SimpleData>
+		<SimpleData name="species.code">253</SimpleData>
+		<SimpleData name="region">gulf</SimpleData>
+		<SimpleData name="label">4T1</SimpleData>
+	</SchemaData></ExtendedData>
+      <LineString><coordinates>-60.8916666666667,46.7766666666667 -61.3566666666667,47.0 -61.5333333333333,46.8333333333333 -61.9733333333333,46.465 -61.425,46.1833333333333</coordinates></LineString>
+  </Placemark>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#fishing.zone.vertices">
+		<SimpleData name="type">fishing zone vertices</SimpleData>
+		<SimpleData name="species.code">253</SimpleData>
+		<SimpleData name="region">gulf</SimpleData>
+		<SimpleData name="label">4T2b</SimpleData>
+	</SchemaData></ExtendedData>
+      <LineString><coordinates>-64,47.0541666666667 -63.5,47.5 -61.5333333333333,46.8333333333333 -61.9733333333333,46.465</coordinates></LineString>
+  </Placemark>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#fishing.zone.vertices">
+		<SimpleData name="type">fishing zone vertices</SimpleData>
+		<SimpleData name="species.code">253</SimpleData>
+		<SimpleData name="region">gulf</SimpleData>
+		<SimpleData name="label">4T2a1</SimpleData>
+	</SchemaData></ExtendedData>
+      <LineString><coordinates>-61.3886111111111,47.6127777777778 -60.2833333333333,47.9333333333333 -61.1666666666667,47.15 -61.3566666666667,47.0 -61.5333333333333,46.8333333333333 -61.7194444444445,47.2777777777778 -61.7736111111111,47.3908333333333</coordinates></LineString>
+  </Placemark>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#fishing.zone.vertices">
+		<SimpleData name="type">fishing zone vertices</SimpleData>
+		<SimpleData name="species.code">253</SimpleData>
+		<SimpleData name="region">gulf</SimpleData>
+		<SimpleData name="label">4T2a2</SimpleData>
+	</SchemaData></ExtendedData>
+      <LineString><coordinates>-61.7736111111111,47.3908333333333 -61.7194444444445,47.2777777777778 -61.7836666666667,47.2824166666667</coordinates></LineString>
+  </Placemark>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#fishing.zone.vertices">
+		<SimpleData name="type">fishing zone vertices</SimpleData>
+		<SimpleData name="species.code">253</SimpleData>
+		<SimpleData name="region">gulf</SimpleData>
+		<SimpleData name="label">4T2a3</SimpleData>
+	</SchemaData></ExtendedData>
+      <LineString><coordinates>-61.7836666666667,47.2824166666667 -61.7194444444445,47.2777777777778 -61.5333333333333,46.8333333333333 -63.5,47.5 -63.445,47.55 -62.0191666666667,47.2286111111111</coordinates></LineString>
+  </Placemark>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#fishing.zone.vertices">
+		<SimpleData name="type">fishing zone vertices</SimpleData>
+		<SimpleData name="species.code">253</SimpleData>
+		<SimpleData name="region">gulf</SimpleData>
+		<SimpleData name="label">4T2a4</SimpleData>
+	</SchemaData></ExtendedData>
+      <LineString><coordinates>-62.0191666666667,47.2286111111111 -63.445,47.55 -62.2666666666667,48.6125 -61.7138888888889,47.5294444444444</coordinates></LineString>
+  </Placemark>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#fishing.zone.vertices">
+		<SimpleData name="type">fishing zone vertices</SimpleData>
+		<SimpleData name="species.code">253</SimpleData>
+		<SimpleData name="region">gulf</SimpleData>
+		<SimpleData name="label">4T2a5</SimpleData>
+	</SchemaData></ExtendedData>
+      <LineString><coordinates>-61.7138888888889,47.5294444444444 -62.2666666666667,48.6125 -61.6683333333333,48.4083333333333 -60.2833333333333,47.9333333333333 -61.3886111111111,47.6127777777778</coordinates></LineString>
+  </Placemark>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#fishing.zone.vertices">
+		<SimpleData name="type">fishing zone vertices</SimpleData>
+		<SimpleData name="species.code">253</SimpleData>
+		<SimpleData name="region">gulf</SimpleData>
+		<SimpleData name="label">4T3a</SimpleData>
+	</SchemaData></ExtendedData>
+      <LineString><coordinates>-65.1333333333333,49.2266666666667 -65.1666666666667,49.4 -64.6666666666667,49.4166666666667 -64.5183333333333,49.3675 -62.2666666666667,48.6125 -64.5166666666667,48.0166666666667</coordinates></LineString>
+  </Placemark>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#fishing.zone.vertices">
+		<SimpleData name="type">fishing zone vertices</SimpleData>
+		<SimpleData name="species.code">253</SimpleData>
+		<SimpleData name="region">gulf</SimpleData>
+		<SimpleData name="label">4T3b</SimpleData>
+	</SchemaData></ExtendedData>
+      <LineString><coordinates>-64.6666666666667,47.7166666666667 -64.5166666666667,48.0166666666667 -62.2666666666667,48.6125 -63.445,47.55 -64.9,47.55</coordinates></LineString>
+  </Placemark>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#fishing.zone.vertices">
+		<SimpleData name="type">fishing zone vertices</SimpleData>
+		<SimpleData name="species.code">253</SimpleData>
+		<SimpleData name="region">gulf</SimpleData>
+		<SimpleData name="label">4T4</SimpleData>
+	</SchemaData></ExtendedData>
+      <LineString><coordinates>-67.3833333333333,49.3333333333333 -65.1666666666667,49.4 -65.1333333333333,49.2266666666667</coordinates></LineString>
+  </Placemark>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#fishing.zone.vertices">
+		<SimpleData name="type">fishing zone vertices</SimpleData>
+		<SimpleData name="species.code">253</SimpleData>
+		<SimpleData name="region">gulf</SimpleData>
+		<SimpleData name="label">4T5</SimpleData>
+	</SchemaData></ExtendedData>
+      <LineString><coordinates>-64.9,47.55 -63.445,47.55 -63.5,47.5 -64,47.0541666666667 -64.8277777777778,47.0133333333333</coordinates></LineString>
+  </Placemark>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#fishing.zone.vertices">
+		<SimpleData name="type">fishing zone vertices</SimpleData>
+		<SimpleData name="species.code">253</SimpleData>
+		<SimpleData name="region">gulf</SimpleData>
+		<SimpleData name="label">4T6</SimpleData>
+	</SchemaData></ExtendedData>
+      <LineString><coordinates>-65.2444444444444,48.0166666666667 -65.1833333333333,47.8166666666667</coordinates></LineString>
+  </Placemark>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#fishing.zone.vertices">
+		<SimpleData name="type">fishing zone vertices</SimpleData>
+		<SimpleData name="species.code">253</SimpleData>
+		<SimpleData name="region">gulf</SimpleData>
+		<SimpleData name="label">4T7</SimpleData>
+	</SchemaData></ExtendedData>
+      <MultiGeometry><LineString><coordinates>-64.8277777777778,47.0133333333333 -64,47.0541666666667</coordinates></LineString><LineString><coordinates>-63.7116666666667,45.8625 -63.4675,46.1763888888889 -63.4905555555556,46.2313888888889</coordinates></LineString></MultiGeometry>
+  </Placemark>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#fishing.zone.vertices">
+		<SimpleData name="type">fishing zone vertices</SimpleData>
+		<SimpleData name="species.code">253</SimpleData>
+		<SimpleData name="region">gulf</SimpleData>
+		<SimpleData name="label">4T8</SimpleData>
+	</SchemaData></ExtendedData>
+      <MultiGeometry><LineString><coordinates>-63.7116666666667,45.8625 -63.4675,46.1763888888889 -63.4905555555556,46.2313888888889</coordinates></LineString><LineString><coordinates>-61.9733333333333,46.465 -61.425,46.1833333333333</coordinates></LineString></MultiGeometry>
+  </Placemark>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#fishing.zone.vertices">
+		<SimpleData name="type">fishing zone vertices</SimpleData>
+		<SimpleData name="species.code">253</SimpleData>
+		<SimpleData name="region">gulf</SimpleData>
+		<SimpleData name="label">4T9a</SimpleData>
+	</SchemaData></ExtendedData>
+      <LineString><coordinates>-60.2833333333333,47.9333333333333 -60,47.8333333333333 -60.2666666666667,47.3166666666667 -61.1666666666667,47.15 -60.2833333333333,47.9333333333333</coordinates></LineString>
+  </Placemark>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#fishing.zone.vertices">
+		<SimpleData name="type">fishing zone vertices</SimpleData>
+		<SimpleData name="species.code">253</SimpleData>
+		<SimpleData name="region">gulf</SimpleData>
+		<SimpleData name="label">4T9b</SimpleData>
+	</SchemaData></ExtendedData>
+      <LineString><coordinates>-60.8916666666667,46.7766666666667 -61.3566666666667,47.0 -61.1666666666667,47.15 -60.2666666666667,47.3166666666667 -60.4091666666667,47.0358333333333</coordinates></LineString>
+  </Placemark>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#fishing.zone.vertices">
+		<SimpleData name="type">fishing zone vertices</SimpleData>
+		<SimpleData name="species.code">253</SimpleData>
+		<SimpleData name="region">maritimes</SimpleData>
+		<SimpleData name="label">4VN1</SimpleData>
+	</SchemaData></ExtendedData>
+      <LineString><coordinates>-60.4091666666667,47.0358333333333 -60.2666666666667,47.3166666666667 -60,47.8333333333333 -59.5833333333333,47.5 -58.8333333333333,46.8333333333333 -58.4333333333333,46.5 -60.4333333333333,46.5</coordinates></LineString>
+  </Placemark>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#fishing.zone.vertices">
+		<SimpleData name="type">fishing zone vertices</SimpleData>
+		<SimpleData name="species.code">253</SimpleData>
+		<SimpleData name="region">maritimes</SimpleData>
+		<SimpleData name="label">4VN2</SimpleData>
+	</SchemaData></ExtendedData>
+      <LineString><coordinates>-60.4333333333333,46.5 -58.4333333333333,46.5 -57.45,45.6666666666667 -60,45.6666666666667 -60.25,45.7</coordinates></LineString>
+  </Placemark>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#fishing.zone.vertices">
+		<SimpleData name="type">fishing zone vertices</SimpleData>
+		<SimpleData name="species.code">253</SimpleData>
+		<SimpleData name="region">newfoundland</SimpleData>
+		<SimpleData name="label">4Ra</SimpleData>
+	</SchemaData></ExtendedData>
+      <MultiGeometry><LineString><coordinates>-55.6833333333333,52.25 -55.4166666666667,52.25 -55.4333333333333,51.5833333333333</coordinates></LineString><LineString><coordinates>-57.4166666666667,50.7 -58.15,50.7166666666667 -57.1075,51.4166666666667</coordinates></LineString></MultiGeometry>
+  </Placemark>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#fishing.zone.vertices">
+		<SimpleData name="type">fishing zone vertices</SimpleData>
+		<SimpleData name="species.code">253</SimpleData>
+		<SimpleData name="region">newfoundland</SimpleData>
+		<SimpleData name="label">4Rb</SimpleData>
+	</SchemaData></ExtendedData>
+      <LineString><coordinates>-57.4166666666667,50.7 -58.15,50.7166666666667 -59.25,49.95 -58.2333333333333,49.4</coordinates></LineString>
+  </Placemark>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#fishing.zone.vertices">
+		<SimpleData name="type">fishing zone vertices</SimpleData>
+		<SimpleData name="species.code">253</SimpleData>
+		<SimpleData name="region">newfoundland</SimpleData>
+		<SimpleData name="label">4Rc</SimpleData>
+	</SchemaData></ExtendedData>
+      <LineString><coordinates>-58.2333333333333,49.4 -59.25,49.95 -60,49.4166666666667 -60,48.4666666666667 -59.2666666666667,48.4666666666667</coordinates></LineString>
+  </Placemark>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#fishing.zone.vertices">
+		<SimpleData name="type">fishing zone vertices</SimpleData>
+		<SimpleData name="species.code">253</SimpleData>
+		<SimpleData name="region">newfoundland</SimpleData>
+		<SimpleData name="label">4Rd</SimpleData>
+	</SchemaData></ExtendedData>
+      <LineString><coordinates>-59.2666666666667,48.4666666666667 -60,48.4666666666667 -60,47.8333333333333 -59.5833333333333,47.5 -59.3166666666667,47.6166666666667</coordinates></LineString>
+  </Placemark>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#fishing.zone.vertices">
+		<SimpleData name="type">fishing zone vertices</SimpleData>
+		<SimpleData name="species.code">253</SimpleData>
+		<SimpleData name="region">quebec</SimpleData>
+		<SimpleData name="label">4S1</SimpleData>
+	</SchemaData></ExtendedData>
+      <LineString><coordinates>-67.3833333333333,49.3333333333333 -65.1666666666667,49.4 -64.6666666666667,49.4166666666667 -64.5183333333333,49.3675 -64.5183333333333,49.8666666666667 -64.5183333333333,50.2916666666667</coordinates></LineString>
+  </Placemark>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#fishing.zone.vertices">
+		<SimpleData name="type">fishing zone vertices</SimpleData>
+		<SimpleData name="species.code">253</SimpleData>
+		<SimpleData name="region">quebec</SimpleData>
+		<SimpleData name="label">4S2</SimpleData>
+	</SchemaData></ExtendedData>
+      <MultiGeometry><LineString><coordinates>-64.5183333333333,50.2916666666667 -64.5183333333333,49.8666666666667</coordinates></LineString><LineString><coordinates>-61.185,50.1733333333333 -61.6683333333333,49.1466666666667</coordinates></LineString></MultiGeometry>
+  </Placemark>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#fishing.zone.vertices">
+		<SimpleData name="type">fishing zone vertices</SimpleData>
+		<SimpleData name="species.code">253</SimpleData>
+		<SimpleData name="region">quebec</SimpleData>
+		<SimpleData name="label">4S3</SimpleData>
+	</SchemaData></ExtendedData>
+      <LineString><coordinates>-61.6683333333333,49.1466666666667 -60,49.4166666666667 -60,48.4666666666667 -60,47.8333333333333 -60.2833333333333,47.9333333333333 -61.6683333333333,48.4083333333333 -61.6683333333333,49.1466666666667</coordinates></LineString>
+  </Placemark>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#fishing.zone.vertices">
+		<SimpleData name="type">fishing zone vertices</SimpleData>
+		<SimpleData name="species.code">253</SimpleData>
+		<SimpleData name="region">quebec</SimpleData>
+		<SimpleData name="label">4S4</SimpleData>
+	</SchemaData></ExtendedData>
+      <LineString><coordinates>-64.5183333333333,49.8666666666667 -64.5183333333333,49.3675 -62.2666666666667,48.6125 -61.6683333333333,48.4083333333333 -61.6683333333333,49.1466666666667</coordinates></LineString>
+  </Placemark>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#fishing.zone.vertices">
+		<SimpleData name="type">fishing zone vertices</SimpleData>
 		<SimpleData name="species.code">60</SimpleData>
 		<SimpleData name="region">newfoundland</SimpleData>
 		<SimpleData name="label">11</SimpleData>
