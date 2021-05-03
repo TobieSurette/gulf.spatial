@@ -10,6 +10,8 @@
 \alias{lon}
 \alias{lat}
 \alias{long}
+\alias{longitude.scsset}
+\alias{latitude.scsset}
 \title{Retrieve Spatial Coordinates}
 \usage{
 longitude(x, ...)
@@ -29,6 +31,10 @@ lon(x, ...)
 lat(x, ...)
 
 long(x, ...)
+
+\method{longitude}{scsset}(x)
+
+\method{latitude}{scsset}(x)
 }
 \arguments{
 \item{x}{Object containing coordinates. Coordinates can be extracted from list and
@@ -40,6 +46,13 @@ in the field variable names. In the latter case, partial matching is used.}
 Functions to retrieve coordinates from an object.
 }
 \section{Functions}{
+\itemize{
+\item \code{longitude.scsset}: Convert numeric longitude coordinates from \code{scsset} objects to decimal degrees.
+
+\item \code{latitude.scsset}: Convert numeric latitude coordinates from \code{scsset} objects to decimal degrees.
+}}
+
+\section{Functions}{
 
 \describe{
   \item{\code{longitude}, \code{latitude}}{Extract longitude or latitude coordinates from a data frame or list.}
@@ -48,3 +61,9 @@ Functions to retrieve coordinates from an object.
 }
 }
 
+\examples{
+x <- read.scsset(2020, valid = 1)
+longitude(x)
+plot(lon(x), lat(x))
+
+}
