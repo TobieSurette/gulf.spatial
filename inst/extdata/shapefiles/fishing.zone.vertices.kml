@@ -272,6 +272,16 @@
 	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
 	<ExtendedData><SchemaData schemaUrl="#fishing.zone.vertices">
 		<SimpleData name="type">fishing zone vertices</SimpleData>
+		<SimpleData name="species.code">253</SimpleData>
+		<SimpleData name="region">quebec</SimpleData>
+		<SimpleData name="label">4S5</SimpleData>
+	</SchemaData></ExtendedData>
+      <LineString><coordinates>-61.185,50.1733333333333 -61.6683333333333,49.1466666666667 -60,49.4166666666667 -59.25,49.95 -58.15,50.7166666666667 -57.1075,51.4166666666667</coordinates></LineString>
+  </Placemark>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#fishing.zone.vertices">
+		<SimpleData name="type">fishing zone vertices</SimpleData>
 		<SimpleData name="species.code">60</SimpleData>
 		<SimpleData name="region">newfoundland</SimpleData>
 		<SimpleData name="label">11</SimpleData>

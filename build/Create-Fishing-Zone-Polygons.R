@@ -5,6 +5,19 @@ library(here)
 library(sf)
 library(tidyverse)
 
+##
+sf.fct <- function(li){
+   df <- data.frame(
+      type=li$type,
+      species.code=li$species.code,
+      region=li$region,
+      label=li$label,
+      geometry=st_sfc(li$geometry, crs=4326)
+   )
+   return(df)
+}
+
+
 ## coastline
 ## coastline file from the Atlas of Canada
 ## https://open.canada.ca/data/en/dataset/fec926ca-25ad-5c92-a9a7-6009c21d17b3
@@ -120,17 +133,6 @@ create.sf.nfld.fct <- function(list.in){
 }
 
 lfa.list.sf <- lapply(lfa.list, create.sf.nfld.fct)
-
-sf.fct <- function(li){
-   df <- data.frame(
-      type=li$type,
-      species.code=li$species.code,
-      region=li$region,
-      label=li$label,
-      geometry=st_sfc(li$geometry, crs=4326)
-   )
-   return(df)
-}
 
 lfa.sf <- st_sf(do.call(rbind, lapply(lfa.list.sf, sf.fct)))
 
@@ -585,6 +587,7 @@ fz.sf.polygons <- rbind(hfa.coast.sf, fz.sf.polygons)
 ################
 ####################
 #### GROUNDFISH start
+# https://inter-l01-uat.dfo-mpo.gc.ca/infoceans/sites/infoceans/files/PoissonFond_en.pdf
 groundfish.afr <- read.table(file="build/groundfish-atlantic-fishery-regulations-points.txt", header=TRUE, sep=" ", colClasses=c("numeric",rep("character", 6)))
 groundfish.afr$longitude <- -dms2deg(as.numeric(paste0(groundfish.afr$lon.d,groundfish.afr$lon.m,groundfish.afr$lon.s)))
 groundfish.afr$latitude <- dms2deg(as.numeric(paste0(groundfish.afr$lat.d,groundfish.afr$lat.m,groundfish.afr$lat.s)))
@@ -617,6 +620,7 @@ gfa.list[[23]] <- list(type="fishing zone vertices", species.code=253, region="q
 gfa.list[[24]] <- list(type="fishing zone vertices", species.code=253, region="quebec", label="4S2", points=c(1,22), points=c(4,21))
 gfa.list[[25]] <- list(type="fishing zone vertices", species.code=253, region="quebec", label="4S3", points=c(21,7,31,6,12,5,21))
 gfa.list[[26]] <- list(type="fishing zone vertices", species.code=253, region="quebec", label="4S4", points=c(22,2,15,5,21))
+gfa.list[[27]] <- list(type="fishing zone vertices", species.code=253, region="quebec", label="4S5", points=c(4,21,7,28,27,8))
 
 create.sf.fct <- function(list.in){
    #   print(list.in$label)
@@ -659,6 +663,17 @@ gfa.list[[13]] <- list(type="fishing zone polygon", species.code=253, region="gu
 gfa.list[[14]] <- list(type="fishing zone polygon", species.code=253, region="gulf", label="4T8", points=c(9,10,51,107,108,11,42,109,110,111,112,113,9))
 gfa.list[[15]] <- list(type="fishing zone polygon", species.code=253, region="gulf", label="4T9a", points=c(12,6,50,49,12))
 gfa.list[[16]] <- list(type="fishing zone polygon", species.code=253, region="gulf", label="4T9b", points=c(45,46,49,50,13,114,45))
+gfa.list[[17]] <- list(type="fishing zone polygon", species.code=253, region="maritimes", label="4VN1", points=c(13,50,6,32,35,36,40,115,116,13))
+gfa.list[[18]] <- list(type="fishing zone polygon", species.code=253, region="maritimes", label="4VN2", points=c(40,36,37,38,39,117,118,119,120,121,122,123,124,125,126,40))
+gfa.list[[19]] <- list(type="fishing zone polygon", species.code=253, region="newfoundland", label="4Ra", points=c(26,27,8,127,23,24,25,128,129,130,131,132,133,26))
+gfa.list[[20]] <- list(type="fishing zone polygon", species.code=253, region="newfoundland", label="4Rb", points=c(29,28,27,26,133,134,29))
+gfa.list[[21]] <- list(type="fishing zone polygon", species.code=253, region="newfoundland", label="4Rc", points=c(29,28,7,31,30,135,136,137,138,134,29))
+gfa.list[[22]] <- list(type="fishing zone polygon", species.code=253, region="newfoundland", label="4Rd", points=c(30,31,6,32,33,139,137,136,135,30))
+gfa.list[[23]] <- list(type="fishing zone polygon", species.code=253, region="quebec", label="4S1", points=c(3,16,18,2,22,1,140,141,3))
+gfa.list[[24]] <- list(type="fishing zone polygon", species.code=253, region="quebec", label="4S2", points=c(1,22,142,21,4,143,1))
+gfa.list[[25]] <- list(type="fishing zone polygon", species.code=253, region="quebec", label="4S3", points=c(21,7,31,6,12,5,21))
+gfa.list[[26]] <- list(type="fishing zone polygon", species.code=253, region="quebec", label="4S4", points=c(22,2,15,5,21,142,22))
+gfa.list[[27]] <- list(type="fishing zone polygon", species.code=253, region="quebec", label="4S5", points=c(4,21,7,28,27,8,144,145,4))
 
 gfa.list.sf <- lapply(gfa.list, create.sf.fct)
 gfa.sf <- st_sf(do.call(rbind, lapply(gfa.list.sf, sf.fct)))
@@ -688,6 +703,17 @@ gfa.coast.sf <- rbind(gfa.coast.sf, difference.fct(gfa.sf[13,]))
 gfa.coast.sf <- rbind(gfa.coast.sf, difference.fct(gfa.sf[14,]))
 gfa.coast.sf <- rbind(gfa.coast.sf, st_cast(gfa.sf[15,], "POLYGON"))
 gfa.coast.sf <- rbind(gfa.coast.sf, difference.fct(gfa.sf[16,]))
+gfa.coast.sf <- rbind(gfa.coast.sf, difference.fct(gfa.sf[17,]))
+gfa.coast.sf <- rbind(gfa.coast.sf, difference.fct(gfa.sf[18,]))
+gfa.coast.sf <- rbind(gfa.coast.sf, difference.fct(gfa.sf[19,]))
+gfa.coast.sf <- rbind(gfa.coast.sf, difference.fct(gfa.sf[20,]))
+gfa.coast.sf <- rbind(gfa.coast.sf, difference.fct(gfa.sf[21,]))
+gfa.coast.sf <- rbind(gfa.coast.sf, difference.fct(gfa.sf[22,]))
+gfa.coast.sf <- rbind(gfa.coast.sf, difference.fct(gfa.sf[23,]))
+gfa.coast.sf <- rbind(gfa.coast.sf, difference.fct(gfa.sf[24,]))
+gfa.coast.sf <- rbind(gfa.coast.sf, st_cast(gfa.sf[25,], "POLYGON"))
+gfa.coast.sf <- rbind(gfa.coast.sf, difference.fct(gfa.sf[26,]))
+gfa.coast.sf <- rbind(gfa.coast.sf, difference.fct(gfa.sf[27,]))
 
 
 fz.sf.polygons <- rbind(gfa.coast.sf, fz.sf.polygons)
@@ -752,10 +778,10 @@ ggsave(file="build/Gulf-of-St-Lawrence-herring-areas-lines.pdf", g5, width = 30,
 g6 <- g+geom_sf(data=herring.polygons, color="red", fill="mistyrose")+geom_label(data=herring.polygons, aes(X, Y, label=label), size=2)
 ggsave(file="build/Gulf-of-St-Lawrence-herring-areas-polygons.pdf", g6, width = 30, height = 20, units = "cm")
 
-g7 <- g+geom_sf(data=groundfish.lines, color="red", fill="mistyrose") #+geom_label(data=groundfish.polygons, aes(X, Y, label=label), size=2)
+g7 <- g+geom_sf(data=groundfish.lines, color="red", fill="mistyrose")+geom_label(data=groundfish.polygons, aes(X, Y, label=label), size=2)
 ggsave(file="build/Gulf-of-St-Lawrence-groundfish-areas-lines.pdf", g7, width = 30, height = 20, units = "cm")
 
-g8 <- g+geom_sf(data=groundfish.polygons, color="red", fill="mistyrose") #+geom_label(data=groundfish.polygons, aes(X, Y, label=label), size=2)
+g8 <- g+geom_sf(data=groundfish.polygons, color="red", fill="mistyrose")+geom_label(data=groundfish.polygons, aes(X, Y, label=label), size=2)
 ggsave(file="build/Gulf-of-St-Lawrence-groundfish-areas-polygons.pdf", g8, width = 30, height = 20, units = "cm")
 
 ## write to files
@@ -775,8 +801,10 @@ save(fz.sf.polygons, file="./data/fishing.zone.polygons.rda")
 ## - remove the lines on land in Nfld, for consistency with the other region
 ## - for Maritimes LFAs, add Canada-US border in the polygons in LFAs 36 and 38
 ## - add Maritimes offshore LFA 41
-## - add groundfish zones
 ## - add Newfoundland snow crab zones
+## - add Maritimes snow crab zones
+## - add 4V and 4RS groundfish zones
+## DONE - add 4T groundfish zones
 ## DONE - add Maritimes LFAs
 ## DONE - generate Gulf lobster zones with coastlines from GSHHG instead of using those in the Gulf package
 ## DONE - add snow crab zones
