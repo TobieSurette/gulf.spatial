@@ -1,18 +1,30 @@
-loran_xz_lat <- function(read1, read2){
+loranxz2deg <- function(x, z){
+
+   ix <- which(!is.na(x) & !is.na(z) & (x > 0) & (z > 0))
+
+   v <- rep(NA, length(x))
+   if (length(ix) > 0){
+      v[ix] <- data.frame(longitude = -loranxz2lon(x[ix], z[ix]), latitude = loranxz2lat(x[ix], z[ix]))
+   }
+
+   return(v)
+}
+
+loranxz2lat <- function(x, z){
    # Returns the latitude for a given loran X and Z coordinate:
-   Pi = 3.14159265358979;   p2 = Pi / 180; 
+   Pi = 3.14159265358979;   p2 = Pi / 180;
    Ae = 6378206.4; Fl = 0.0033900753; rlax = 0.75;
    tImine1 = "start"; tImine2 = "end";
    l = 0; m = 1; dor1 = 2;
 
    xd1 = 41; xm1 = 15; xs1 = 11.98; xd2 = 69; xm2 = 58; xs2 = 40.51; xd3 = 46;
    xm3 = 48; xs3 = 27.54; xd4 = 67; xm4 = 55; xs4 = 39.35; count1 = 4263.76;
-   delta1 = 11000; yd1 = 52; ym1 = 22; ys1 = 35.11; yd2 = 55; ym2 = 42; 
+   delta1 = 11000; yd1 = 52; ym1 = 22; ys1 = 35.11; yd2 = 55; ym2 = 42;
    ys2 = 31.35; yd3 = xd3; ym3 = xm3; ys3 = xs3; yd4 = xd4; ym4 = xm4; ys4 = xs4;
    count2 = 7189.12; delta2 = 38000; dd1 = 49; dm1 = 51; ds1 = 30.07; dd2 = 64;
    dm2 = 26; ds2 = 41.18; nstn = 1; dur = 1; xlIsect1 = 45; xlIsect2 = 30;
    xlIsect3 = 30; xlIsect4 = 65; xlIsect5 = 0; xlIsect6 = 0;
-   
+
    pos11 = (xd1 + xm1 / 60 + xs1 / 3600) * p2;
    pos12 = (xd2 + xm2 / 60 + xs2 / 3600) * p2;
    pos21 = (xd3 + xm3 / 60 + xs3 / 3600) * p2;
@@ -20,11 +32,11 @@ loran_xz_lat <- function(read1, read2){
 
    Php = pos11; Flp = pos12; Phs = pos21; Fls = pos22; Dlon = Fls - Flp;
    Sl = sin(Dlon); Cl = cos(Dlon); Sp = sin(Php); Cp = cos(Php); Ss = sin(Phs); Cs = cos(Phs);
-   C = Ss * Sp + Cs * Cp * Cl; S = sqrt(1 - C ^ 2); U = atan(S / C); 
+   C = Ss * Sp + Cs * Cp * Cl; S = sqrt(1 - C ^ 2); U = atan(S / C);
    Dv = (U + 3 * S) / (1 - C); Dv = Dv * (Sp - Ss) ^ 2; Dw = (U - 3 * S) / (1 + C);
-   Dw = Dw * (Sp + Ss) ^ 2; 
+   Dw = Dw * (Sp + Ss) ^ 2;
    Range = Ae * (U - 0.25 * Fl * (Dv + Dw));
-   a_1 = (-1) * Cp * Ss + Sp * Cs * Cl; a_1 = a_1 * Ae / S; 
+   a_1 = (-1) * Cp * Ss + Sp * Cs * Cl; a_1 = a_1 * Ae / S;
    a_2 = (-1) * Ae * Cp * Cs * Sl / S;
    base1 = Range; wIdegth1 = base1 / count1;
 
@@ -35,27 +47,27 @@ loran_xz_lat <- function(read1, read2){
 
    Php = pos31; Flp = pos32; Phs = pos41; Fls = pos42; Dlon = Fls - Flp; Sl = sin(Dlon);
    Cl = cos(Dlon); Sp = sin(Php); Cp = cos(Php); Ss = sin(Phs); Cs = cos(Phs);
-   C = Ss * Sp + Cs * Cp * Cl; S = sqrt(1 - C ^ 2); U = atan(S / C); 
+   C = Ss * Sp + Cs * Cp * Cl; S = sqrt(1 - C ^ 2); U = atan(S / C);
    Dv = (U + 3 * S) / (1 - C); Dv = Dv * (Sp - Ss) ^ 2; Dw = (U - 3 * S) / (1 + C);
    Dw = Dw * (Sp + Ss) ^ 2; Range = Ae * (U - 0.25 * Fl * (Dv + Dw));
-   a_1 = (-1) * Cp * Ss + Sp * Cs * Cl; a_1 = a_1 * Ae / S; 
+   a_1 = (-1) * Cp * Ss + Sp * Cs * Cl; a_1 = a_1 * Ae / S;
    a_2 = (-1) * Ae * Cp * Cs * Sl / S;
    base2 = Range; wIdegth2 = base2 / count2;
 
    pos51 = (xlIsect1 + xlIsect2 / 60 + xlIsect3 / 3600) * p2
    pos52 = (xlIsect4 + xlIsect5 / 60 + xlIsect6 / 3600) * p2
 
-   pa1 = read1 - delta1; pa2 = read2 - delta2;
+   pa1 = x - delta1; pa2 = z - delta2;
    test = 1000;
    iter = 0;
-   
+
    while ((iter < 40) && (test > 2)){
       iter = iter + 1;
 
       Php = pos51; Flp = pos52; Phs = pos11; Fls = pos12;
       Dlon = Fls - Flp;
       Sl = sin(Dlon); Cl = cos(Dlon); Sp = sin(Php); Cp = cos(Php); Ss = sin(Phs); Cs = cos(Phs);
-      C = Ss * Sp + Cs * Cp * Cl; S = sqrt(1 - C ^ 2); U = atan(S / C); 
+      C = Ss * Sp + Cs * Cp * Cl; S = sqrt(1 - C ^ 2); U = atan(S / C);
       Dv = (U + 3 * S) / (1 - C); Dv = Dv * (Sp - Ss) ^ 2; Dw = (U - 3 * S) / (1 + C);
       Dw = Dw * (Sp + Ss) ^ 2;
       Range = Ae * (U - 0.25 * Fl * (Dv + Dw));
@@ -64,11 +76,11 @@ loran_xz_lat <- function(read1, read2){
       r1 = Range; a1 = a_1; b1 = a_2;
       Php = pos51; Flp = pos52; Phs = pos21; Fls = pos22;
 
-      Dlon = Fls - Flp; 
+      Dlon = Fls - Flp;
       Sl = sin(Dlon); Cl = cos(Dlon); Sp = sin(Php); Cp = cos(Php); Ss = sin(Phs); Cs = cos(Phs);
       C = Ss * Sp + Cs * Cp * Cl; S = sqrt(1 - C ^ 2); U = atan(S / C); Dv = (U + 3 * S) / (1 - C);
       Dv = Dv * (Sp - Ss) ^ 2; Dw = (U - 3 * S) / (1 + C); Dw = Dw * (Sp + Ss) ^ 2;
-      Range = Ae * (U - 0.25 * Fl * (Dv + Dw)); 
+      Range = Ae * (U - 0.25 * Fl * (Dv + Dw));
       a_1 = (-1) * Cp * Ss + Sp * Cs * Cl; a_1 = a_1 * Ae / S; a_2 = (-1) * Ae * Cp * Cs * Sl / S;
 
       r2 = Range; a2 = a_1; b2 = a_2;
@@ -78,13 +90,13 @@ loran_xz_lat <- function(read1, read2){
       Sl = sin(Dlon); Cl = cos(Dlon); Sp = sin(Php); Cp = cos(Php); Ss = sin(Phs); Cs = cos(Phs);
       C = Ss * Sp + Cs * Cp * Cl; S = sqrt(1 - C ^ 2); U = atan(S / C); Dv = (U + 3 * S) / (1 - C);
       Dv = Dv * (Sp - Ss) ^ 2; Dw = (U - 3 * S) / (1 + C); Dw = Dw * (Sp + Ss) ^ 2;
-      Range = Ae * (U - 0.25 * Fl * (Dv + Dw)); 
+      Range = Ae * (U - 0.25 * Fl * (Dv + Dw));
       a_1 = (-1) * Cp * Ss + Sp * Cs * Cl; a_1 = a_1 * Ae / S; a_2 = (-1) * Ae * Cp * Cs * Sl / S;
 
       r3 = Range; a3 = a_1; b3 = a_2;
 
       Php = pos51; Flp = pos52; Phs = pos41; Fls = pos42;
-    
+
       Dlon = Fls - Flp;
       Sl = sin(Dlon); Cl = cos(Dlon); Sp = sin(Php); Cp = cos(Php); Ss = sin(Phs); Cs = cos(Phs)
       C = Ss * Sp + Cs * Cp * Cl; S = sqrt(1 - C ^ 2); U = atan(S / C);
@@ -120,14 +132,14 @@ loran_xz_lat <- function(read1, read2){
    return(Loranc1)
 }
 
-loran_xz_lon <- function(read1, read2){
+loranxz2lon <- function(x, z){
    # Returns the longitude for a given loran X and Z coordinate:
     Pi = 3.14159265358979; p2 = Pi / 180; Ae = 6378206.4; Fl = 0.0033900753; rlax = 0.75;
-    tImine1 = "start"; tImine2 = "end"; l = 0; m = 1; dor1 = 2; 
+    tImine1 = "start"; tImine2 = "end"; l = 0; m = 1; dor1 = 2;
     xd1 = 41; xm1 = 15; xs1 = 11.98; xd2 = 69; xm2 = 58; xs2 = 40.51; xd3 = 46;
-    xm3 = 48; xs3 = 27.54; xd4 = 67; xm4 = 55; xs4 = 39.35; count1 = 4263.76; 
-    delta1 = 11000; yd1 = 52; ym1 = 22; ys1 = 35.11; yd2 = 55; ym2 = 42; ys2 = 31.35; 
-    yd3 = xd3; ym3 = xm3; ys3 = xs3; yd4 = xd4; ym4 = xm4; ys4 = xs4; 
+    xm3 = 48; xs3 = 27.54; xd4 = 67; xm4 = 55; xs4 = 39.35; count1 = 4263.76;
+    delta1 = 11000; yd1 = 52; ym1 = 22; ys1 = 35.11; yd2 = 55; ym2 = 42; ys2 = 31.35;
+    yd3 = xd3; ym3 = xm3; ys3 = xs3; yd4 = xd4; ym4 = xm4; ys4 = xs4;
     count2 = 7189.12; delta2 = 38000; dd1 = 49; dm1 = 51; ds1 = 30.07; dd2 = 64;
     dm2 = 26; ds2 = 41.18;
 
@@ -197,11 +209,11 @@ loran_xz_lon <- function(read1, read2){
     pos51 = (xlIsect1 + xlIsect2 / 60 + xlIsect3 / 3600) * p2;
     pos52 = (xlIsect4 + xlIsect5 / 60 + xlIsect6 / 3600) * p2;
 
-    pa1 = read1 - delta1;
-    pa2 = read2 - delta2;
+    pa1 = x - delta1;
+    pa2 = z - delta2;
     test = 1000;
     iter = 0;
-    
+
    while ((iter < 40) && (test > 2)){
       iter = iter + 1;
 
@@ -293,7 +305,7 @@ loran_xz_lon <- function(read1, read2){
         Flp = pos52;
         Phs = pos41;
         Fls = pos42;
-    
+
         Dlon = Fls - Flp;
         Sl = sin(Dlon);
         Cl = cos(Dlon);
@@ -367,8 +379,7 @@ loran_xz_lon <- function(read1, read2){
    return(Loranc2)
 }
 
-loran_xz_lat(14508.27,	43316.88
-)   # Return latitude
-loran_xz_lon(14508.27,	43316.88
-) # Return longitude
+loran_xz_lat(14508.27,	43316.88) # Return latitude
+loran_xz_lon(14508.27,	43316.88) # Return longitude
 
+loranxz2deg(14508.27,	43316.88)
