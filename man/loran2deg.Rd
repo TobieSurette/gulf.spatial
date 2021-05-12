@@ -3,11 +3,17 @@
 \name{loran2deg}
 \alias{loran2deg}
 \alias{loran}
+\alias{loranxy2deg}
+\alias{loranxz2deg}
 \alias{as.loran}
 \alias{is.loran}
 \title{Loran Coordinate Conversion}
 \usage{
-loran2deg(x, y)
+loran2deg(x, y, z)
+
+loranxy2deg(x, y)
+
+loranxz2deg(x, z)
 
 as.loran(x)
 
@@ -27,7 +33,11 @@ Function to convert Loran coordinates format to decimal latitude-longitude degre
 }
 \section{Functions}{
 \itemize{
-\item \code{as.loran}: Clean up loran coordinate strings.
+\item \code{loranxy2deg}: Convert Loran XY coordinates.
+
+\item \code{loranxz2deg}: Convert Loran XZ coordinates.
+
+\item \code{as.loran}: Clean up character strings containing Loran coordinates.
 
 \item \code{is.loran}: Determine if character string is a Loran-type coordinate.
 }}
@@ -45,4 +55,6 @@ loran2deg(14500, 29500)
 # Convert a vector of Loran XY coordinates to decimal degree format:
 loran2deg(seq(14000, 14500, len = 21), seq(29000, 29500, len = 21))
 
+# Loran XZ conversion:
+loranxz2deg(14508.27, z = 43316.88) # Return latitude
 }
