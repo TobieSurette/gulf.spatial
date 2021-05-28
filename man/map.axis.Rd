@@ -11,6 +11,7 @@
   major.cex = 0.6,
   minor.cex = 0.4,
   cex = 1,
+  language = "english",
   ...
 )
 }

@@ -16,7 +16,7 @@
 #' map.axis()
 #'
 #' @export map.axis
-map.axis <- function(side = 1, at, major.interval = 1, major.cex = 0.6, minor.cex = 0.4, cex = 1, ...){
+map.axis <- function(side = 1, at, major.interval = 1, major.cex = 0.6, minor.cex = 0.4, cex = 1, language = "english", ...){
    # Loop over multiple axes:
    if (length(side) > 1){
       for (i in 1:length(side)) map.axis(side = side[i], at = at, major.interval = major.interval, major.cex = major.cex, minor.cex = minor.cex, ...)
@@ -35,8 +35,8 @@ map.axis <- function(side = 1, at, major.interval = 1, major.cex = 0.6, minor.ce
 
       # Major tick labels:
       if (sum(index) > 0){
-         if (side %in% c(1, 3)) lab <- deg2str(long = at[index])
-         if (side %in% c(2, 4)) lab <- deg2str(lat = at[index])
+         if (side %in% c(1, 3)) lab <- deg2str(long = at[index], ...)
+         if (side %in% c(2, 4)) lab <- deg2str(lat = at[index], ...)
          graphics::axis(side, at = at[index], labels = lab, cex.axis = cex * major.cex, padj = padj[1], ...)
       }
 

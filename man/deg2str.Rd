@@ -11,7 +11,9 @@ deg2str(
   clip = TRUE,
   northing = TRUE,
   easting = TRUE,
-  as.list = FALSE
+  as.list = FALSE,
+  language = "english",
+  ...
 )
 }
 \arguments{
@@ -30,6 +32,8 @@ or Easting (i.e. "E" or "W") character in the output string when \code{longitude
 or \code{latitude} are specified.}
 
 \item{as.list}{Logical value specifying whether to return the output as a list object. The default is \code{FALSE}.}
+
+\item{language}{Lanaguage with which to state easting and northing symbols.}
 }
 \value{
 If a single argument is provided and as.list is FALSE, then the

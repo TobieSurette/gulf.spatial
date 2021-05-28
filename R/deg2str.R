@@ -17,6 +17,7 @@
 #'                         or \code{latitude} are specified.
 #'
 #' @param as.list Logical value specifying whether to return the output as a list object. The default is \code{FALSE}.
+#' @param language Lanaguage with which to state easting and northing symbols.
 #'
 #' @return If a single argument is provided and as.list is FALSE, then the
 #' returned output is a character string vector. Otherwise, the output is
@@ -38,10 +39,11 @@
 
 #' @export deg2str
 deg2str <- function(deg = NULL, latitude = NULL, longitude = NULL, clip = TRUE,
-                    northing = TRUE, easting = TRUE, as.list = FALSE){
+                    northing = TRUE, easting = TRUE, as.list = FALSE, language = "english", ...){
 
    count <- 1 # Initialize counter for number of output values.
    result <- list() # Initialize result variable.
+   language  <- gulf.utils::language(language)
 
    # Convert generic degree to a string:
    if (!is.null(deg)){
@@ -52,7 +54,6 @@ deg2str <- function(deg = NULL, latitude = NULL, longitude = NULL, clip = TRUE,
          deg.sec <- round((deg.min - floor(deg.min)) * 60, 1)
 
          deg.str[i] <- paste(as.character(floor(deg.deg)))
-         # deg.str[i] <- paste0(deg.str[i], "°") # Add degree symbol.
          deg.str[i] <- paste0(deg.str[i], '\u00B0') # Add degree symbol.
 
          # Get minute string:
@@ -77,13 +78,20 @@ deg2str <- function(deg = NULL, latitude = NULL, longitude = NULL, clip = TRUE,
       count <- count + 1
    }
 
+   # Define easting and northing symbols:
+   north.str <- c("S", "N")
+   if (easting){
+      if (language == "english") east.str <- c("W", "E")
+      if (language == "french")  east.str <- c("O", "E")
+   }
+
    # Convert latitudes:
    if (!is.null(latitude)){
       latitude.str <- rep("", length(latitude))
       for (i in 1:length(latitude)){
          latitude.str[i] <- deg2str(latitude[i], clip = clip)
          if (northing){
-            if (latitude[i] < 0) latitude.str[i] <- paste0(latitude.str[i], "S") else latitude.str[i] <- paste0(latitude.str[i], "N")
+            if (latitude[i] < 0) latitude.str[i] <- paste0(latitude.str[i], north.str[1]) else latitude.str[i] <- paste0(latitude.str[i], north.str[2])
          }
       }
       result[["lat"]] <- latitude.str
@@ -96,7 +104,7 @@ deg2str <- function(deg = NULL, latitude = NULL, longitude = NULL, clip = TRUE,
       for (i in 1:length(longitude)){
          longitude.str[i] <- deg2str(longitude[i], clip = clip)
          if (easting){
-            if (longitude[i] < 0) longitude.str[i] <- paste0(longitude.str[i], "W") else longitude.str[i] <- paste0(longitude.str[i], "E")
+            if (longitude[i] < 0) longitude.str[i] <- paste0(longitude.str[i], east.str[1]) else longitude.str[i] <- paste0(longitude.str[i], east.str[2])
          }
       }
       result[["long"]] <- longitude.str
