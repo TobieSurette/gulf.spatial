@@ -1,4 +1,4 @@
-#' Survey Spatial Strata
+#' @title Survey Spatial Strata
 #'
 #' @description Determine the spatial survey stata corresponding to a set of coordinates.
 #'
@@ -18,6 +18,9 @@
 #'         containing the survey strata numbers.
 #'
 #' @examples
+#' # Get stratum information:
+#' stratum(region = "gulf", survey = "rv")
+#'
 #' # Find the stratum at a single point:
 #' stratum(-63.8, 47.05) # returns 429
 #'
@@ -34,7 +37,20 @@
 stratum <- function(x, ...) UseMethod("stratum")
 
 #' @export
-stratum.default <- function(longitude, latitude, region = "gulf", survey = "rv", ...){
+stratum.default <- function(longitude, latitude, region, survey = "rv", stratum, ...){
+   if (missing(longitude) | missing(latitude)){
+      # Get stratum information from polygons:
+      stratum.info <- as.data.frame(read.gulf.spatial("stratum"))
+      stratum.info$stratum <- as.numeric(stratum.info$stratum)
+
+      # Subset variables:
+      if (!missing(stratum)) stratum.info <- stratum.info[which(stratum.info$stratum %in% stratum), ]
+      if (!missing(survey))  stratum.info <- stratum.info[which(stratum.info$survey %in% survey), ]
+      if (!missing(region))  stratum.info <- stratum.info[which(stratum.info$region %in% region), ]
+
+      return(stratum.info)
+   }
+
    # Load stratum polygons:
    s <- read.gulf.spatial(layer = "strata", region = region, ...)
    s <- s[which(s@data$survey %in% survey), ]
