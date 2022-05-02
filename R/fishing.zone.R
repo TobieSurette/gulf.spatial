@@ -20,9 +20,6 @@
 #' fishing.zone(lon(x), lat(x), species = 2526) # Read snow crab set card for 2013 and determine fishing zone:
 #' fishing.zone(lon(x), lat(x), species = 2550) # Lobster fishing areas of snow crab survey tows.
 
-#' @export fishing.zone
-fishing.zone <- function(x, ...) UseMethod("fishing.zone")
-
 #' @describeIn fishing.zone  Returns a fishing zone for a set of coordinate points.
 #' @rawNamespace S3method(fishing.zone,default)
 fishing.zone.default <- function(longitude, latitude, species, ...){
