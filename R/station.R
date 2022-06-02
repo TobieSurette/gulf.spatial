@@ -1,14 +1,15 @@
-#' Return a Station Number
+#' @title Sampling Station Numbering
 #'
-#' @description Assign or retrieve a sampling station identifier.
+#' @description Functions to extract or determine trawl sampling station identification numbers.
+#'              A sampling station is to be interpreted as a particular location, e.g. if two tows share
+#'              a station number they can be considered as having been sampled in the same location.
+#'              Station numbers can be assigned or determined based on spatial proximity.
 #'
-#' @param longitude,latitude Coordinates in decimal degrees.
-#' @param time Numeric or (\sQuote{POSIX}) time objects.
-#' @param distance.tolerance Numeric value specifying the distance (in kilometers) below which a pair of points
-#'                           is considered to belong to the same group or station.
-#' @param time.tolerance Numeric value specifying the time-difference below which a pair of points
-#'                       is considered to belong to the same group or station. The units are in minutes
-#'                       if the \code{time} argument belongs to a \sQuote{POSIX} class.
+#' @param longitude,latitude Numeric vector in decimal degrees.
+#' @param time Numeric vector or time (\sQuote{POSIX}) objects.
+#' @param distance.tolerance Distance (in kilometers) below which a pair of points is considered to belong to the same sampling station.
+#' @param time.tolerance Numeric value specifying the time-difference below which a pair of points is considered
+#'                       to have occured at the same time.
 
 # @describeIn station Generic 'station' function.
 #' @export
