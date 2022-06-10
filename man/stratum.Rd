@@ -27,6 +27,9 @@ Returns a numerical vector the same size as \code{latitude} and \code{longitude}
 Determine the spatial survey stata corresponding to a set of coordinates.
 }
 \examples{
+# Get stratum information:
+stratum(region = "gulf", survey = "rv")
+
 # Find the stratum at a single point:
 stratum(-63.8, 47.05) # returns 429
 
