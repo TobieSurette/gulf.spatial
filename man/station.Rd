@@ -22,6 +22,6 @@ Group sampling stations by spatial proximity.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{default}: Assign a spatial location identifier based on spatio-temporal proximity.
-}}
+\item \code{station(default)}: Assign a spatial location identifier based on spatio-temporal proximity.
 
+}}

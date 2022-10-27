@@ -20,9 +20,9 @@ Returns a fishing zone given a set of of coordinates.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{default}: Returns a fishing zone for a set of coordinate points.
-}}
+\item \code{fishing.zone(default)}: Returns a fishing zone for a set of coordinate points.
 
+}}
 \examples{
 # Find the fishing.zone at a single point:
 fishing.zone(-63.8, 47.05, species = 2526)

@@ -766,19 +766,19 @@ ggsave(file="build/Gulf-of-St-Lawrence-snow-crab-areas-lines.pdf", g1, width = 3
 g2 <- g+geom_sf(data=snow.crab.polygons, color="red", fill="mistyrose")+geom_label(data=snow.crab.polygons, aes(X, Y, label=label), size=2)
 ggsave(file="build/Gulf-of-St-Lawrence-snow-crab-areas-polygons.pdf", g2, width = 30, height = 20, units = "cm")
 
-g3 <- g+geom_sf(data=lobster.lines, color="red", fill="mistyrose")+geom_label(data=lobster.polygons, aes(X, Y, label=label), size=2)
+g3 <- g+geom_sf(data=lobster.lines, color="red", fill="mistyrose")+geom_label(data=lobster.lines, aes(X, Y, label=label), size=2)
 ggsave(file="build/Gulf-of-St-Lawrence-lobster-areas-lines.pdf", g3, width = 30, height = 20, units = "cm")
 
 g4 <- g+geom_sf(data=lobster.polygons, color="red", fill="mistyrose")+geom_label(data=lobster.polygons, aes(X, Y, label=label), size=2)
 ggsave(file="build/Gulf-of-St-Lawrence-lobster-areas-polygons.pdf", g4, width = 30, height = 20, units = "cm")
 
-g5 <- g+geom_sf(data=herring.lines, color="red", fill="mistyrose")+geom_label(data=herring.polygons, aes(X, Y, label=label), size=2)
+g5 <- g+geom_sf(data=herring.lines, color="red", fill="mistyrose")+geom_label(data=herring.lines, aes(X, Y, label=label), size=2)
 ggsave(file="build/Gulf-of-St-Lawrence-herring-areas-lines.pdf", g5, width = 30, height = 20, units = "cm")
 
 g6 <- g+geom_sf(data=herring.polygons, color="red", fill="mistyrose")+geom_label(data=herring.polygons, aes(X, Y, label=label), size=2)
 ggsave(file="build/Gulf-of-St-Lawrence-herring-areas-polygons.pdf", g6, width = 30, height = 20, units = "cm")
 
-g7 <- g+geom_sf(data=groundfish.lines, color="red", fill="mistyrose")+geom_label(data=groundfish.polygons, aes(X, Y, label=label), size=2)
+g7 <- g+geom_sf(data=groundfish.lines, color="red", fill="mistyrose")+geom_label(data=groundfish.lines, aes(X, Y, label=label), size=2)
 ggsave(file="build/Gulf-of-St-Lawrence-groundfish-areas-lines.pdf", g7, width = 30, height = 20, units = "cm")
 
 g8 <- g+geom_sf(data=groundfish.polygons, color="red", fill="mistyrose")+geom_label(data=groundfish.polygons, aes(X, Y, label=label), size=2)
@@ -796,9 +796,8 @@ write_sf(fz.sf.polygons, file.path(here(), "inst/extdata/shapefiles/fishing.zone
 save(fz.sf.polygons, file="./data/fishing.zone.polygons.rda")
 
 
-
 ## still to do,
-## - remove the lines on land in Nfld, for consistency with the other region
+## - remove the lines on land in Nfld, for consistency with the other regions
 ## - for Maritimes LFAs, add Canada-US border in the polygons in LFAs 36 and 38
 ## - add Maritimes offshore LFA 41
 ## - add Newfoundland snow crab zones

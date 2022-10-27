@@ -20,11 +20,11 @@ Draws southern Gulf of St. Lawrence geographical features.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{default}: Plot Gulf of Saint Lawrence base map.
+\item \code{map(default)}: Plot Gulf of Saint Lawrence base map.
 
-\item \code{esonar}: Plot \strong{eSonar} coordinate track data.
+\item \code{map(esonar)}: Plot \strong{eSonar} coordinate track data.
+
 }}
-
 \examples{
 map()
 map(layer = "strata", survey = "rv", region = "gulf")

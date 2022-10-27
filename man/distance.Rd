@@ -41,9 +41,9 @@ Functions to retrieve or calculate distance.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{default}: Default distance method.
-}}
+\item \code{distance(default)}: Default distance method.
 
+}}
 \seealso{
 deg2km
 }

@@ -3,6 +3,9 @@
 \name{deg2grid}
 \alias{deg2grid}
 \alias{grid2deg}
+\alias{grid.scs}
+\alias{grid.scs.default}
+\alias{grid.scs.scsset}
 \title{Coordinates and Grids}
 \usage{
 deg2grid(
@@ -25,34 +28,42 @@ grid2deg(
   reference = "HP23",
   vertices = FALSE
 )
+
+grid.scs(x, ...)
+
+\method{grid.scs}{default}(longitude, latitude, ...)
+
+\method{grid.scs}{scsset}(x, correct = TRUE, ...)
 }
 \arguments{
-\item{x}{Horizontal coordinate vector (e.g. decimal longitude) or grid name.}
-
-\item{y}{Vertical coordinate vector (e.g. decimal latitude).}
+\item{x, y}{Coordinate vectors (e.g. decimal longitude or latitude) or grid name.}
 
 \item{quarter.grid}{A logical value specifying whether the grid is to include northing and easting qualifiers.}
 
-\item{xref}{A numerical value specifying the horizontal reference coordinate. Reference coordinates specify the location of the the lower-left corner of reference grid.}
+\item{xref, yref}{Numerical values specifying the horizontal and vertical reference coordinates. Reference coordinates specify the location of the the lower-left corner of reference grid.}
 
-\item{yref}{A numerical value specifying the vertical reference coordinate. Reference coordinates specify the location of the the lower-left corner of reference grid.}
-
-\item{dx}{A numerical value specifying the horizontal width of each regular grid.}
-
-\item{dy}{A numerical value specifying the vertical height of each regular grid.}
+\item{dx, dy}{Numerical values specifying the width or height of each grid.}
 
 \item{reference}{A four-character string of the form XXYY, where XX are two letters and YY are two digits.}
+
+\item{longitude, latitude}{Vector of decimal longitude or latitude.}
 }
 \description{
 Functions to assign a grid label(s) given coordinates, and vice versa.
 }
 \section{Functions}{
 \itemize{
-\item \code{deg2grid}: Returns a grid name for a given coordinate(s).
+\item \code{deg2grid()}: Returns a grid name for a given coordinate(s).
 
-\item \code{grid2deg}: Returns the corner coordinates of a grid.
+\item \code{grid2deg()}: Returns the corner coordinates of a grid.
+
+\item \code{grid.scs()}: Generic method for identifying a grid from the snow crab survey spatial design.
+
+\item \code{grid.scs(default)}: Default method for identifying a grid from the snow crab survey spatial design.
+
+\item \code{grid.scs(scsset)}: 'scsset' method for identifying a grid from the snow crab survey spatial design.
+
 }}
-
 \examples{
 deg2grid(-64, 47) # Returns "HD37".
 grid2deg("HD37")  # Return corner coordinates for "HD37".
@@ -62,6 +73,17 @@ grid2deg("HD37", vertices = TRUE)  # Return vertex coordinates for "HD37".
 lon <- -66 + 6 * runif(100)
 lat <- 45 + 4 * runif(100)
 deg2grid(lon, lat)
+
+# Single point:
+grid.scs(-63, 47.5)
+
+# Vector of points:
+s <- read.scsset(2020)
+grid.scs(lon(s), lat(s))
+grid.scs(s) # Apply directly.
+
+# Return survey grid definitions:
+grid.scs()
 
 }
 \seealso{
