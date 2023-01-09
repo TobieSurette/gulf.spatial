@@ -1,6 +1,16 @@
 # gulf.spatial
 Southern Gulf of Saint Lawrence (sGSL) spatial data access, manipulation and mapping package.
 
+## Installation:
+
+Packages from the `gulf` series of packages can be installed directly from GitHub by running the following code from R:
+
+```
+library(devtools)
+install_github("TobieSurette/gulf.utils")
+gulf.utils::install.gulf()
+```
+
 # Basic maps:
 ```
 # Draw base maps:
