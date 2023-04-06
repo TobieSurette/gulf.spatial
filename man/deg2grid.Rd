@@ -4,8 +4,6 @@
 \alias{deg2grid}
 \alias{grid2deg}
 \alias{grid.scs}
-\alias{grid.scs.default}
-\alias{grid.scs.scsset}
 \title{Coordinates and Grids}
 \usage{
 deg2grid(
@@ -30,10 +28,6 @@ grid2deg(
 )
 
 grid.scs(x, ...)
-
-\method{grid.scs}{default}(longitude, latitude, ...)
-
-\method{grid.scs}{scsset}(x, correct = TRUE, ...)
 }
 \arguments{
 \item{x, y}{Coordinate vectors (e.g. decimal longitude or latitude) or grid name.}
@@ -53,17 +47,13 @@ Functions to assign a grid label(s) given coordinates, and vice versa.
 }
 \section{Functions}{
 \itemize{
-\item \code{deg2grid()}: Returns a grid name for a given coordinate(s).
+\item \code{deg2grid}: Returns a grid name for a given coordinate(s).
 
-\item \code{grid2deg()}: Returns the corner coordinates of a grid.
+\item \code{grid2deg}: Returns the corner coordinates of a grid.
 
-\item \code{grid.scs()}: Generic method for identifying a grid from the snow crab survey spatial design.
-
-\item \code{grid.scs(default)}: Default method for identifying a grid from the snow crab survey spatial design.
-
-\item \code{grid.scs(scsset)}: 'scsset' method for identifying a grid from the snow crab survey spatial design.
-
+\item \code{grid.scs}: Generic method for identifying a grid from the snow crab survey spatial design.
 }}
+
 \examples{
 deg2grid(-64, 47) # Returns "HD37".
 grid2deg("HD37")  # Return corner coordinates for "HD37".
