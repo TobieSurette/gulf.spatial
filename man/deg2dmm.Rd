@@ -23,15 +23,15 @@ Converts from one latitude-longitude numeric format to another.
 }
 \section{Functions}{
 \itemize{
-\item \code{deg2dmm}: Convert from decimal degree to degree-decimal minute format.
+\item \code{deg2dmm()}: Convert from decimal degree to degree-decimal minute format.
 
-\item \code{dmm2deg}: Convert from degree-decimal minute to decimal degree format.
+\item \code{dmm2deg()}: Convert from degree-decimal minute to decimal degree format.
 
-\item \code{deg2dms}: Convert from decimal degree to degree-minute-second format.
+\item \code{deg2dms()}: Convert from decimal degree to degree-minute-second format.
 
-\item \code{dms2deg}: Convert from degree-minute-second to decimal degree format.
+\item \code{dms2deg()}: Convert from degree-minute-second to decimal degree format.
+
 }}
-
 \examples{
 # Degree decimal-minute conversions:
 deg2dmm(66.5) # Returns 6630.00

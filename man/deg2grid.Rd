@@ -47,13 +47,13 @@ Functions to assign a grid label(s) given coordinates, and vice versa.
 }
 \section{Functions}{
 \itemize{
-\item \code{deg2grid}: Returns a grid name for a given coordinate(s).
+\item \code{deg2grid()}: Returns a grid name for a given coordinate(s).
 
-\item \code{grid2deg}: Returns the corner coordinates of a grid.
+\item \code{grid2deg()}: Returns the corner coordinates of a grid.
 
-\item \code{grid.scs}: Generic method for identifying a grid from the snow crab survey spatial design.
+\item \code{grid.scs()}: Generic method for identifying a grid from the snow crab survey spatial design.
+
 }}
-
 \examples{
 deg2grid(-64, 47) # Returns "HD37".
 grid2deg("HD37")  # Return corner coordinates for "HD37".

@@ -31,9 +31,9 @@ Displays the coast and landmass surrounding the Gulf of Saint Lawrence.
 }
 \section{Functions}{
 \itemize{
-\item \code{coastline}: Alias for \code{coast}
-}}
+\item \code{coastline()}: Alias for \code{coast}
 
+}}
 \examples{
 # Display simple map:
 plot(c(-66.5, -60), c(45, 49), type = "n")

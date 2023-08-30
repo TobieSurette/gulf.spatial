@@ -33,15 +33,15 @@ Function to convert Loran coordinates format to decimal latitude-longitude degre
 }
 \section{Functions}{
 \itemize{
-\item \code{loranxy2deg}: Convert Loran XY coordinates.
+\item \code{loranxy2deg()}: Convert Loran XY coordinates.
 
-\item \code{loranxz2deg}: Convert Loran XZ coordinates.
+\item \code{loranxz2deg()}: Convert Loran XZ coordinates.
 
-\item \code{as.loran}: Clean up character strings containing Loran coordinates.
+\item \code{as.loran()}: Clean up character strings containing Loran coordinates.
 
-\item \code{is.loran}: Determine if character string is a Loran-type coordinate.
+\item \code{is.loran()}: Determine if character string is a Loran-type coordinate.
+
 }}
-
 \examples{
 # Check whether character string is a candidate loran coordinate:
 is.loran(c("", "25.000", "0025500", "14456.123", "014512345", "14'456", "0000"))
