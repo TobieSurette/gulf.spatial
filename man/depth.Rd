@@ -31,11 +31,11 @@ The sign of \code{longitude} has no influence on the result.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{depth(default)}: Default \code{depth} function.
+\item \code{default}: Default \code{depth} function.
 
-\item \code{depth(list)}: Depth function for a list obejct.
-
+\item \code{list}: Depth function for a list obejct.
 }}
+
 \examples{
    # Find the water depth at a single point:
    depth(63.8, 47.05)

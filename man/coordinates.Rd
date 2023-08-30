@@ -47,11 +47,11 @@ Functions to retrieve coordinates from an object.
 }
 \section{Functions}{
 \itemize{
-\item \code{longitude(scsset)}: Convert numeric longitude coordinates from \code{scsset} objects to decimal degrees.
+\item \code{longitude.scsset}: Convert numeric longitude coordinates from \code{scsset} objects to decimal degrees.
 
-\item \code{latitude(scsset)}: Convert numeric latitude coordinates from \code{scsset} objects to decimal degrees.
-
+\item \code{latitude.scsset}: Convert numeric latitude coordinates from \code{scsset} objects to decimal degrees.
 }}
+
 \section{Functions}{
 
 \describe{

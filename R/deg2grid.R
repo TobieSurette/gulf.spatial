@@ -86,12 +86,11 @@ grid2deg <- function(x, xref = -66-1/3, yref = 45, dx = 1/6, dy = 1/6, reference
    return(v)
 }
 
-
 #' @describeIn deg2grid Generic method for identifying a grid from the snow crab survey spatial design.
 #' @export grid.scs
 grid.scs <- function(x, ...) UseMethod("grid.scs")
 
-#' @describeIn deg2grid Default method for identifying a grid from the snow crab survey spatial design.
+# @describeIn deg2grid Default method for identifying a grid from the snow crab survey spatial design.
 #' @rawNamespace S3method(grid.scs,default)
 grid.scs.default <- function(longitude, latitude, ...){
    # Read survey grids:
@@ -114,7 +113,7 @@ grid.scs.default <- function(longitude, latitude, ...){
    return(v)
 }
 
-#' @describeIn deg2grid 'scsset' method for identifying a grid from the snow crab survey spatial design.
+# @describeIn deg2grid 'scsset' method for identifying a grid from the snow crab survey spatial design.
 #' @rawNamespace S3method(grid.scs,scsset)
 grid.scs.scsset <- function(x, correct = TRUE, ...){
    years <- sort(unique(year(x)))
@@ -201,4 +200,6 @@ grid.scs.scsset <- function(x, correct = TRUE, ...){
 
    return(r)
 }
+
+
 

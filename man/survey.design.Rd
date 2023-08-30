@@ -59,11 +59,11 @@ Returns a set of randomly-selected snow crab survey sampling stations.
 }
 \section{Functions}{
 \itemize{
-\item \code{scs()}: Snow crab survey station design.
+\item \code{scs}: Snow crab survey station design.
 
-\item \code{nss()}: Northumberland Strait survey station design.
-
+\item \code{nss}: Northumberland Strait survey station design.
 }}
+
 \examples{
 # Snow crab survey:
 x <- scs(355) # Generate 355 survey stations.
