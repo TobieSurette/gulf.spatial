@@ -130,7 +130,8 @@ loranxy2lat <- function(x, y){
    test = 1000;
    iter = 0;
 
-   while ((iter < 40) && (test > 2)){
+
+   while ((iter < 40) & (test > 2)){
       iter = iter + 1;
 
       Php = pos51;
@@ -425,7 +426,7 @@ loranxy2lon <- function(x, y){
    test = 1000;
    iter = 0;
 
-   while ((iter < 40) && (test > 2)){
+   while ((iter < 40) & (test > 2)){
       iter = iter + 1;
 
       Php = pos51;
@@ -640,7 +641,7 @@ loranxz2lat <- function(x, z){
    test = 1000;
    iter = 0;
 
-   while ((iter < 40) && (test > 2)){
+   while ((iter < 40) & (test > 2)){
       iter = iter + 1;
 
       Php = pos51; Flp = pos52; Phs = pos11; Fls = pos12;
@@ -792,7 +793,7 @@ loranxz2lon <- function(x, z){
     test = 1000;
     iter = 0;
 
-   while ((iter < 40) && (test > 2)){
+   while ((iter < 40) & (test > 2)){
       iter = iter + 1;
 
        Php = pos51;
@@ -970,9 +971,9 @@ loranxy2deg <- function(x, y){
    # Perform conversion:
    lon <- lat <- rep(NA, length(x))
    if (length(ix) > 0){
-      for (i in 2:length(ix)){
-         lon[ix] <- -loranxy2lon(x[ix], y[ix])
-         lat[ix] <-  loranxy2lat(x[ix], y[ix])
+      for (i in 1:length(ix)){
+         lon[ix[i]] <- -loranxy2lon(x[ix[i]], y[ix[i]])
+         lat[ix[i]] <-  loranxy2lat(x[ix[i]], y[ix[i]])
       }
    }
 
@@ -995,9 +996,9 @@ loranxz2deg <- function(x, z){
    # Perform conversion:
    lon <- lat <- rep(NA, length(x))
    if (length(ix) > 0){
-      for (i in 2:length(ix)){
-         lon[ix] <- -loranxz2lon(x[ix], z[ix])
-         lat[ix] <-  loranxz2lat(x[ix], z[ix])
+      for (i in 1:length(ix)){
+         lon[ix[i]] <- -loranxz2lon(x[ix[i]], z[ix[i]])
+         lat[ix[i]] <-  loranxz2lat(x[ix[i]], z[ix[i]])
       }
    }
 
