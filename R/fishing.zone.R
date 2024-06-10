@@ -38,7 +38,7 @@ fishing.zone.default <- function(longitude, latitude, species, ...){
    options(warn = w)
 
    # Determine zone:
-   r <- over(x, p)
+   r <- sp::over(x, p)
 
    return(r$label)
 }

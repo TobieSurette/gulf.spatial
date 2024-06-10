@@ -1,4 +1,4 @@
-#' Coordinates and Grids
+#' @title Coordinates and Grids
 #'
 #' @description Functions to assign a grid label(s) given coordinates, and vice versa.
 #'
