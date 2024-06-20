@@ -73,21 +73,21 @@ depth.default <- function(longitude, latitude, units = "m"){
    fy <- floor(yp)
 
    # Index of points which lie within the image bounds:
-   index <- (fx >= 1) & (fx < dz[1]) & (fy >= 1) & (fy < dz[2])
+   ix <- (fx >= 1) & (fx < dz[1]) & (fy >= 1) & (fy < dz[2])
 
    # Remove exterior points:
-   fx <- fx[index]
-   fy <- fy[index]
+   fx <- fx[ix]
+   fy <- fy[ix]
 
    # Calculate pixel weights:
-   wx <- 1 - (xp[index] - fx)
-   wy <- 1 - (yp[index] - fy)
+   wx <- 1 - (xp[ix] - fx)
+   wy <- 1 - (yp[ix] - fy)
 
    # Calculate weighted 'z' value:
-   z[index] <- wx * wy * I$z[fy * dz[1] + fx] +
-               (1-wx) * wy * I$z[fy * dz[1] + fx + 1] +
-               wx * (1-wy) * I$z[(fy+1) * dz[1] + fx] +
-               (1-wx) * (1-wy) * I$z[fy * dz[1] + fx + 1]
+   z[ix] <- wx * wy * I$z[fy * dz[1] + fx] +
+            (1-wx) * wy * I$z[fy * dz[1] + fx + 1] +
+            wx * (1-wy) * I$z[(fy+1) * dz[1] + fx] +
+            (1-wx) * (1-wy) * I$z[fy * dz[1] + fx + 1]
 
    # Convert to other units if required:
    if (units %in% c("ft", "feet"))  z <- z * 3.280839
