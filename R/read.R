@@ -33,15 +33,16 @@ read.gulf.spatial <- function(layer, region,  species, zone, area, lfa, ...){
    if (length(file) == 1){
       # Read shapefile:
       if (fext(file) == "shp"){
-         v <- rgdal::readOGR(file, verbose = FALSE)
+         # v <- rgdal::readOGR(file, verbose = FALSE)
+         v <- read_sf(dsn = file)
          names(v) <- gsub("spcs_cd", "species", names(v))
 
          # Subset by survey and region:
-         if (!missing(species)) if ("species" %in% names(v)) v <- v[v@data$species %in% species, ]
-         if (!missing(region))  if ("region" %in% names(v))  v <- v[v@data$region %in% region, ]
-         if (!missing(zone))    if ("label" %in% names(v))   v <- v[v@data$label %in% zone, ]
-         if (!missing(area))    if ("label" %in% names(v))   v <- v[v@data$label %in% area, ]
-         if (!missing(lfa))     if ("label" %in% names(v))   v <- v[v@data$label %in% lfa, ]
+         if (!missing(species)) if ("species" %in% names(v)) v <- v[v$species %in% species, ]
+         if (!missing(region))  if ("region" %in% names(v))  v <- v[v$region %in% region, ]
+         if (!missing(zone))    if ("label" %in% names(v))   v <- v[v$label %in% zone, ]
+         if (!missing(area))    if ("label" %in% names(v))   v <- v[v$label %in% area, ]
+         if (!missing(lfa))     if ("label" %in% names(v))   v <- v[v$label %in% lfa, ]
       }
 
       # Read CSV file:
@@ -58,8 +59,6 @@ read.gulf.spatial <- function(layer, region,  species, zone, area, lfa, ...){
          eval(parse(text = paste0("v = ", v)))
       }
    }
-
-   #subset(v, ...)
 
    return(v)
 }
