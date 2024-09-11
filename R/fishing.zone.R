@@ -30,10 +30,14 @@ fishing.zone.default <- function(longitude, latitude, species, ...){
    p <- read.gulf.spatial("fishing zone polygon", file = "shp", species = species, ...)
 
    # Convert coordinates to 'sf' object:
-   x <- st_as_sf(data.frame(longitude = longitude, latitude = latitude), coords = c("longitude", "latitude"), crs = st_crs(p))
+   x <- sf::st_as_sf(data.frame(longitude = longitude, latitude = latitude), coords = c("longitude", "latitude"), crs = sf::st_crs(p))
+
+   w <- options("warn")$warn
+   options(warn = -1)
 
    # Get fishing zones:
    r <- sf::st_intersection(x,p)
+   options(warn = w)
 
    return(r$label)
 }

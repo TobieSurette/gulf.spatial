@@ -2,6 +2,7 @@
 % Please edit documentation in R/gulf.spatial.R
 \docType{package}
 \name{gulf.spatial}
+\alias{gulf.spatial-package}
 \alias{gulf.spatial}
 \title{gulf.spatial: sGSL Utility Functions}
 \description{
@@ -14,3 +15,12 @@ fisheries' science.
 \code{\link{match}} matches the rows between data frames.
 }
 
+\author{
+\strong{Maintainer}: Tobie Surette \email{Tobie.Surette@dfo-mpo.gc.ca}
+
+Authors:
+\itemize{
+  \item Daniel Ricard \email{Daniel.Ricard@dfo-mpo.gc.ca}
+}
+
+}
