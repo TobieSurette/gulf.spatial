@@ -34,7 +34,7 @@ read.gulf.spatial <- function(layer, region,  species, zone, area, lfa, ...){
       # Read shapefile:
       if (fext(file) == "shp"){
          # v <- rgdal::readOGR(file, verbose = FALSE)
-         v <- read_sf(dsn = file)
+         v <- sf::read_sf(dsn = file)
          names(v) <- gsub("spcs_cd", "species", names(v))
 
          # Subset by survey and region:

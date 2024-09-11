@@ -29,16 +29,11 @@ fishing.zone.default <- function(longitude, latitude, species, ...){
    # Read polygons:
    p <- read.gulf.spatial("fishing zone polygon", file = "shp", species = species, ...)
 
-   # Convert coordinates to 'sp' object:
-   x <- data.frame(longitude = longitude, latitude = latitude)
-   sp::coordinates(x) <- ~ longitude + latitude
-   w <- options("warn")$warn
-   options(warn = -1)
-   sp::proj4string(x) <- sp::proj4string(p)
-   options(warn = w)
+   # Convert coordinates to 'sf' object:
+   x <- st_as_sf(data.frame(longitude = longitude, latitude = latitude), coords = c("longitude", "latitude"), crs = st_crs(p))
 
-   # Determine zone:
-   r <- sp::over(x, p)
+   # Get fishing zones:
+   r <- sf::st_intersection(x,p)
 
    return(r$label)
 }
