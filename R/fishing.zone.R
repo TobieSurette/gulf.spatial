@@ -1,4 +1,4 @@
-#' Determine Fishing Zone
+#' @title Determine Fishing Zone
 #'
 #' @description Returns a fishing zone given a set of of coordinates.
 #'
