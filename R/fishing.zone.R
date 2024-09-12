@@ -25,6 +25,7 @@
 fishing.zone.default <- function(longitude, latitude, species, ...){
    # Check 'species' argument:
    if (missing(species)) stop("'species' must be defined.")
+   if (length(longitude) != length(latitude)) stop("'longitude' and 'latitude' must be the same length.")
 
    # Read polygons:
    p <- read.gulf.spatial("fishing zone polygon", file = "shp", species = species, ...)
@@ -36,8 +37,13 @@ fishing.zone.default <- function(longitude, latitude, species, ...){
    options(warn = -1)
 
    # Get fishing zones:
-   r <- sf::st_intersection(x,p)
+   r <- sf::st_intersects(x,p)
+   ix <- unlist(lapply(r, length))
+   v <- rep(NA, length(longitude))
+   v[ix == 1] <- p$label[unlist(r[ix == 1])]
+   v[ix > 1] <- p$label[unlist(lapply(r[ix > 1], function(x) x[1]))]
+
    options(warn = w)
 
-   return(r$label)
+   return(v)
 }
