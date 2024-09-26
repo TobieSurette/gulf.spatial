@@ -104,3 +104,13 @@ distance.default <- function(x, y, x0 = NULL, y0 = NULL,
 
    return(dist)
 }
+
+#' @describeIn distance Return the active trawling distance for a snow crab survey tow.
+#' @export
+distance.scsset <- function(x, ...){
+   v <- rep(NA, nrow(x))
+   ix <- !is.na(x$longitude.start) & !is.na(x$latitude.start) & !is.na(x$longitude.stop) & !is.na(x$latitude.stop)
+   v[ix] <- distance(dmm2deg(x$longitude.start[ix]), dmm2deg(x$latitude.start[ix]),
+                     dmm2deg(x$longitude.stop[ix]), dmm2deg(x$latitude.stop[ix]), pairwise = FALSE)
+   return(v)
+}
