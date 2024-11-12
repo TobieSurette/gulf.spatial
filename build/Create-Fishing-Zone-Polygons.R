@@ -311,7 +311,12 @@ lfa.sf <- st_sf(do.call(rbind, lapply(lfa.list.sf, sf.fct)))
 difference.fct <- function(li){
    temp <- st_cast(li, "POLYGON")
    bb <- st_bbox(temp)
+   ## to remove warning "attribute variables are assumed to be spatially constant throughout all geometries"
+   ## convert to a projected CRS
+   ## st_transform(boundaries_simple, crs="UTM")
+
    boundaries.temp <- st_crop(boundaries_simple, bb)
+   ## st_difference returns an error
    temp.coast <- st_difference(temp, st_union(boundaries.temp$geometry))
    return(temp.coast)
 }
@@ -719,7 +724,20 @@ gfa.coast.sf <- rbind(gfa.coast.sf, difference.fct(gfa.sf[27,]))
 fz.sf.polygons <- rbind(gfa.coast.sf, fz.sf.polygons)
 
 
+##########################################################################
 #### GROUNDFISH end
+####################
+################
+
+##########################################################################
+####################
+#### SHRIMP start
+#############################
+## https://inter-l01-uat.dfo-mpo.gc.ca/infoceans/en/commercial-fisheries#carte
+## https://inter-l01-uat.dfo-mpo.gc.ca/infoceans/sites/infoceans/files/Crevette_en.pdf
+
+##########################################################################
+#### SHRIMP end
 ####################
 ################
 
