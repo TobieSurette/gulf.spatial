@@ -1,4 +1,4 @@
-#' Determine Fishing Zone
+#' @title Determine Fishing Zone
 #'
 #' @description Returns a fishing zone given a set of of coordinates.
 #'
@@ -25,20 +25,25 @@
 fishing.zone.default <- function(longitude, latitude, species, ...){
    # Check 'species' argument:
    if (missing(species)) stop("'species' must be defined.")
+   if (length(longitude) != length(latitude)) stop("'longitude' and 'latitude' must be the same length.")
 
    # Read polygons:
    p <- read.gulf.spatial("fishing zone polygon", file = "shp", species = species, ...)
 
-   # Convert coordinates to 'sp' object:
-   x <- data.frame(longitude = longitude, latitude = latitude)
-   sp::coordinates(x) <- ~ longitude + latitude
+   # Convert coordinates to 'sf' object:
+   x <- sf::st_as_sf(data.frame(longitude = longitude, latitude = latitude), coords = c("longitude", "latitude"), crs = sf::st_crs(p))
+
    w <- options("warn")$warn
    options(warn = -1)
-   sp::proj4string(x) <- sp::proj4string(p)
+
+   # Get fishing zones:
+   r <- sf::st_intersects(x,p)
+   ix <- unlist(lapply(r, length))
+   v <- rep(NA, length(longitude))
+   v[ix == 1] <- p$label[unlist(r[ix == 1])]
+   v[ix > 1] <- p$label[unlist(lapply(r[ix > 1], function(x) x[1]))]
+
    options(warn = w)
 
-   # Determine zone:
-   r <- sp::over(x, p)
-
-   return(r$label)
+   return(v)
 }
