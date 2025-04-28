@@ -986,7 +986,7 @@
 		<SimpleData name="region">gulf</SimpleData>
 		<SimpleData name="label">23D</SimpleData>
 	</SchemaData></ExtendedData>
-      <LineString><coordinates>-64.98194444,47.28808333 -64.98172222,47.28808333 -64.88091667,47.28855556 -64.03616667,47.56988889 -64.03613889,47.453 -64.03613889,47.24827778 -64.03611111,47.14027778 -64.81883333,47.03144444 -64.81916667,47.03144444</coordinates></LineString>
+      <LineString><coordinates>-64.98194444,47.28808333 -64.98172222,47.28808333 -64.88091667,47.28855556 -64.03616667,47.56988889 -64.03613889,47.453 -64.03613889,47.24827778 -64.03611111,47.14027778 -64.81883333,47.01333 -64.81916667,47.01333</coordinates></LineString>
   </Placemark>
   <Placemark id="fishing.zone.vertices.99">
 	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>

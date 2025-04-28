@@ -927,9 +927,12 @@ save(fishing.zone.polygons, file="../data/fishing.zone.polygons.rda")
 ## - remove the lines on land in Nfld, for consistency with the other regions
 ## - for Maritimes LFAs, add Canada-US border in the polygons in LFAs 36 and 38
 ## - add Maritimes offshore LFA 41
+## - add east coast of Newfoundland herring zones
 ## - add Newfoundland snow crab zones
 ## - add Maritimes snow crab zones
 ## - add 4V and 4RS groundfish zones
+## - add all other groundfish zones
+
 ## DONE - add 4T groundfish zones
 ## DONE - add Maritimes LFAs
 ## DONE - generate Gulf lobster zones with coastlines from GSHHG instead of using those in the Gulf package
