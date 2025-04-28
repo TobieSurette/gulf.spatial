@@ -1,9 +1,12 @@
 ## creation of the fishing.zones.polygons and fishing.zones.vertices for inclusion in gulf.spatial
-##
+## rm(list=ls())
 library(gulf.spatial)
 library(here)
 library(sf)
 library(tidyverse)
+
+## this resolves errors that were occurring with st_difference
+sf_use_s2(FALSE)
 
 ##
 sf.fct <- function(li){
@@ -32,7 +35,7 @@ sf.fct <- function(li){
 # )
 #unzip("AC_1M_BoundaryPolygons.shp.zip", exdir="AC")
 
-boundaries <- read_sf("build/AC/AC_1M_BoundaryPolygons_shp/AC_1M_BoundaryPolygons.shp")
+boundaries <- read_sf("AC/AC_1M_BoundaryPolygons_shp/AC_1M_BoundaryPolygons.shp")
 
 boundaries_simple <- boundaries %>%
    filter(
@@ -53,7 +56,7 @@ boundaries_simple <- boundaries %>%
 ##########################################################################
 ## Newfoundland and Labrador, zones 3,4,5,6,7,8,9,10,11,12,13A,13B,14A,14B,14C
 ## this is the file obtained from Elisabeth from NFLD
-nfld.shp <- read_sf("inst/extdata/shapefiles/LobsterFishingAreas.shp")
+nfld.shp <- read_sf("../inst/extdata/shapefiles/LobsterFishingAreas.shp")
 ## this shapefile was shared with me from Newfoundland, the geometry appears as a linestring
 fz.nfld.sf.lines <-  st_sf(
    data.frame(
@@ -94,7 +97,7 @@ fz.nfld.sf.polygons <- nfld.coast
 ## we now have all the Newfoundland lobster fishing areas in simple features
 
 ## Newfoundland regions from AFR points
-lobster.nfld.afr <- read.table(file="./build/lobster-atlantic-fishery-regulations-points-Newfoundland.txt", header=TRUE, sep=" ", colClasses=c("numeric",rep("character", 6)))
+lobster.nfld.afr <- read.table(file="./lobster-atlantic-fishery-regulations-points-Newfoundland.txt", header=TRUE, sep=" ", colClasses=c("numeric",rep("character", 6)))
 lobster.nfld.afr$longitude <- -dms2deg(as.numeric(paste0(lobster.nfld.afr$lon.d,lobster.nfld.afr$lon.m,lobster.nfld.afr$lon.s)))
 lobster.nfld.afr$latitude <- dms2deg(as.numeric(paste0(lobster.nfld.afr$lat.d,lobster.nfld.afr$lat.m,lobster.nfld.afr$lat.s)))
 
@@ -153,7 +156,7 @@ fz.nfld.sf.lines <- lfa.sf
 ##
 ## https://inter-l01-uat.dfo-mpo.gc.ca/infoceans/en/commercial-fisheries#carte
 ## I captured the points appearing in the Atlantic Fisheries Regulations in a text file, load that
-lobster.afr <- read.table(file="./build/lobster-atlantic-fishery-regulations-points.txt", header=TRUE, sep=" ", colClasses=c("numeric",rep("character", 6)))
+lobster.afr <- read.table(file="./lobster-atlantic-fishery-regulations-points.txt", header=TRUE, sep=" ", colClasses=c("numeric",rep("character", 6)))
 lobster.afr$longitude <- -dms2deg(as.numeric(paste0(lobster.afr$lon.d,lobster.afr$lon.m,lobster.afr$lon.s)))
 lobster.afr$latitude <- dms2deg(as.numeric(paste0(lobster.afr$lat.d,lobster.afr$lat.m,lobster.afr$lat.s)))
 
@@ -211,14 +214,59 @@ lfa.sf <- st_sf(do.call(rbind, lapply(lfa.list.sf, sf.fct)))
 
 fz.gulf.quebec.sf.lines <- lfa.sf
 
-fz.sf.lines <- rbind(fz.nfld.sf.lines, fz.gulf.quebec.sf.lines)
 
+############################################
+## LFA 23 sub-zones A, B, C and D
+## coordinates come from the gulf package object called fishing.zone.polygons
+lobster.23 <- read.table(file="./lobster-LFA-23-sub-zones-points.txt", header=TRUE, sep=" ", colClasses=c("character","character","numeric","numeric","numeric"))
+
+lfa.23.list <- list()
+lfa.23.list[[1]] <- list(type="fishing zone vertices", species.code=2550, region="gulf", label="23A", points=which(lobster.23$LFA=="23A" & lobster.23$type=="ocean"))
+lfa.23.list[[2]] <- list(type="fishing zone vertices", species.code=2550, region="gulf", label="23B", points=which(lobster.23$LFA=="23B" & lobster.23$type=="ocean"))
+lfa.23.list[[3]] <- list(type="fishing zone vertices", species.code=2550, region="gulf", label="23C", points=which(lobster.23$LFA=="23C" & lobster.23$type=="ocean"))
+lfa.23.list[[4]] <- list(type="fishing zone vertices", species.code=2550, region="gulf", label="23D", points=which(lobster.23$LFA=="23D" & lobster.23$type=="ocean"))
+
+create.sf.fct.23 <- function(list.in){
+   print(list.in$label)
+   n.ls <- length(list.in)-4 ## number of linestrings for this LFA
+   if(n.ls==1){
+      list.in$geometry <- st_linestring(as.matrix(lobster.23[list.in$points, c("longitude","latitude")]))
+   }
+   else{
+      ll <- list()
+      for(i in 1:n.ls){
+         ll[[i]] <- st_linestring(as.matrix(lobster.23[unlist(list.in[i+4]), c("longitude","latitude")]))
+      }
+      list.in$geometry <- st_multilinestring(ll)
+   }
+   return(list.in)
+}
+
+
+lfa.23.list.sf <- lapply(lfa.23.list, create.sf.fct.23)
+
+lfa.23.sf <- st_sf(do.call(rbind, lapply(lfa.23.list.sf, sf.fct)))
+fz.lfa.23.sf.lines <- lfa.23.sf
+## plot(fz.lfa.23.sf.lines)
+
+## replace LFA 23 with the 3 sub-zones
+keep.1 <- which(fz.gulf.quebec.sf.lines$label %in% c("15","16","17A","17B","18A","18B","18C","18D","18E","18F","18G","18H","18I","19A","19B","19C","20A","20B","21A","21B","22"))
+keep.2 <- which(fz.gulf.quebec.sf.lines$label %in% c("24","25","26A","26B","27","28"))
+
+fz.gulf.quebec.sf.lines <-
+rbind(
+fz.gulf.quebec.sf.lines[keep.1,],
+fz.lfa.23.sf.lines,
+fz.gulf.quebec.sf.lines[keep.2,]
+)
+
+fz.sf.lines <- rbind(fz.nfld.sf.lines, fz.gulf.quebec.sf.lines)
 
 ## Maritimes LFAs
 ## Part IV at https://laws-lois.justice.gc.ca/eng/regulations/SOR-86-21/page-25.html#h-892770
 
 ## Part V at https://laws-lois.justice.gc.ca/eng/regulations/SOR-86-21/page-25.html#h-892770
-lobster.mar.afr <- read.table(file="./build/lobster-atlantic-fishery-regulations-points-Maritimes.txt", header=TRUE, sep=" ", colClasses=c("numeric",rep("character", 6)))
+lobster.mar.afr <- read.table(file="./lobster-atlantic-fishery-regulations-points-Maritimes.txt", header=TRUE, sep=" ", colClasses=c("numeric",rep("character", 6)))
 lobster.mar.afr$longitude <- -dms2deg(as.numeric(paste0(lobster.mar.afr$lon.d,lobster.mar.afr$lon.m,lobster.mar.afr$lon.s)))
 lobster.mar.afr$latitude <- dms2deg(as.numeric(paste0(lobster.mar.afr$lat.d,lobster.mar.afr$lat.m,lobster.mar.afr$lat.s)))
 
@@ -269,7 +317,6 @@ fz.sf.lines <- rbind(fz.sf.lines, fz.gulf.maritimes.sf.lines)
 ## already done for Newfoundland
 fz.sf.polygons <- fz.nfld.sf.polygons
 
-
 #################
 ## this is good, but it won't work to add the coastline, need points on land!
 ## so add points on land (after point 79 in the ARC text file) and use st_difference
@@ -306,6 +353,15 @@ lfa.list[[28]] <- list(type="fishing zone polygon", species.code=2550, region="m
 lfa.list.sf <- lapply(lfa.list, create.sf.fct)
 lfa.sf <- st_sf(do.call(rbind, lapply(lfa.list.sf, sf.fct)))
 
+# g <- ggplot(data=boundaries.temp) +
+#    geom_sf(fill=grey(0.8), color=grey(0.3)) +
+#    xlim(-62,-55) + ylim(48,52)
+# g2 <- g+geom_sf(data=lfa.sf[1,], color="red", fill="mistyrose")
+
+# g <- ggplot(data=temp.coast) +
+#    geom_sf(fill=grey(0.8), color=grey(0.3)) +
+#    xlim(-62,-55) + ylim(48,52)
+
 
 ## now use st_difference to add coast
 difference.fct <- function(li){
@@ -317,7 +373,8 @@ difference.fct <- function(li){
 
    boundaries.temp <- st_crop(boundaries_simple, bb)
    ## st_difference returns an error
-   temp.coast <- st_difference(temp, st_union(boundaries.temp$geometry))
+   temp.coast <- st_difference(temp, st_union(boundaries.temp$geometry), dimension = "polygon")
+   ## https://github.com/r-spatial/sf/issues/1944
    return(temp.coast)
 }
 
@@ -327,6 +384,56 @@ for(i in 2:28){
    lfa.coast.sf <- rbind(lfa.coast.sf, difference.fct(lfa.sf[i,]))
 }
 
+## deal with LFA 23 sub zones
+lobster.23 <- read.table(file="./lobster-LFA-23-sub-zones-points.txt", header=TRUE, sep=" ", colClasses=c("character","character","numeric","numeric","numeric"))
+# lobster.23.land <- read.table(file="./lobster-LFA-23-sub-zones-land-points.txt", header=TRUE, sep=" ", colClasses=c("numeric","numeric","numeric"))
+
+
+lfa.23.list <- list()
+lfa.23.list[[1]] <- list(type="fishing zone polygon", species.code=2550, region="gulf", label="23A", points=which(lobster.23$LFA=="23A"))
+lfa.23.list[[2]] <- list(type="fishing zone polygon", species.code=2550, region="gulf", label="23B", points=which(lobster.23$LFA=="23B"))
+lfa.23.list[[3]] <- list(type="fishing zone polygon", species.code=2550, region="gulf", label="23C", points=which(lobster.23$LFA=="23C"))
+lfa.23.list[[4]] <- list(type="fishing zone polygon", species.code=2550, region="gulf", label="23D", points=which(lobster.23$LFA=="23D"))
+
+
+create.sf.fct.23 <- function(list.in){
+   print(list.in$label)
+   n.ls <- length(list.in)-4 ## number of linestrings for this LFA
+   if(n.ls==1){
+      list.in$geometry <- st_linestring(as.matrix(lobster.23[list.in$points, c("longitude","latitude")]))
+   }
+   else{
+      ll <- list()
+      for(i in 1:n.ls){
+         ll[[i]] <- st_linestring(as.matrix(lobster.23[unlist(list.in[i+4]), c("longitude","latitude")]))
+      }
+      list.in$geometry <- st_multilinestring(ll)
+   }
+   return(list.in)
+}
+
+lfa.23.list.sf <- lapply(lfa.23.list, create.sf.fct.23)
+
+lfa.23.sf <- st_sf(do.call(rbind, lapply(lfa.23.list.sf, sf.fct)))
+
+
+
+lfa.23.coast.sf <- difference.fct(lfa.23.sf[1,])
+for(i in 2:4){
+   print(i)
+   lfa.23.coast.sf <- rbind(lfa.23.coast.sf, difference.fct(lfa.23.sf[i,]))
+}
+
+## replace LFA 23 with the 4 sub-areas
+keep.1 <- which(lfa.coast.sf$label %in% c("15","16","17A","17B","18A","18B","18C","18D","18E","18F","18G","18H","18I","19A","19B","19C","20A","20B","21A","21B","22"))
+keep.2 <- which(lfa.coast.sf$label %in% c("24","25","26A","26B","27","28"))
+
+lfa.coast.sf <-
+   rbind(
+      lfa.coast.sf[keep.1,],
+      lfa.23.coast.sf,
+      lfa.coast.sf[keep.2,]
+   )
 
 
 ## do the same for Maritimes LFAs
@@ -385,7 +492,7 @@ fz.sf.polygons <- rbind(lfa.coast.sf, lfa.coast.mar.sf, fz.nfld.sf.polygons[,var
 #############################
 ## now do the snow crab zones
 ## https://inter-l01-uat.dfo-mpo.gc.ca/infoceans/sites/infoceans/files/Crabe_des_Neiges_en.pdf
-crab.afr <- read.table(file="build/snow-crab-atlantic-fishery-regulations-points.txt", header=TRUE, sep=" ", colClasses=c("numeric",rep("character", 6)))
+crab.afr <- read.table(file="snow-crab-atlantic-fishery-regulations-points.txt", header=TRUE, sep=" ", colClasses=c("numeric",rep("character", 6)))
 crab.afr$longitude <- -dms2deg(as.numeric(paste0(crab.afr$lon.d,crab.afr$lon.m,crab.afr$lon.s)))
 crab.afr$latitude <- dms2deg(as.numeric(paste0(crab.afr$lat.d,crab.afr$lat.m,crab.afr$lat.s)))
 
@@ -461,10 +568,11 @@ difference.fct <- function(li){
    temp <- st_cast(li, "POLYGON")
    bb <- st_bbox(temp)
    boundaries.temp <- st_crop(boundaries_simple, bb)
+   ## ERROR HERE
    temp.coast <- st_difference(temp, st_union(boundaries.temp$geometry))
    return(temp.coast)
 }
-
+## ERROR HERE
 cfa.coast.sf <- difference.fct(cfa.sf[1,])
 for(i in 2:3){
    print(i)
@@ -487,7 +595,7 @@ fz.sf.polygons <- rbind(cfa.coast.sf, fz.sf.polygons)
 #############################
 ## now do the herring zones
 ## https://inter-l01-uat.dfo-mpo.gc.ca/infoceans/sites/infoceans/files/Hareng_en.pdf
-herring.afr <- read.table(file="build/herring-atlantic-fishery-regulations-points.txt", header=TRUE, sep=" ", colClasses=c("numeric",rep("character", 6)))
+herring.afr <- read.table(file="herring-atlantic-fishery-regulations-points.txt", header=TRUE, sep=" ", colClasses=c("numeric",rep("character", 6)))
 herring.afr$longitude <- -dms2deg(as.numeric(paste0(herring.afr$lon.d,herring.afr$lon.m,herring.afr$lon.s)))
 herring.afr$latitude <- dms2deg(as.numeric(paste0(herring.afr$lat.d,herring.afr$lat.m,herring.afr$lat.s)))
 
@@ -593,7 +701,7 @@ fz.sf.polygons <- rbind(hfa.coast.sf, fz.sf.polygons)
 ####################
 #### GROUNDFISH start
 # https://inter-l01-uat.dfo-mpo.gc.ca/infoceans/sites/infoceans/files/PoissonFond_en.pdf
-groundfish.afr <- read.table(file="build/groundfish-atlantic-fishery-regulations-points.txt", header=TRUE, sep=" ", colClasses=c("numeric",rep("character", 6)))
+groundfish.afr <- read.table(file="groundfish-atlantic-fishery-regulations-points.txt", header=TRUE, sep=" ", colClasses=c("numeric",rep("character", 6)))
 groundfish.afr$longitude <- -dms2deg(as.numeric(paste0(groundfish.afr$lon.d,groundfish.afr$lon.m,groundfish.afr$lon.s)))
 groundfish.afr$latitude <- dms2deg(as.numeric(paste0(groundfish.afr$lat.d,groundfish.afr$lat.m,groundfish.afr$lat.s)))
 
@@ -779,40 +887,41 @@ g <- ggplot(data=boundaries_simple) +
    xlim(-72,-48) + ylim(42,53)
 
 g1 <- g+geom_sf(data=snow.crab.lines, color="red", fill="mistyrose")+geom_label(data=snow.crab.polygons, aes(X, Y, label=label), size=2)
-ggsave(file="build/Gulf-of-St-Lawrence-snow-crab-areas-lines.pdf", g1, width = 30, height = 20, units = "cm")
+ggsave(file="Gulf-of-St-Lawrence-snow-crab-areas-lines.pdf", g1, width = 30, height = 20, units = "cm")
 
 g2 <- g+geom_sf(data=snow.crab.polygons, color="red", fill="mistyrose")+geom_label(data=snow.crab.polygons, aes(X, Y, label=label), size=2)
-ggsave(file="build/Gulf-of-St-Lawrence-snow-crab-areas-polygons.pdf", g2, width = 30, height = 20, units = "cm")
+ggsave(file="Gulf-of-St-Lawrence-snow-crab-areas-polygons.pdf", g2, width = 30, height = 20, units = "cm")
 
 g3 <- g+geom_sf(data=lobster.lines, color="red", fill="mistyrose")+geom_label(data=lobster.lines, aes(X, Y, label=label), size=2)
-ggsave(file="build/Gulf-of-St-Lawrence-lobster-areas-lines.pdf", g3, width = 30, height = 20, units = "cm")
+ggsave(file="Gulf-of-St-Lawrence-lobster-areas-lines.pdf", g3, width = 30, height = 20, units = "cm")
 
 g4 <- g+geom_sf(data=lobster.polygons, color="red", fill="mistyrose")+geom_label(data=lobster.polygons, aes(X, Y, label=label), size=2)
-ggsave(file="build/Gulf-of-St-Lawrence-lobster-areas-polygons.pdf", g4, width = 30, height = 20, units = "cm")
+ggsave(file="Gulf-of-St-Lawrence-lobster-areas-polygons.pdf", g4, width = 30, height = 20, units = "cm")
 
 g5 <- g+geom_sf(data=herring.lines, color="red", fill="mistyrose")+geom_label(data=herring.lines, aes(X, Y, label=label), size=2)
-ggsave(file="build/Gulf-of-St-Lawrence-herring-areas-lines.pdf", g5, width = 30, height = 20, units = "cm")
+ggsave(file="Gulf-of-St-Lawrence-herring-areas-lines.pdf", g5, width = 30, height = 20, units = "cm")
 
 g6 <- g+geom_sf(data=herring.polygons, color="red", fill="mistyrose")+geom_label(data=herring.polygons, aes(X, Y, label=label), size=2)
-ggsave(file="build/Gulf-of-St-Lawrence-herring-areas-polygons.pdf", g6, width = 30, height = 20, units = "cm")
+ggsave(file="Gulf-of-St-Lawrence-herring-areas-polygons.pdf", g6, width = 30, height = 20, units = "cm")
 
 g7 <- g+geom_sf(data=groundfish.lines, color="red", fill="mistyrose")+geom_label(data=groundfish.lines, aes(X, Y, label=label), size=2)
-ggsave(file="build/Gulf-of-St-Lawrence-groundfish-areas-lines.pdf", g7, width = 30, height = 20, units = "cm")
+ggsave(file="Gulf-of-St-Lawrence-groundfish-areas-lines.pdf", g7, width = 30, height = 20, units = "cm")
 
 g8 <- g+geom_sf(data=groundfish.polygons, color="red", fill="mistyrose")+geom_label(data=groundfish.polygons, aes(X, Y, label=label), size=2)
-ggsave(file="build/Gulf-of-St-Lawrence-groundfish-areas-polygons.pdf", g8, width = 30, height = 20, units = "cm")
+ggsave(file="Gulf-of-St-Lawrence-groundfish-areas-polygons.pdf", g8, width = 30, height = 20, units = "cm")
 
 ## write to files
 ## lines
-write_sf(fz.sf.lines, file.path(here(), "inst/extdata/shapefiles/fishing.zone.vertices.shp")) ## silently overwrites shapefile
-write_sf(fz.sf.lines, file.path(here(), "inst/extdata/shapefiles/fishing.zone.vertices.kml")) ## google earth format
-save(fz.sf.lines, file="./data/fishing.zone.vertices.rda")
+write_sf(fz.sf.lines, file.path(here(), "../inst/extdata/shapefiles/fishing.zone.vertices.shp")) ## silently overwrites shapefile
+write_sf(fz.sf.lines, file.path(here(), "../inst/extdata/shapefiles/fishing.zone.vertices.kml")) ## google earth format
+fishing.zone.vertices <- fz.sf.lines
+save(fishing.zone.vertices, file="../data/fishing.zone.vertices.rda")
 
 ## polygons
-write_sf(fz.sf.polygons, file.path(here(), "inst/extdata/shapefiles/fishing.zone.polygons.shp")) ## silently overwrites shapefile
-write_sf(fz.sf.polygons, file.path(here(), "inst/extdata/shapefiles/fishing.zone.polygons.kml")) ## google earth format
-save(fz.sf.polygons, file="./data/fishing.zone.polygons.rda")
-
+write_sf(fz.sf.polygons, file.path(here(), "../inst/extdata/shapefiles/fishing.zone.polygons.shp")) ## silently overwrites shapefile
+write_sf(fz.sf.polygons, file.path(here(), "../inst/extdata/shapefiles/fishing.zone.polygons.kml")) ## google earth format
+fishing.zone.polygons <- fz.sf.polygons
+save(fishing.zone.polygons, file="../data/fishing.zone.polygons.rda")
 
 ## still to do,
 ## - remove the lines on land in Nfld, for consistency with the other regions
