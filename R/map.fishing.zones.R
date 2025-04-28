@@ -1,4 +1,5 @@
-map.fishing.zones <- function(region = "gulf", species = NULL, fishing.zone = NULL, 
+#' @export map.fishing.zones
+map.fishing.zones <- function(region = "gulf", species = NULL, fishing.zone = NULL,
                               labels = FALSE, cex = 0.7, ...){
    # MAP.FISHING.ZONES - Plot fishing zone boundaries for various species.
 
