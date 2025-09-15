@@ -3,6 +3,7 @@
 \name{distance}
 \alias{distance}
 \alias{distance.default}
+\alias{distance.scsset}
 \title{Calculate Distance}
 \usage{
 distance(x, ...)
@@ -18,6 +19,8 @@ distance(x, ...)
   method = "utm",
   ...
 )
+
+\method{distance}{scsset}(x, ...)
 }
 \arguments{
 \item{x}{Horizontal coordinates.}
@@ -42,6 +45,8 @@ Functions to retrieve or calculate distance.
 \section{Methods (by class)}{
 \itemize{
 \item \code{distance(default)}: Default distance method.
+
+\item \code{distance(scsset)}: Return the active trawling distance for a snow crab survey tow.
 
 }}
 \seealso{
