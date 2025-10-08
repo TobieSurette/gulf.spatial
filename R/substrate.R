@@ -22,18 +22,16 @@
 #'
 
 substrate <- function(longitude, latitude){
-   # To be fixed in a later version:
-   #file <- "C:/Users/SuretteTJ/Desktop/github/gulf.spatial/inst/extdata/shapefiles"
-
-   file <- locate.gulf.spatial(c("Seafloor", "shp"))
-   file <- paste0(strsplit(file, "shapefiles")[[1]][1], "shapefiles")
+   # Define substrate file path:
+   path <- locate.gulf.spatial(c("Seafloor", "shp"))
+   path <- paste0(strsplit(file, "shapefiles")[[1]][1], "shapefiles")
 
    # Read seafloor substrate file:
-   subtrate <- sf::read_sf(dsn = file, layer = "Seafloor_SubstratBenthique")
+   substrate <- sf::read_sf(dsn = path, layer = "Seafloor_SubstratBenthique")
 
    # Create and re-project coordinate data:
    p <- sf::st_as_sf(data.frame(longitude, latitude), crs = 4326, coords = c("longitude", "latitude"))
-   p <- sf::st_transform(p, crs = sf::st_crs(subtrate))
+   p <- sf::st_transform(p, crs = sf::st_crs(substrate))
 
    # Join points and substrate data:
    p <- sf::st_join(p, subtrate, left = TRUE, sf::st_nearest_feature)[, c("DEPOT_EN")]
