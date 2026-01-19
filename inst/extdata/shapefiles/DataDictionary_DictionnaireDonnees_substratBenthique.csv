@@ -1,0 +1,19 @@
+Data dictionary / Dictionnaire de données,,
+Column name/Nom de la colonne,Description_EN,Description_FR
+FID,Sequential unique whole numbers that are automatically generated,Numéro séquentiel unique généré automatiquement
+THEME,Theme (Fr),Thème (Fr)
+THEME_EN,Theme (En),Thème (An)
+DEPOT_GRO,General category of surface sediments (Fr),Catégorie générale des sédiments de surface (Fr)
+DEPOT_EN,General category of surface sediments (En),Catégorie générale des sédiments de surface (An)
+DEPOT_SOU,Subcategory of surface sediments (Fr),Sous-catégorie de sédiment de surface (Fr)
+DEPOT_S_EN,Subcategory of surface sediments (En),Sous-catégorie de sédiment de surface (An)
+DEPOT_COD,Associated code of surface sediments ,Code associé aux sédiments de surface
+PARTICULE,Grain size (cm),Taille des particules (cm)
+ROCHE_GRO,Kind of bedrocks (Fr),Type de substrat rocheux (Fr)
+BEDROCK,Kind of bedrocks (En),Type de substrat rocheux (An)
+ROCHE_ERE,Geologic era of the bedrock establishement (Fr),Ère géologique de mise en place du substrat rocheux (Fr)
+BEDROCK_ER,Geologic era of the bedrock establishement (En),Ère géologique de mise en place du substrat rocheux (An)
+ROCHE_AGE,Geologic period of the bedrock establishement (Fr),Période géologique de mise en place du substrat rocheux (Fr)
+BEDROCK_AG,Geologic period of the bedrock establishement (En),Période géologique de mise en place du substrat rocheux (An)
+ROCHE_COD,Associated code of bedrocks,Code associé au substrat rocheux
+REFERENCE,References,Références
