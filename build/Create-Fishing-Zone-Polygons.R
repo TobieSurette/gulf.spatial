@@ -828,9 +828,7 @@ gfa.coast.sf <- rbind(gfa.coast.sf, st_cast(gfa.sf[25,], "POLYGON"))
 gfa.coast.sf <- rbind(gfa.coast.sf, difference.fct(gfa.sf[26,]))
 gfa.coast.sf <- rbind(gfa.coast.sf, difference.fct(gfa.sf[27,]))
 
-
 fz.sf.polygons <- rbind(gfa.coast.sf, fz.sf.polygons)
-
 
 ##########################################################################
 #### GROUNDFISH end
@@ -843,12 +841,90 @@ fz.sf.polygons <- rbind(gfa.coast.sf, fz.sf.polygons)
 #############################
 ## https://inter-l01-uat.dfo-mpo.gc.ca/infoceans/en/commercial-fisheries#carte
 ## https://inter-l01-uat.dfo-mpo.gc.ca/infoceans/sites/infoceans/files/Crevette_en.pdf
-
+## https://laws-lois.justice.gc.ca/eng/regulations/SOR-86-21/page-26.html#docCont
 ##########################################################################
 #### SHRIMP end
 ####################
 ################
 
+##########################################################################
+####################
+#### SEALS start
+#############################
+## https://www.qc.dfo-mpo.gc.ca/en/commercial-fisheries?_ga=2.229645980.1892263078.1768840064-784841676.1754409847
+## https://www.qc.dfo-mpo.gc.ca/sites/infoceans/files/Phoque_en.pdf
+## https://laws-lois.justice.gc.ca/eng/regulations/SOR-93-56/page-6.html#h-958065
+seals.afr <- read.table(file="seals-atlantic-fishery-regulations-points.txt", header=TRUE, sep=" ", colClasses=c("numeric",rep("character", 6)))
+seals.afr$longitude <- -dms2deg(as.numeric(paste0(seals.afr$lon.d,seals.afr$lon.m,seals.afr$lon.s)))
+seals.afr$latitude <- dms2deg(as.numeric(paste0(seals.afr$lat.d,seals.afr$lat.m,seals.afr$lat.s)))
+
+# gulf.map("gulf")
+# text(seals.afr$longitude, seals.afr$latitude, seals.afr$point.number)
+
+## each area is a series of points from this list
+sfa.list <- list()
+sfa.list[[1]] <- list(type="fishing zone vertices", species.codes=900, region="quebec", label="13", points=c(48,1,47,46,49,48))
+sfa.list[[2]] <- list(type="fishing zone vertices", species.codes=900, region="quebec", label="14", points=c())
+sfa.list[[3]] <- list(type="fishing zone vertices", species.codes=900, region="quebec", label="15", points=c(2,3,33,42,43,44,2))
+sfa.list[[4]] <- list(type="fishing zone vertices", species.codes=900, region="quebec", label="16", points=c())
+sfa.list[[5]] <- list(type="fishing zone vertices", species.codes=900, region="quebec", label="17", points=c())
+sfa.list[[6]] <- list(type="fishing zone vertices", species.codes=900, region="gulf", label="18", points=c())
+sfa.list[[7]] <- list(type="fishing zone vertices", species.codes=900, region="gulf", label="19", points=c())
+sfa.list[[8]] <- list(type="fishing zone vertices", species.codes=900, region="gulf", label="20", points=c(3,14,21,32,33,3))
+sfa.list[[9]] <- list(type="fishing zone vertices", species.codes=900, region="gulf", label="21", points=c())
+sfa.list[[10]] <- list(type="fishing zone vertices", species.codes=900, region="gulf", label="22", points=c(14,15,21,14))
+sfa.list[[11]] <- list(type="fishing zone vertices", species.codes=900, region="gulf", label="23", points=c())
+sfa.list[[12]] <- list(type="fishing zone vertices", species.codes=900, region="gulf", label="24", points=c())
+sfa.list[[13]] <- list(type="fishing zone vertices", species.codes=900, region="gulf", label="25", points=c())
+sfa.list[[14]] <- list(type="fishing zone vertices", species.codes=900, region="gulf", label="26", points=c())
+sfa.list[[15]] <- list(type="fishing zone vertices", species.codes=900, region="maritimes", label="27", points=c())
+
+create.sf.fct <- function(list.in){
+   #   print(list.in$label)
+   n.ls <- length(list.in)-4 ## number of linestrings for this LFA
+   if(n.ls==1){
+      list.in$geometry <- st_linestring(as.matrix(seals.afr[list.in$points, c("longitude","latitude")]))
+   }
+   else{
+      ll <- list()
+      for(i in 1:n.ls){
+         ll[[i]] <- st_linestring(as.matrix(seals.afr[unlist(list.in[i+4]), c("longitude","latitude")]))
+      }
+      list.in$geometry <- st_multilinestring(ll)
+   }
+   return(list.in)
+}
+
+
+sfa.list.sf <- lapply(sfa.list, create.sf.fct)
+sfa.sf <- st_sf(do.call(rbind, lapply(sfa.list.sf, sf.fct)))
+
+fz.sf.lines <- rbind(sfa.sf, fz.sf.lines)
+
+# plot(sfa.sf[4,])
+
+## now use st_difference to add coast
+sfa.coast.sf <- difference.fct(sfa.sf[1,])
+
+fz.sf.polygons <- rbind(sfa.coast.sf, fz.sf.polygons)
+
+##########################################################################
+#### SEALS end
+####################
+################
+
+
+## SQUID
+## https://laws-lois.justice.gc.ca/eng/regulations/SOR-86-21/page-28.html#docCont
+
+## SCALLOPS
+## https://laws-lois.justice.gc.ca/eng/regulations/SOR-86-21/page-24.html#docCont
+
+## MACKEREL
+## https://laws-lois.justice.gc.ca/eng/regulations/SOR-86-21/page-17.html#docCont
+
+## CAPELIN
+## https://laws-lois.justice.gc.ca/eng/regulations/SOR-86-21/page-12.html#docCont
 
 ### final steps, make some maps showing the assembled lines and polygons for the different species, write shapefiles and KML files, and save as an .rda file
 
@@ -878,37 +954,50 @@ herring.polygons <- cbind(herring.polygons, st_coordinates(st_centroid(herring.p
 groundfish.lines <- fz.sf.lines[fz.sf.lines$species.code==253,]
 groundfish.lines <- cbind(groundfish.lines, st_coordinates(st_centroid(groundfish.lines)))
 
-groundfish.polygons <- fz.sf.polygons[fz.sf.polygons$species.code==253,] # gfa.coast.sf
+groundfish.polygons <- fz.sf.polygons[fz.sf.polygons$species.code==253,]
 groundfish.polygons <- cbind(groundfish.polygons, st_coordinates(st_centroid(groundfish.polygons)))
+
+## seals
+seals.lines <- fz.sf.lines[fz.sf.lines$species.code==900,]
+seals.lines <- cbind(seals.lines, st_coordinates(st_centroid(seals.lines)))
+
+seals.polygons <- fz.sf.polygons[fz.sf.polygons$species.code==900,]
+seals.polygons <- cbind(seals.polygons, st_coordinates(st_centroid(seals.polygons)))
 
 
 g <- ggplot(data=boundaries_simple) +
    geom_sf(fill=grey(0.8), color=grey(0.3)) +
    xlim(-72,-48) + ylim(42,53)
 
+## snow crab
 g1 <- g+geom_sf(data=snow.crab.lines, color="red", fill="mistyrose")+geom_label(data=snow.crab.polygons, aes(X, Y, label=label), size=2)
 ggsave(file="Gulf-of-St-Lawrence-snow-crab-areas-lines.pdf", g1, width = 30, height = 20, units = "cm")
-
 g2 <- g+geom_sf(data=snow.crab.polygons, color="red", fill="mistyrose")+geom_label(data=snow.crab.polygons, aes(X, Y, label=label), size=2)
 ggsave(file="Gulf-of-St-Lawrence-snow-crab-areas-polygons.pdf", g2, width = 30, height = 20, units = "cm")
 
+## lobster
 g3 <- g+geom_sf(data=lobster.lines, color="red", fill="mistyrose")+geom_label(data=lobster.lines, aes(X, Y, label=label), size=2)
 ggsave(file="Gulf-of-St-Lawrence-lobster-areas-lines.pdf", g3, width = 30, height = 20, units = "cm")
-
 g4 <- g+geom_sf(data=lobster.polygons, color="red", fill="mistyrose")+geom_label(data=lobster.polygons, aes(X, Y, label=label), size=2)
 ggsave(file="Gulf-of-St-Lawrence-lobster-areas-polygons.pdf", g4, width = 30, height = 20, units = "cm")
 
+## herring
 g5 <- g+geom_sf(data=herring.lines, color="red", fill="mistyrose")+geom_label(data=herring.lines, aes(X, Y, label=label), size=2)
 ggsave(file="Gulf-of-St-Lawrence-herring-areas-lines.pdf", g5, width = 30, height = 20, units = "cm")
-
 g6 <- g+geom_sf(data=herring.polygons, color="red", fill="mistyrose")+geom_label(data=herring.polygons, aes(X, Y, label=label), size=2)
 ggsave(file="Gulf-of-St-Lawrence-herring-areas-polygons.pdf", g6, width = 30, height = 20, units = "cm")
 
+## groundfish
 g7 <- g+geom_sf(data=groundfish.lines, color="red", fill="mistyrose")+geom_label(data=groundfish.lines, aes(X, Y, label=label), size=2)
 ggsave(file="Gulf-of-St-Lawrence-groundfish-areas-lines.pdf", g7, width = 30, height = 20, units = "cm")
-
 g8 <- g+geom_sf(data=groundfish.polygons, color="red", fill="mistyrose")+geom_label(data=groundfish.polygons, aes(X, Y, label=label), size=2)
 ggsave(file="Gulf-of-St-Lawrence-groundfish-areas-polygons.pdf", g8, width = 30, height = 20, units = "cm")
+
+## seals
+g9 <- g+geom_sf(data=seals.lines, color="red", fill="mistyrose")+geom_label(data=seals.lines, aes(X, Y, label=label), size=2)
+ggsave(file="Gulf-of-St-Lawrence-seals-areas-lines.pdf", g9, width = 30, height = 20, units = "cm")
+g10 <- g+geom_sf(data=seals.polygons, color="red", fill="mistyrose")+geom_label(data=groundfish.polygons, aes(X, Y, label=label), size=2)
+ggsave(file="Gulf-of-St-Lawrence-seals-areas-polygons.pdf", g10, width = 30, height = 20, units = "cm")
 
 ## write to files
 ## lines
@@ -932,6 +1021,7 @@ save(fishing.zone.polygons, file="../data/fishing.zone.polygons.rda")
 ## - add Maritimes snow crab zones
 ## - add 4V and 4RS groundfish zones
 ## - add all other groundfish zones
+## - add seals
 
 ## DONE - add 4T groundfish zones
 ## DONE - add Maritimes LFAs
