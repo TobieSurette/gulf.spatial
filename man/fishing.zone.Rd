@@ -13,7 +13,7 @@ fishing.zone(longitude, latitude, species, ...)
 
 \item{species}{Numerical scalar containing a species code.}
 
-\item{region}{Character value specifying the geographic region. This argument is passed onto the \code{\link[gulf]{fishing.zone.info}} function.}
+\item{...}{Further arguments passed on to read.gulf.spatial}
 }
 \description{
 Returns a fishing zone given a set of of coordinates.
@@ -27,7 +27,10 @@ lat <- c(48, 47, 46.5)
 long <- c(-64, -61.5, -62)
 fishing.zone(long, lat, species = 2526)
 
+# Read snow crab set card for 2020 and determine fishing zone:
 x <- read.scsset(2020)
-fishing.zone(lon(x), lat(x), species = 2526) # Read snow crab set card for 2013 and determine fishing zone:
-fishing.zone(lon(x), lat(x), species = 2550) # Lobster fishing areas of snow crab survey tows.
+fishing.zone(lon(x), lat(x), species = 2526)
+
+# Lobster fishing areas of snow crab survey tows.
+fishing.zone(lon(x), lat(x), species = 2550)
 }

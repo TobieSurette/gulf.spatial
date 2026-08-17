@@ -42,10 +42,19 @@ Read southern Gulf spatial data files.
 }
 
 \examples{
-locate.gulf.spatial(layer = "bounds", survey = "rv")   # Locate September survey boundaries.
-locate.gulf.spatial(layer = "bounds", survey = "sc")   # Locate snow crab survey boundaries.
-locate.gulf.spatial(layer = "stations", survey = "rv") # Locate September survey stations.
-locate.gulf.spatial(layer = "stations", survey = "ns") # Locate Northumberland Strait survey stations.
-locate.gulf.spatial("grids", survey = "ns")            # Locate Northumberland Strait survey grids.
+# Locate September survey boundaries.
+locate.gulf.spatial(layer = "bounds", survey = "rv")
+
+# Locate snow crab survey boundaries.
+locate.gulf.spatial(layer = "bounds", survey = "sc")
+
+# Locate September survey stations.
+locate.gulf.spatial(layer = "stations", survey = "rv")
+
+# Locate Northumberland Strait survey stations.
+locate.gulf.spatial(layer = "stations", survey = "ns")
+
+# Locate Northumberland Strait survey grids.
+locate.gulf.spatial("grids", survey = "ns")
 
 }

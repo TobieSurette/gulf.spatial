@@ -13,6 +13,7 @@ Collection of spatial functions for use in DFO Gulf Region, the southern Gulf of
 
 Authors:
 \itemize{
+  \item Tobie Surette \email{Tobie.Surette@dfo-mpo.gc.ca}
   \item Daniel Ricard \email{Daniel.Ricard@dfo-mpo.gc.ca}
 }
 
