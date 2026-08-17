@@ -4,8 +4,7 @@
 #'
 #' @param longitude,latitude Numerical longitude and latitude value(s) in decimal degree format.
 #'
-#' @param region Character string specifying the geographic region. This argument is passed onto
-#'               the \code{\link{stratum.info}} function.
+#' @param region Character string specifying the geographic region.
 #'
 #' @param survey Character string specifying the research survey. This argument
 #'               is passed onto the \code{\link{stratum.info}} function.

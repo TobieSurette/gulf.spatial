@@ -9,8 +9,9 @@
 #' @param ... Other arguments (not used).
 
 #' @describeIn station Assign a spatial location identifier based on spatio-temporal proximity.
-#' @export
-station.default <- function(longitude, latitude, time, distance.tolerance = 1, time.tolerance, ...){
+#'
+#' @export station
+station <- function(longitude, latitude, time, distance.tolerance = 1, time.tolerance, ...){
    # Check input arguments:
    if (missing(longitude) | missing(latitude)) stop("'longitude' and 'latitude' must be specified.")
    if (length(longitude) != length(latitude)) stop("'longitude' and 'latitude' vectors must be the same length.")

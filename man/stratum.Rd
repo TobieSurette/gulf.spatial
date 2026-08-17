@@ -13,8 +13,7 @@ stratum(x, ...)
 
 \item{longitude, latitude}{Numerical longitude and latitude value(s) in decimal degree format.}
 
-\item{region}{Character string specifying the geographic region. This argument is passed onto
-the \code{\link{stratum.info}} function.}
+\item{region}{Character string specifying the geographic region.}
 
 \item{survey}{Character string specifying the research survey. This argument
 is passed onto the \code{\link{stratum.info}} function.}
